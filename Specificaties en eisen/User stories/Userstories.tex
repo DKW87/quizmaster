@@ -1,0 +1,111 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[dutch]{babel}
+\usepackage{newpxtext}
+
+\begin{document}
+\title{User stories voor de QuizMaster}
+\date{2019-01-15}
+\author{Huub van Thienen}
+\maketitle
+\begin{abstract}
+In dit document worden de user stories beschreven van het systeem dat de MIW2.0 cursisten in het eerste project gaan bouwen.
+\end{abstract}
+
+\section{Algemeen}
+
+In dit hoofdstuk worden de user stories beschreven die voor alle rollen gelden. Ook is er een overzicht van de rollen.
+
+\subsection{Objecten}
+Bij de beschrijving van het Quizmaster systeem worden een aantal objecten gebruikt die hier worden beschreven.
+
+\paragraph{Gebruiker} Een gebruiker is iemand die gebruik mag maken van het systeem. 
+De Quizmaster legt van iedere gebruiker de naam, het password en de rol vast. 
+Gebruikers krijgen toegang tot de Quizmaster door hun naam en password in te voeren in het login scherm.
+
+\paragraph{Cursus} Een cursus heeft een naam en een coordinator.
+Een cursus heeft nul of meer groepen die deze cursus volgen.
+Bij een cursus horen nul of meer quizes.
+
+\paragraph{Groep} Een groep is een aantal studenten die een bepaalde cursus volgt, daarom heeft iedere groep een cursus.
+Een student die meerdere cursussen volgt wordt voor iedere cursus in een groep ingedeeld, het is dus niet zo dat een student voor het hele stdiejaar in dezelfde groep zit.
+Iedere groep heeft een naam en een docent.
+Een coordinator (van de cursus bij deze groep of van een andere cursus) kan ook docent van een groep zijn.
+
+\paragraph{Quiz}
+Een quiz hoort bij een cursus.
+Een quiz bestaat uit \'e\'en of meer multiple-choicevragen.
+Iedere vraag heeft twee of meer antwoorden.
+
+\subsection{Rollen}
+
+\paragraph{Student} Een \emph{student} maakt alle toetsen die voor een cursus vereist zijn.
+
+\paragraph{Docent} Een \emph{docent} gebruikt het systeem om de voortgang van de studenten in zijn klas te bewaken.
+Daartoe vraagt hij overzichten op van de studenten en hun prestaties tot nu toe.
+
+\paragraph{Co\"ordinator} Een \emph{co"ordinator} is verantwoordelijk voor het beheer van de toetsen.
+Zij voert vragen in (met de antwoorden natuurlijk!) en bepaalt de succesdefinitie. Iedere co\"ordinator is ook docent en kan dus ook alle taken die bij de docentrol horen uitvoeren.
+
+\paragraph{Onderwijsadminstratie} Een \emph{administrator} maakt klassen, deelt cursisten in en wijst een leraar toe aan die klas.
+Ook bepaalt hij wie er co"ordinator is van die cursus.
+
+\paragraph{Technisch beheerder} Een \emph{systeembeheerder} is verantwoordelijk voor het functioneren van het systeem.
+Hij maakt gebruikers aan met een naam en een password.
+Van iedere gebruiker legt hij de rol vast.
+
+\section{User stories}
+
+\subsection{Algemeen}
+
+\paragraph{Inloggen}
+Als gebruiker wil ik in het systeem kunnen inloggen zodat ik de functies die bij mijn rol horen kan uitvoeren. (scherm login.fxml).
+
+\paragraph{Taakselectie}
+Als gebruiker wil ik na het inloggen een overzicht vand de mogelijke taken krijgen zodat ik daar een keuze uit kan maken. (scherm welcomeScene.fxml).
+Bij deze keuze wil ik alleen de taken aangeboden krijgen die bij mijn rol passen.
+
+\subsection{User stories voor de rol Student}
+
+\paragraph{Inschrijven}
+Als student wil ik mij voor een vak kunnen inschrijven zodat ik de bij quizes van dat vak kan maken.
+Bij de inschrijving wil ik mij voor meerdere vakken tegelijk kunnen inschrijven.
+Ik wil de vakken selecteren uit een lijst met alle vakken behalve de vakken waar ik al voor ingeschreven ben.
+(Scherm studentSignup.fxml)
+
+\paragraph{Uitschrijven}
+Als student wil ik mij voor een vak kunnen uitschrijven zodat ik de quizes van dat vak niet meer hoef te maken.
+Ik wil mij voor meerdere vakken tegelijk kunnen uitchrijven.
+Ik wil de vakken selecteren uit een lijst die alleen de vakken bevat waar ik voor ingeschreven ben.
+(Scherm studentSignout.fxml)
+
+\subsection{User stories voor de rol Docent}
+
+\subsection{User stories voor de rol Co\"ordinator}
+
+\paragraph{Quizes onderhouden}
+Als co\"ordinator wil ik quizes kunnen maken en onderhouden.
+
+\subsection{User stories voor de rol Onderwijsadminstratie}
+
+\paragraph{Cursus CRUD}
+Als administrator wil ik de volledige crud-functionaliteit voor het beheer van cursussen hebben. (schermen manageCourses.fxml, changeCourse.fxml, newCourse.fxml).
+
+\paragraph{Groepen CRUD}
+Als administrator wil ik de volledige crud-functionaliteit voor het beheer van groepen hebben. Toevoegen en verwijderen van studenten aan groepen hoort hier nog niet bij! (schermen manageGroups.fxml, changeGroup.fxml, newGroup.fxml).
+
+\paragraph{Groepen en cursisten}
+Als administrator wil ik cursisten aan groepen kunnen toevoegen en er weer uit halen.
+
+\subsection{User stories voor de rol Technisch beheerder}
+
+\paragraph{Overzicht gebruikers} Als technisch beheerder wil ik een overzicht kunnen zien van alle geregistreerde gebruikers. (scherm selectUser.fxml)
+
+\paragraph{Gebruiker aanmaken} Als technisch beheerder wil ik een nieuwe gebruiker aanmaken en daarbij zijn rol vastleggen zodat deze gebruiker toegang tot het systeem kan krijgen. (scherm newUser.fxml)
+
+\paragraph{Gebruiker wijzigen} Als technisch beheerder wil ik de gegevens van een bestaande gebruiker wijzigen zodat de gegevensadministratie up-to-date blijft. (scherm changeUser.fxml)
+
+\paragraph{Gebruiker verwijderen} Als technisch beheerder wil ik een bestaande gebruiker verwijderen om te voorkomen dat gebruikers onterecht toegang tot het systeem houden. (scherm deleteUser.fxml)
+
+\paragraph{Schermnavigatie} 
+
+\end{document}

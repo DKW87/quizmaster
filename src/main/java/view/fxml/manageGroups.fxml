@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageGroupsController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Groepenbeheer">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ListView fx:id="groupList" layoutX="14.0" layoutY="78.0" prefHeight="200.0" prefWidth="281.0" />
+      <Label layoutX="14.0" layoutY="49.0" text="Selecteer groep">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="deleteGroupButton" layoutX="14.0" layoutY="287.0" mnemonicParsing="false" onAction="#doDeleteGroup" text="Verwijder">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="changeGroupButton" layoutX="107.0" layoutY="288.0" mnemonicParsing="false" onAction="#doChangeGroup" text="Wijzig">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="newGroupButton" layoutX="177.0" layoutY="289.0" mnemonicParsing="false" onAction="#doCreateGroup" text="Nieuwe groep">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="menuButton" layoutX="14.0" layoutY="329.0" mnemonicParsing="false" onAction="#doMenu" text="Menu">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

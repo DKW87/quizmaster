@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ChangeUserController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Wijzig gebruiker">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="63.0" text="Naam">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="98.0" text="Password">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="137.0" text="Rol">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="nameField" layoutX="113.0" layoutY="61.0" />
+      <TextField fx:id="passwordField" layoutX="113.0" layoutY="96.0" />
+      <MenuButton fx:id="roleMenuButton" layoutX="113.0" layoutY="135.0" mnemonicParsing="false" text="Kies rol">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </MenuButton>
+      <Button fx:id="menuButton" layoutX="14.0" layoutY="187.0" mnemonicParsing="false" onAction="#doMenu" text="Menu">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="changeUserButton" layoutX="113.0" layoutY="188.0" mnemonicParsing="false" onAction="#doChangeUser" text="Wijzig gebruiker">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

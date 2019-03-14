@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignupController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Inschrijven voor een vak">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="37.0" text="Selecteer alle vakken waar je je voor wil inschrijven">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ListView fx:id="courseList" layoutX="14.0" layoutY="60.0" prefHeight="200.0" prefWidth="700.0"/>
+      <Button fx:id="menuButton" layoutX="14.0" layoutY="273.0" mnemonicParsing="false" onAction="#doMenu" text="Menu">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="signupButton" layoutX="88.0" layoutY="274.0" mnemonicParsing="false" onAction="#doSignup" text="Inschrijven">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
