@@ -67,6 +67,9 @@ public class WelcomeController {
   }
 
   private void populateTeacherTasks() {
+  }
+
+  private void populateCoordinatorTasks() {
     MenuItem item1 = new MenuItem("Overzicht cursussen");
     item1.setOnAction(new EventHandler<ActionEvent>() {
       @Override
@@ -75,10 +78,6 @@ public class WelcomeController {
       }
     });
     taskMenuButton.getItems().add(item1);
-  }
-
-  private void populateCoordinatorTasks() {
-
   }
 
   private void populateAdminTasks() {
