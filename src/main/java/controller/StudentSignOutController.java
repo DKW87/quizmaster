@@ -12,16 +12,17 @@ import model.entity.user.Student;
 import view.Main;
 import view.SceneManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SignupController {
+public class StudentSignOutController {
 
   SceneManager manager = SceneManager.getSceneManager();
   CourseDao courseDao = CourseDao.getInstance();
   Student student = (Student)Main.getCurrentUser();
 
   @FXML
-  Button signupButton;
+  Button signoutButton;
 
   @FXML
   Button menuButton;
@@ -30,18 +31,22 @@ public class SignupController {
   ListView<String> courseList;
 
   public void setup() {
-    List<Course> allCourses = courseDao.getAllCourses();
+    List<Course> allCourses = student.getCourses();
     courseList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     for (Course course: allCourses) {
       courseList.getItems().add(course.toString());
     }
   }
 
-  public void doSignup() {
+  public void doSignout() {
     ObservableList<Integer> selectedIndices = courseList.getSelectionModel().getSelectedIndices();
+    List<Course> coursesCopy = new ArrayList<>();
+    for (Course c: student.getCourses()) {
+      coursesCopy.add(c);
+    }
     for (int index: selectedIndices) {
-      Course course = courseDao.findCourseByIndex(index);
-      student.signup(course);
+      Course course = coursesCopy.get(index);
+      student.signoff(course);
     }
     manager.showWelcomeScene();
   }
@@ -49,5 +54,4 @@ public class SignupController {
   public void doMenu(ActionEvent event) {
     manager.showWelcomeScene();
   }
-
 }
