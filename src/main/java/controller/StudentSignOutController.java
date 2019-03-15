@@ -2,11 +2,11 @@ package controller;
 
 import javafx.event.ActionEvent;
 
-public class SignupController {
+public class StudentSignOutController {
 
   public void setup() {}
 
   public void doMenu(ActionEvent event){}
 
-  public void doSignup(ActionEvent event){}
+  public void doSignout(ActionEvent event){}
 }
