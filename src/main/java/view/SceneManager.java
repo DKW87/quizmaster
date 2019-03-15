@@ -130,7 +130,7 @@ public class SceneManager {
     controller.setup();
   }
 
-  public void showCoordinatorOverviewScene() {
+  public void showCoordinatorCourseOverviewScene() {
     FXMLLoader loader = getScene("/view/fxml/coordinatorCourseOverview.fxml");
     CoordinatorCourseOverviewController controller = loader.getController();
     controller.setup();
