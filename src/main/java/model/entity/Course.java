@@ -1,5 +1,6 @@
 package model.entity;
 
+import model.entity.quiz.Quiz;
 import model.entity.user.Coordinator;
 import model.entity.user.Student;
 
@@ -12,12 +13,14 @@ public class Course {
   private Coordinator coordinator;
 
   private List<Student> students;
+  private List<Quiz> quizes;
 
   public Course(String name, Coordinator coordinator) {
     super();
     this.name = name;
     this.coordinator = coordinator;
     this.students = new ArrayList<>();
+    this.quizes = new ArrayList<>();
   }
 
   public String getName() {

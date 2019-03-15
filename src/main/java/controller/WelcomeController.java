@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import model.entity.user.Coordinator;
 import model.entity.user.User;
 import view.Main;
 import view.SceneManager;
@@ -50,7 +51,7 @@ public class WelcomeController {
     item1.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent actionEvent) {
-        manager.showStudentSignupScene();
+        manager.showStudentSignInScene();
       }
     });
     taskMenuButton.getItems().add(item1);
@@ -59,14 +60,21 @@ public class WelcomeController {
     item2.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent actionEvent) {
-        manager.showStudentSignoutScene();
+        manager.showStudentSignOutScene();
       }
     });
     taskMenuButton.getItems().add(item2);
   }
 
   private void populateTeacherTasks() {
-
+    MenuItem item1 = new MenuItem("Overzicht cursussen");
+    item1.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent actionEvent) {
+        manager.showCoordinatorCourseOverview((Coordinator)Main.getCurrentUser());
+      }
+    });
+    taskMenuButton.getItems().add(item1);
   }
 
   private void populateCoordinatorTasks() {
