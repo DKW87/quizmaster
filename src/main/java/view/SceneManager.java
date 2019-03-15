@@ -129,4 +129,10 @@ public class SceneManager {
     StudentSignOutController controller = loader.getController();
     controller.setup();
   }
+
+  public void showCoordinatorOverviewScene() {
+    FXMLLoader loader = getScene("/view/fxml/coordinatorCourseOverview.fxml");
+    CoordinatorCourseOverviewController controller = loader.getController();
+    controller.setup();
+  }
 }
