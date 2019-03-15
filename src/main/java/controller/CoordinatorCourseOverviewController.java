@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import model.entity.user.User;
 
 public class CoordinatorCourseOverviewController {
 
@@ -17,7 +16,7 @@ public class CoordinatorCourseOverviewController {
   @FXML
   ListView<String> courseList;
 
-  public void setup(User user) {}
+  public void setup() {}
 
   public void doMenu(ActionEvent event) {}
 
