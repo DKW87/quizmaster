@@ -5,4 +5,5 @@ module QuizMaster {
 
   opens view to javafx.graphics, javafx.fxml;
   opens controller to javafx.fxml;
+  opens controller.shared to javafx.fxml;
 }

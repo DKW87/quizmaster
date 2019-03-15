@@ -1,12 +1,18 @@
 package controller;
 
+import controller.shared.UpdateGroupController;
 import javafx.event.ActionEvent;
+import model.entity.Group;
 
-public class NewGroupController {
+public class NewGroupController extends UpdateGroupController {
 
-  public void setup() {}
+  public void setup() {
+    super.setup();
+  }
 
-  public void doMenu(ActionEvent event){}
-
-  public void doCreateGroup(ActionEvent event){}
+  public void doCreateGroup(ActionEvent event) {
+    group = new Group(nameField.getText(), teacher, course);
+    groupDao.addGroup(group);
+    manager.showManageGroupsScene();
+  }
 }
