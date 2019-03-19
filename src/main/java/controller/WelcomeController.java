@@ -74,7 +74,7 @@ public class WelcomeController {
     item1.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent actionEvent) {
-        manager.showCoordinatorCourseOverview((Coordinator)Main.getCurrentUser());
+        manager.showCoordinatorCourseOverviewScene();
       }
     });
     taskMenuButton.getItems().add(item1);
