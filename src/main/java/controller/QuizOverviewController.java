@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import model.entity.Course;
+import model.entity.Quiz;
 
 public class QuizOverviewController {
 
@@ -30,7 +30,7 @@ public class QuizOverviewController {
   @FXML
   ListView<String> quizList;
 
-  public void setup(Course course) {}
+  public void setup(Quiz quiz) {}
 
   public void doMenu(ActionEvent event) {}
 
