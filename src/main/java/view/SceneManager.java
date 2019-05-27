@@ -129,4 +129,9 @@ public class SceneManager {
     CoordinatorCourseOverviewController controller = loader.getController();
     controller.setup();
   }
+  public void selectQuizForStudent() {
+    FXMLLoader loader = getScene("/view/fxml/selectQuizForStudent.fxml");
+    SelectQuizForStudentController controller = loader.getController();
+    controller.setup();
+  }
 }
