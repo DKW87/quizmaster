@@ -51,7 +51,7 @@ public class WelcomeController {
     item1.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent actionEvent) {
-        manager.showStudentSignInScene();
+        manager.showStudentSignInOutScene();
       }
     });
     taskMenuButton.getItems().add(item1);
@@ -60,7 +60,7 @@ public class WelcomeController {
     item2.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent actionEvent) {
-        manager.showStudentSignOutScene();
+        manager.showStudentSignInOutScene();
       }
     });
     taskMenuButton.getItems().add(item2);
