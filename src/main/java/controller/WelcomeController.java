@@ -47,7 +47,7 @@ public class WelcomeController {
   }
 
   private void populateStudentTasks() {
-    MenuItem item1 = new MenuItem("Aanmelden voor cursus");
+    MenuItem item1 = new MenuItem("Aan- en afmelden voor cursus");
     item1.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent actionEvent) {
@@ -56,11 +56,11 @@ public class WelcomeController {
     });
     taskMenuButton.getItems().add(item1);
 
-    MenuItem item2 = new MenuItem("Afmelden voor cursus");
+    MenuItem item2 = new MenuItem("Doe quiz");
     item2.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent actionEvent) {
-        manager.showStudentSignInOutScene();
+        manager.selectQuizForStudent();
       }
     });
     taskMenuButton.getItems().add(item2);

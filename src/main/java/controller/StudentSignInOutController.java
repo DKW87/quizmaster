@@ -3,8 +3,11 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import view.SceneManager;
 
 public class StudentSignInOutController {
+
+  private SceneManager sceneManager = SceneManager.getSceneManager();
 
   @FXML
   private Button signInButton;
@@ -14,7 +17,9 @@ public class StudentSignInOutController {
 
   public void setup() {}
 
-  public void doMenu(ActionEvent event){}
+  public void doMenu(ActionEvent event){
+    sceneManager.showWelcomeScene();
+  }
 
   public void doSignIn(ActionEvent event){}
 
