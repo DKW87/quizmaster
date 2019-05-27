@@ -118,15 +118,9 @@ public class SceneManager {
     controller.setup(group);
   }
 
-  public void showStudentSignInScene() {
-    FXMLLoader loader = getScene("/view/fxml/studentSignIn.fxml");
-    StudentSignInController controller = loader.getController();
-    controller.setup();
-  }
-
-  public void showStudentSignOutScene() {
-    FXMLLoader loader = getScene("/view/fxml/studentSignOut.fxml");
-    StudentSignOutController controller = loader.getController();
+  public void showStudentSignInOutScene() {
+    FXMLLoader loader = getScene("/view/fxml/studentSignInOut.fxml");
+    StudentSignInOutController controller = loader.getController();
     controller.setup();
   }
 
