@@ -1,10 +1,11 @@
 \documentclass[11pt, a4paper]{article}
 \usepackage[dutch]{babel}
 \usepackage{newpxtext}
+\usepackage{graphicx}
 
 \begin{document}
 \title{User stories voor de QuizMaster}
-\date{2019-01-15}
+\date{\today}
 \author{Huub van Thienen}
 \maketitle
 \begin{abstract}
@@ -22,7 +23,7 @@ Bij de beschrijving van het Quizmaster systeem worden een aantal objecten gebrui
 De Quizmaster legt van iedere gebruiker de naam, het password en de rol vast. 
 Gebruikers krijgen toegang tot de Quizmaster door hun naam en password in te voeren in het login scherm.
 
-\paragraph{Cursus} Een cursus heeft een naam en een coordinator.
+\paragraph{Cursus} Een cursus heeft een naam en een co\"ordinator.
 Een cursus heeft nul of meer groepen die deze cursus volgen.
 Bij een cursus horen nul of meer quizes.
 
@@ -58,7 +59,7 @@ Van iedere gebruiker legt hij de rol vast.
 \subsection{Algemeen}
 
 \paragraph{Inloggen}
-Als gebruiker wil ik in het systeem kunnen inloggen zodat ik de functies die bij mijn rol horen kan uitvoeren. (scherm login.fxml).
+Als gebruiker wil ik in het systeem kunnen inloggen zodat ik de functies die bij mijn rol horen kan uitvoeren. (scherm login.fxml, loginFailed.fxml).
 
 \paragraph{Taakselectie}
 Als gebruiker wil ik na het inloggen een overzicht vand de mogelijke taken krijgen zodat ik daar een keuze uit kan maken. (scherm welcomeScene.fxml).
@@ -66,22 +67,59 @@ Bij deze keuze wil ik alleen de taken aangeboden krijgen die bij mijn rol passen
 
 \subsection{User stories voor de rol Student}
 
-\paragraph{Inschrijven}
-Als student wil ik mij voor een vak kunnen inschrijven zodat ik de bij quizes van dat vak kan maken.
-Bij de inschrijving wil ik mij voor meerdere vakken tegelijk kunnen inschrijven.
-Ik wil de vakken selecteren uit een lijst met alle vakken behalve de vakken waar ik al voor ingeschreven ben.
-(Scherm studentSignIn.fxml)
+\paragraph{In- en Uitschrijven}
+Als student wil ik mij voor een cursus kunnen in- of schrijven zodat ik de bij quizes van die cursus kan maken.
+Bij de inschrijving wil ik mij voor meerdere cursussen tegelijk kunnen inschrijven.
 
-\paragraph{Uitschrijven}
-Als student wil ik mij voor een vak kunnen uitschrijven zodat ik de quizes van dat vak niet meer hoef te maken.
-Ik wil mij voor meerdere vakken tegelijk kunnen uitchrijven.
-Ik wil de vakken selecteren uit een lijst die alleen de vakken bevat waar ik voor ingeschreven ben.
-(Scherm studentSignOut.fxml)
+\paragraph{Opmerking}
+Voor het in- en uitschrijven wordt hetzelfde scherm gebruikt. Dit scherm bevat twee lijsten, links de lijst met cursussen waarvoor de student nog niet is ingeschreven, rechts de lijst met cursussen waarvoor zij al wel is ingeschreven.
+De lijsten ondersteunen multiple selections.
+Door in de linker lijst \'e\'en of meer vakken te selecteren en op de $\rightarrow$ knop te klikken wordt de student voor die cursussen ingeschreven.
+Door in de rechter lijst \'e\'en of meer vakken te selecteren en op de $\leftarrow$ knop te klikken wordt de student voor die cursussen uitgeschreven.
+In beide gevallen worden de lijsten bijgewerkt.
+(Scherm studentSignInOut.fxml)
+
+\paragraph{Quiz selecteren}
+Als student wil ik een quiz kunnen selecteren zodat ik die vervolgens kan gaan invullen.
+Op het selectiescherm worden alleen de quizes aangeboden van de cursussen waarvoor de student is ingeschreven.
+Een student mag een quiz meerdere keren invullen.
+Quizes die de student al eerder heeft ingevuld worden in de lijst gemerkt met een sterretje achter de naam.
+(Scherm selectQuizForStudent.fxml)
 
 \paragraph{Quiz invullen}
 Als student wil ik een quiz kunnen invullen\footnote{We gebruiken de term "invullen" ipv "maken" om verwarring met het maken van een quiz door de co\"ordinator te voorkomen.} om zo de stof beter te begrijpen en aan de eisen van de cursus te voldoen.
 
+Voor iedere vraag van de quiz wordt het volgende scherm getoond (fillOutQuiz.fxml):
+
+\begin{center}
+\includegraphics[width=\linewidth]{Screenshot_fillOutQuiz.png}
+\end{center}
+
+Hou rekening met het volgende:
+\begin{itemize}
+\item Het label (``Vraag 1'' in de figuur) moet worden aangepast om het juiste vraagnummer weer te geven.
+
+\item De text area bevat de vraag en de antwoorden.
+De antwoorden worden daarbij in willekeurige volgorde gepresenteerd.
+
+\item Door op een van de knoppen Antw. A t/m Antw. C te klikken wordt het betreffende antwoord geregistreerd en de volgende vraag getoond.
+
+\item Door op Volgende te klikken wordt de volgende vraag getoond maar er wordt geen antwoord geregistreerd.
+
+\item Door op Vorige te klikken wordt de vorige vraag getoond zonder een antwoord te registreren.
+
+\item Als een student een vraag twee of meer keer beantwoordt, wordt alleen het laatst gegeven antwoord geregistreerd.
+
+\item Als de laatste vraag is beantwoord, of als de student bij de laatste vraag op Volgende klikt wordt het feedback scherm getoond.
+
+\end{itemize}
+
+\paragraph{Quiz afsluiten en feedback}
+Als student wil ik na de beantwoording van de laatste vraag een scherm zien met daarop een overzicht van alle keren dat ik deze quiz heb gedaan met daarbij het behaalde resultaat.
+
 \subsection{User stories voor de rol Docent}
+
+Functionaliteit voor de docenten behoort niet tot deze release van de applicatie.
 
 \subsection{User stories voor de rol Co\"ordinator}
 

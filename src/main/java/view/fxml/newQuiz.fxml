@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewQuizController">
    <children>
-      <Label layoutX="24.0" layoutY="24.0" text="Maak nieuwe quiz voor cursus &lt;CURSUS&gt;">
+      <Label fx:id="newQuizLabel" layoutX="24.0" layoutY="24.0" text="Maak nieuwe quiz voor cursus &lt;CURSUS&gt;">
          <font>
             <Font size="18.0" />
          </font>
@@ -18,16 +18,27 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="nameField" layoutX="142.0" layoutY="71.0" />
-      <Button fx:id="menuButton" layoutX="24.0" layoutY="124.0" mnemonicParsing="false" onAction="#doMenu" text="Menu">
+      <TextField fx:id="nameField" layoutX="162.0" layoutY="71.0" />
+      <Button fx:id="menuButton" layoutX="20.0" layoutY="225.0" mnemonicParsing="false" onAction="#doMenu" text="Menu">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="newQuizButton" layoutX="142.0" layoutY="124.0" mnemonicParsing="false" onAction="#doNewQuiz" text="Maak quiz">
+      <Button fx:id="newQuizButton" layoutX="142.0" layoutY="225.0" mnemonicParsing="false" onAction="#doNewQuiz" text="Maak quiz">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
+      <Label layoutX="24.0" layoutY="107.0" text="Aantal vragen">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <TextField fx:id="nrOfQuestionsField" layoutX="162.0" layoutY="105.0" />
+      <Label layoutX="24.0" layoutY="145.0" text="Cesuur">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tresholdField" layoutX="162.0" layoutY="143.0" />
    </children>
 </AnchorPane>
