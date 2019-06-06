@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CoordinatorDashboardController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Coordinator dashboard">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="51.0" text="Selecteer cursus">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ListView fx:id="courseList" layoutX="15.0" layoutY="70.0" prefHeight="200.0" prefWidth="270.0" />
+      <Button fx:id="menuButton" layoutX="15.0" layoutY="314.0" mnemonicParsing="false" onAction="#doMenu" text="Menu">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="editCourseButton" layoutX="176.0" layoutY="273.0" mnemonicParsing="false" onAction="#doEditCourse" text="Wijzig cursus">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <ListView fx:id="quizList" layoutX="315.0" layoutY="70.0" prefHeight="200.0" prefWidth="270.0" />
+      <ListView fx:id="questionList" layoutX="615.0" layoutY="70.0" prefHeight="200.0" prefWidth="270.0" />
+      <Label layoutX="315.0" layoutY="51.0" text="Selecteer quiz">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="615.0" layoutY="51.0" text="Selecteer vraag">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="editQuizButton" layoutX="493.0" layoutY="273.0" mnemonicParsing="false" onAction="#doEditQuiz" text="Wijzig quiz">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="editQuestionButton" layoutX="784.0" layoutY="273.0" mnemonicParsing="false" onAction="#doEditQuestion" text="Wijzig vraag">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="newCourseButton" layoutX="14.0" layoutY="274.0" mnemonicParsing="false" onAction="#doNewCourse" text="Nieuwe cursus">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="newQuizButton" layoutX="315.0" layoutY="274.0" mnemonicParsing="false" onAction="#doNewQuiz" text="Nieuwe quiz">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="newQuestionButton" layoutX="615.0" layoutY="274.0" mnemonicParsing="false" onAction="#doNewQuestion" text="Nieuwe vraag">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.entity.Course;
 import model.entity.Group;
+import model.entity.Quiz;
 import model.entity.user.User;
 
 import java.io.IOException;
@@ -124,14 +125,27 @@ public class SceneManager {
     controller.setup();
   }
 
-  public void showCoordinatorCourseOverviewScene() {
-    FXMLLoader loader = getScene("/view/fxml/coordinatorCourseOverview.fxml");
-    CoordinatorCourseOverviewController controller = loader.getController();
-    controller.setup();
-  }
-  public void selectQuizForStudent() {
+  public void showSelectQuizForStudent() {
     FXMLLoader loader = getScene("/view/fxml/selectQuizForStudent.fxml");
     SelectQuizForStudentController controller = loader.getController();
+    controller.setup();
+  }
+
+  public void showFillOutQuiz() {
+    FXMLLoader loader = getScene("/view/fxml/fillOutQuiz.fxml");
+    FillOutQuizController controller = loader.getController();
+    controller.setup();
+  }
+
+  public void showStudentFeedback(Quiz quiz) {
+    FXMLLoader loader = getScene("/view/fxml/studentFeedback.fxml");
+    StudentFeedbackController controller = loader.getController();
+    controller.setup(quiz);
+  }
+
+  public void showCoordinatorDashboard() {
+    FXMLLoader loader = getScene("/view/fxml/coordinatorDashboard.fxml");
+    CoordinatorDashboardController controller = loader.getController();
     controller.setup();
   }
 }
