@@ -6,10 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewQuestionController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewQuestionController">
    <children>
-      <Label layoutX="34.0" layoutY="34.0" text="Maak niewue vraag voor quiz &lt;QUIZ&gt;">
+      <Label layoutX="34.0" layoutY="34.0" text="Maak nieuwe vraag voor quiz &lt;QUIZ&gt;">
          <font>
             <Font size="18.0" />
          </font>

@@ -4,7 +4,7 @@
 \usepackage{graphicx}
 
 \begin{document}
-\title{User stories voor de QuizMaster}
+\title{User stories voor de Quizmaster}
 \date{\today}
 \author{Huub van Thienen}
 \maketitle
@@ -83,7 +83,7 @@ In beide gevallen worden de lijsten bijgewerkt.
 Als student wil ik een quiz kunnen selecteren zodat ik die vervolgens kan gaan invullen.
 Op het selectiescherm worden alleen de quizes aangeboden van de cursussen waarvoor de student is ingeschreven.
 Een student mag een quiz meerdere keren invullen.
-Quizes die de student al eerder heeft ingevuld worden in de lijst gemerkt met een sterretje achter de naam.
+Bij een quiz die de student al eerder heeft ingevuld wordt achter de naam van de quiz de datum van de laatste poging en het resultaat daarvan vermeld.
 (Scherm selectQuizForStudent.fxml)
 
 \paragraph{Quiz invullen}
@@ -115,7 +115,7 @@ De antwoorden worden daarbij in willekeurige volgorde gepresenteerd.
 \end{itemize}
 
 \paragraph{Quiz afsluiten en feedback}
-Als student wil ik na de beantwoording van de laatste vraag een scherm zien met daarop een overzicht van alle keren dat ik deze quiz heb gedaan met daarbij het behaalde resultaat.
+Als student wil ik na de beantwoording van de laatste vraag een scherm zien met daarop een overzicht van alle keren dat ik deze quiz heb gedaan met daarbij het behaalde resultaat. (Scherm studentFeedback.fxml)
 
 \subsection{User stories voor de rol Docent}
 
@@ -123,19 +123,17 @@ Functionaliteit voor de docenten behoort niet tot deze release van de applicatie
 
 \subsection{User stories voor de rol Co\"ordinator}
 
-\paragraph{Cursus selecteren}
-Als co\"ordinator wil ik een overzicht kunnen opvragen van alle cursussen waarvoor ik de rol co\"ordinator heb.
-In dit overzicht wil ik een cursus kunnen selecteren waarvoor ik de quizes wil onderhouden. (Scherm coordinatorCourseOverview.fxml)
+\paragraph{Dashboard}
+Als co\"ordinator wil ik \'e\'en scherm een overzicht kunnen opvragen van alle cursussen, quizen en vragen waarvoor ik de rol co\"ordinator heb.
+Dit scherm bevat drie lijsten: een lijst van cursussen, een lijst van quizes voor de geselecteerde cursus en een lijst van vragen voor de geselecteerde quiz.
+Als er geen cursus is geselecteerd is de lijst van quizes leeg, en mutatis mutandi geldt dit ook voor de lijst van vragen.
+Iedere lijst heeft twee knoppen: een knop om een nieuw item in die lijst te maken en een knop om het geselecteerde item in die lijst te wijzigen.
+Merk op dat het maken en wijzigen van cursussen ook al onderdeel is van de functionaliteit van de Onderwijsadministratie\footnote{De CRUD functionaliteit is niet volledig: verwijderen van cursussen/quizes/vragen is hier niet mogelijk. Informeer bij de product owner hoe je hiermee moet omgaan.}!
+Het scherm (CoordinatorDashboard.fxml) ziet er zo uit:
 
-\paragraph{Selecteer quiz}
-Als co\"ordinator wil ik een overzicht van alle quizes voor een bepaald vak kunnen opvragen.
-In dit overzicht wil ik een quiz die ik wil gaan wijzigen kunnen selecteren.
-Ook wil ik in dit overzicht een quiz kunnen verwijderen en een nieuwe quiz aanmaken. (Scherm quizOverview.fxml)
-
-\paragraph{Selecteer vraag}
-Als co\"ordinator wil ik een overzicht van alle vragen voor een bepaalde quiz kunnen opvragen.
-In dit overzicht wil ik een vraag die ik wil gaan wijzigen kunnen selecteren.
-Ook wil ik in dit overzicht een vraag kunnen verwijderen en een nieuwe vraag kunnen aanmaken. (Scherm questionOverview.fxml)
+\begin{center}
+\includegraphics[width=\linewidth]{CoordinatorDashboard.png}
+\end{center}
 
 \paragraph{Vragen maken en bewerken}
 Als co\"ordinator wil ik een nieuwe vraag kunnen maken.
@@ -147,20 +145,22 @@ Daarom wil ik:
 \item Een bestaand antwoord wijzigen.
 \end{enumerate}
 
-NB! In de lijst van antwoorden moet het eerste antwoord het juiste zijn.
+\textbf{NB 1!} In de lijst van antwoorden moet het eerste antwoord het juiste zijn.
 De volgende antwoorden in de lijst zijn de onjuiste antwoorden.
 Bij de presentatie van een vraag aan een student worden de antwoorden in een willekeurige volgorde aangeboden zodat het eerste niet noodzakelijkerwijs het juiste is. (Scherm newQuestion.fxml)
 
-\subsection{User stories voor de rol Onderwijsadminstratie}
+\textbf{NB 2!} Voor het maken van nieuwe vragen en het bewerken van bestaande moet hetzelfde scherm worden gebruikt (newQuestion.fxml).
+Bij nieuwe vragen is dist scherm leeg, bij het bewerken van bestaande vragen wordt de inhoud van de vraag getoond.
+
+\textbf{NB 3!} Selectie van de te maken of bewerken vraag gaat altijd via het co\"ordinator dashboard.
+
+\subsection{User stories voor de rol Administrator}
 
 \paragraph{Cursus CRUD}
 Als administrator wil ik de volledige crud-functionaliteit voor het beheer van cursussen hebben. (schermen manageCourses.fxml, changeCourse.fxml, newCourse.fxml).
 
 \paragraph{Groepen CRUD}
-Als administrator wil ik de volledige crud-functionaliteit voor het beheer van groepen hebben. Toevoegen en verwijderen van studenten aan groepen hoort hier nog niet bij! (schermen manageGroups.fxml, changeGroup.fxml, newGroup.fxml).
-
-\paragraph{Groepen en cursisten}
-Als administrator wil ik cursisten aan groepen kunnen toevoegen en er weer uit halen.
+Als administrator wil ik de volledige crud-functionaliteit voor het beheer van groepen hebben. Toevoegen en verwijderen van studenten aan groepen hoort hier nog niet bij (deze functionaliteit is geen onderdeel van de huidige release)! (schermen manageGroups.fxml, changeGroup.fxml, newGroup.fxml).
 
 \subsection{User stories voor de rol Technisch beheerder}
 
@@ -171,7 +171,5 @@ Als administrator wil ik cursisten aan groepen kunnen toevoegen en er weer uit h
 \paragraph{Gebruiker wijzigen} Als technisch beheerder wil ik de gegevens van een bestaande gebruiker wijzigen zodat de gegevensadministratie up-to-date blijft. (scherm changeUser.fxml)
 
 \paragraph{Gebruiker verwijderen} Als technisch beheerder wil ik een bestaande gebruiker verwijderen om te voorkomen dat gebruikers onterecht toegang tot het systeem houden. (scherm deleteUser.fxml)
-
-\paragraph{Schermnavigatie} 
 
 \end{document}
