@@ -52,6 +52,6 @@ public class Course {
   }
 
   public String toString() {
-    return "[Course: " + name + ", coord: " + coordinator.getName() + "]";
+    return  name + ", (" + coordinator.getName() + ")";
   }
 }

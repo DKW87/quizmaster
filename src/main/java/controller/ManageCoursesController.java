@@ -13,19 +13,19 @@ import java.util.List;
 public class ManageCoursesController {
 
   @FXML
-  Button deleteCourseButton;
+  private Button deleteCourseButton;
 
   @FXML
-  Button changeCourseButton;
+  private Button changeCourseButton;
 
   @FXML
-  Button newCourseButton;
+  private Button newCourseButton;
 
   @FXML
-  Button menuButton;
+  private Button menuButton;
 
   @FXML
-  ListView<String> courseList;
+  private ListView<String> courseList;
 
   private CourseDao courseDao = CourseDao.getInstance();
   private SceneManager manager = SceneManager.getSceneManager();
@@ -36,8 +36,10 @@ public class ManageCoursesController {
 
   public void setup() {
     List<Course> courses = courseDao.getAllCourses();
+    List<String> items = courseList.getItems();
     for (Course c: courses) {
-      courseList.getItems().add(c.getName() + " (" + c.getCoordinator().getName() + ")");
+//      items.add(c.getName() + " (" + c.getCoordinator().getName() + ")");
+      items.add(c.toString());
     }
   }
 
