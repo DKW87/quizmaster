@@ -3,52 +3,42 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
-   <children>
-      <Label layoutX="262.0" layoutY="40.0" text="Prlwytzkofsky College">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Label>
-      <GridPane fx:id="contentGrid" hgap="10.0" layoutX="162.0" layoutY="160.0" prefHeight="99.0" prefWidth="599.0">
-        <columnConstraints>
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="166.0" minWidth="10.0" prefWidth="110.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="333.0" minWidth="10.0" prefWidth="332.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="257.0" minWidth="10.0" prefWidth="110.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="35.0" valignment="CENTER" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="35.0" valignment="CENTER" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label text="Naam:">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label text="Wachtwoord:" GridPane.rowIndex="1">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="nameTextField" prefHeight="25.0" GridPane.columnIndex="1" />
-            <PasswordField fx:id="passwordField" prefHeight="25.0" prefWidth="215.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button fx:id="loginButton" defaultButton="true" mnemonicParsing="false" onAction="#doLogin" prefHeight="25.0" prefWidth="100.0" text="Log in" GridPane.columnIndex="2">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="stopButton" mnemonicParsing="false" onAction="#doQuit" prefHeight="25.0" prefWidth="100.0" text="Stop" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-         </children>
-      </GridPane>
-      <Label layoutX="287.0" layoutY="84.0" prefHeight="29.0" prefWidth="326.0" text="Welkom bij de QuizMaster">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-   </children>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+            prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.LoginController">
+    <Label alignment="CENTER" layoutY="40.0" prefHeight="54.0" prefWidth="900.0" text="Prlwytzkofsky College">
+        <font>
+            <Font size="36.0"/>
+        </font>
+    </Label>
+    <Label alignment="CENTER" layoutY="84.0" prefHeight="29.0" prefWidth="900.0" text="Welkom bij de QuizMaster">
+        <font>
+            <Font size="24.0"/>
+        </font>
+    </Label>
+    <Label layoutX="154.0" layoutY="148.0" text="Naam:">
+        <font>
+            <Font size="18.0"/>
+        </font>
+    </Label>
+    <TextField fx:id="nameTextField" layoutX="286.0" layoutY="149.0" prefHeight="25.0" prefWidth="335.0"/>
+    <Button defaultButton="true" layoutX="646.0" layoutY="143.0" mnemonicParsing="false" onAction="#doLogin"
+            prefHeight="25.0" prefWidth="100.0" text="Log in">
+        <font>
+            <Font size="16.0"/>
+        </font>
+    </Button>
+    <Label layoutX="154.0" layoutY="211.0" text="Wachtwoord:">
+        <font>
+            <Font size="18.0"/>
+        </font>
+    </Label>
+    <PasswordField fx:id="passwordField" layoutX="286.0" layoutY="212.0" prefHeight="25.0" prefWidth="335.0"/>
+    <Button layoutX="646.0" layoutY="206.0" mnemonicParsing="false" onAction="#doQuit" prefHeight="25.0"
+            prefWidth="100.0" text="Stop">
+        <font>
+            <Font size="16.0"/>
+        </font>
+    </Button>
 </AnchorPane>

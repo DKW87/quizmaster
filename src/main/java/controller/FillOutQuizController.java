@@ -1,48 +1,30 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import model.Quiz;
 
 public class FillOutQuizController {
 
-  @FXML
-  private Label title;
+    @FXML
+    private Label titleLabel;
+    @FXML
+    private TextArea questionArea;
 
-  @FXML
-  private Button answerAButton;
+    public void setup(Quiz quiz) {}
 
-  @FXML
-  private Button answerBButton;
+    public void doRegisterA() {}
 
-  @FXML
-  private Button answerCButton;
+    public void doRegisterB() {}
 
-  @FXML
-  private Button answerDButton;
+    public void doRegisterC() {}
 
-  @FXML
-  private Button nextQuestionButton;
+    public void doRegisterD() {}
 
-  @FXML
-  private Button previousQuestionButton;
+    public void doNextQuestion() {}
 
-  @FXML
-  private Button menuButton;
+    public void doPreviousQuestion() {}
 
-  public void setup() {}
-
-  public void registerA() {}
-
-  public void registerB() {}
-
-  public void registerC() {}
-
-  public void registerD() {}
-
-  public void doNextQuestion() {}
-
-  public void doPreviousQuestion() {}
-
-  public void doMenu() {}
+    public void doMenu() {}
 }

@@ -1,27 +1,21 @@
 package controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import view.SceneManager;
+import javafx.scene.control.ListView;
+import model.Course;
 
 public class StudentSignInOutController {
 
-  private SceneManager sceneManager = SceneManager.getSceneManager();
+    @FXML
+    private ListView<Course> signedOutCourseList;
+    @FXML
+    private ListView <Course> signedInCourseList;
 
-  @FXML
-  private Button signInButton;
+    public void setup() {}
 
-  @FXML
-  private Button signOutButton;
+    public void doMenu() {}
 
-  public void setup() {}
+    public void doSignIn() {}
 
-  public void doMenu(ActionEvent event){
-    sceneManager.showWelcomeScene();
-  }
-
-  public void doSignIn(ActionEvent event){}
-
-  public void doSignOut(ActionEvent event){}
+    public void doSignOut() {}
 }

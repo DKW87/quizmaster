@@ -1,18 +1,17 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import model.Quiz;
 
 public class SelectQuizForStudentController {
 
-  @FXML
-  private Button doQuizButton;
+    @FXML
+    ListView<Quiz> quizList;
 
-  public void doQuiz() {}
+    public void setup() {}
 
-  public void setup() {
-  }
+    public void doMenu() {}
 
-  public void doMenu() {
-  }
+    public void doQuiz() {}
 }
