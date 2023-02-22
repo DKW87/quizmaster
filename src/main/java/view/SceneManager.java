@@ -32,17 +32,6 @@ public class SceneManager {
         }
     }
 
-    public void setWindowTool() {
-        FXMLLoader loader = getScene("/view/fxml/windowTool.fxml");
-        if (loader != null) {
-            WindowToolController controller = loader.getController();
-            controller.populateScreenMenu();
-        } else {
-            System.out.println("set windowTool: Loader is not initialized");
-            System.out.flush();
-        }
-    }
-
     public void showLoginScene() {
         getScene("/view/fxml/login.fxml");
     }

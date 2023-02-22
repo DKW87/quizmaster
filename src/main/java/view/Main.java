@@ -16,7 +16,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         Main.primaryStage = primaryStage;
         primaryStage.setTitle("Make IT Work - Project 1");
-        getSceneManager().setWindowTool();
+        getSceneManager().showLoginScene();
         primaryStage.show();
     }
 
