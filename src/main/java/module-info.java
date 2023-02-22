@@ -3,7 +3,7 @@ module QuizMaster {
     requires javafx.controls;
     requires javafx.graphics;
     requires java.sql;
-    requires mysql.connector.java;
+    requires mysql.connector.j;
     requires lightcouch;
     requires gson;
 
