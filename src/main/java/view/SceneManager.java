@@ -131,4 +131,10 @@ public class SceneManager {
         CoordinatorDashboardController controller = loader.getController();
         controller.setup();
     }
+
+    public void showAssignStudentsToGroupScene() {
+        FXMLLoader loader = getScene("/view/fxml/assignStudentsToGroup.fxml");
+        AssignStudentsToGroupController controller= loader.getController();
+        controller.setup();
+    }
 }

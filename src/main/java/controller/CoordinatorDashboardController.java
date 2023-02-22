@@ -19,20 +19,12 @@ public class CoordinatorDashboardController {
 
     public void setup() {
         courseList.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<Course>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Course> observableValue, Course oldCourse, Course newCourse) {
-                        System.out.println("Geselecteerde cursus: " + observableValue + ", " + oldCourse + ", " + newCourse);
-                    }
-                });
+                (observableValue, oldCourse, newCourse) ->
+                        System.out.println("Geselecteerde cursus: " + observableValue + ", " + oldCourse + ", " + newCourse));
 
         quizList.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<Quiz>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Quiz> observableValue, Quiz oldQuiz, Quiz newQuiz) {
-                        System.out.println("Geselecteerde quiz: " + observableValue + ", " + oldQuiz + ", " + newQuiz);
-                    }
-                });
+                (observableValue, oldQuiz, newQuiz) ->
+                        System.out.println("Geselecteerde quiz: " + observableValue + ", " + oldQuiz + ", " + newQuiz));
     }
 
     public void doNewQuiz() { }
