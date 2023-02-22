@@ -23,18 +23,18 @@
         </font>
     </Label>
     <TextField fx:id="nameTextField" layoutX="286.0" layoutY="149.0" prefHeight="25.0" prefWidth="335.0"/>
-    <Button defaultButton="true" layoutX="646.0" layoutY="143.0" mnemonicParsing="false" onAction="#doLogin"
-            prefHeight="25.0" prefWidth="100.0" text="Log in">
-        <font>
-            <Font size="16.0"/>
-        </font>
-    </Button>
     <Label layoutX="154.0" layoutY="211.0" text="Wachtwoord:">
         <font>
             <Font size="18.0"/>
         </font>
     </Label>
     <PasswordField fx:id="passwordField" layoutX="286.0" layoutY="212.0" prefHeight="25.0" prefWidth="335.0"/>
+    <Button defaultButton="true" layoutX="646.0" layoutY="143.0" mnemonicParsing="false" onAction="#doLogin"
+            prefHeight="25.0" prefWidth="100.0" text="Log in">
+        <font>
+            <Font size="16.0"/>
+        </font>
+    </Button>
     <Button layoutX="646.0" layoutY="206.0" mnemonicParsing="false" onAction="#doQuit" prefHeight="25.0"
             prefWidth="100.0" text="Stop">
         <font>
