@@ -1,6 +1,5 @@
 package view;
 
-import database.mysql.DBAccess;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
