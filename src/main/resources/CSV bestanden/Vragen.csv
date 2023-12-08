@@ -1,0 +1,84 @@
+Je wilt cijfers opslaan in een cijferlijst. Welk datatype is hiervoor het meest geschikt?;Float;Integer;String;Boolean;Python Basis
+Je wilt een gebruiker vragen om diens telefoonnummer. Welk datatype is hiervoor het meest geschikt?;String;Float;Integer;Boolean;Python Basis
+Wat is typecasting?;Het omzetten van een variabele van het ene naar het andere datatype.;Wanneer je variabelen van hetzelfde datatype namen geeft die op elkaar lijken.;Het proces waarmee Python gegevens automatisch omzet naar het juiste datatype.;Een functie waarmee je het datatype van een variabele kan zien.;Python Basis
+Wat is het resultaat van de volgende code: print(10 * “3”);3333333333;TypeError: Python cannot multiply integer and string values;30;10 * “3”;Python Basis
+Via een import-statement kan je modules importeren in jouw Python-programma. Welk van de onderstaande stellingen geeft de meest volledige uitleg van wat een import-statement doet?;Via een import-statement importeer je alle code die in een ander Python-bestand staat geschreven. Functies roep je aan met de syntax <modulenaam>.<functienaam>.;Via een import-statement importeer je alle code die in een ander Python-bestand staat geschreven. Functies kan je vervolgens op dezelfde manier aanroepen als functies die gedefinieerd staan in het hoofdbestand.;Via een import-statement importeer je alle functies die in een ander Python-bestand staan opgeslagen. Functies roep je aan met de syntax <modulenaam>.<functienaam>.;Via een import-statement importeer je alle functies die in een ander Python-bestand staan opgeslagen. Functies kan je vervolgens op dezelfde manier aanroepen als functies die gedefinieerd staan in het hoofdbestand.;Python Basis
+Er zijn twee loops die we veel gebruiken in Python: for en while. Wat is het verschil tussen de twee?;Een for-loop gebruik je als je weet hoe vaak je code moet herhalen. Een while-loop gebruik je als je code wilt herhalen totdat bepaalde voorwaarden zijn bereikt, maar niet weet hoe vaak dat gaat zijn.;Ze doen allebei redelijk hetzelfde.;Een for-loop kan je alleen gebruiken met lists, terwijl je bij een while-loop ook andere soorten variabelen kan gebruiken.;Een while-loop gebruik je als je weet hoe vaak je code moet herhalen. Een for-loop gebruik je als je code wilt herhalen totdat bepaalde voorwaarden zijn bereikt, maar niet weet hoe vaak dat gaat zijn.;Python Basis
+Waarom zetten we code in functies?;Alle andere antwoorden zijn juist.;Zodat we blokken code vaker kunnen herhalen, zonder telkens de code opnieuw te schrijven.;Zodat je wijzigingen in code maar op één plek hoeft door te voeren, ook al gebruik je die functie vaker in je programma.;Om de leesbaarheid van code te verbeteren.;Python Basis
+Welke bewering over machinetaal (machine language) is NIET waar:;In machinetaal kan je programma's schrijven die op iedere willekeurige computer kunnen runnen.;Machinetaal bestaat uit nullen (0) en enen (1).;Machinetaal wordt door een compiler geproduceerd.;In machinetaal kan je algoritmes beschrijven.;Java Basis
+Een bit is ...;een binair cijfer (binary digit): 0 of 1.;een alternatieve term voor byte.;een ijzeren mondstuk voor een paard waaraan de teugels bevestigd zijn.;een elektronisch onderdeel (electronic device) van een computer.;Java Basis
+Welke bewering is waar?;Java is een hogere-orde taal (high-level language).;Java is een assembly taal (assembly language).;Java is een machinetaal (machine language).;Geen van de beweringen is waar.;Java Basis
+Welke bewering is waar?;Java is hoofdlettergevoelig (case sensitive).;De compiler gebruikt commentaar (comments) om sneller te compileren.;Ieder statement in Java eindigt met een );Het `System.out.println` statement zorgt dat het programma op de printer wordt afgedrukt.;Java Basis
+Een compiler ...;vertaalt broncode (source code) in machine code;vertaalt machine code van de ene computer naar machine code voor de andere computer;test de logica van een programma;houdt een verzameling programma's bij;Java Basis
+Tools als IntelliJ IDEA, Netbeans en Eclipse zijn...;Programma's om je te helpen om Java Programma's te schrijven;Uitbreidingen van Java;Programmeertalen;Java dialecten;Java Basis
+Voordat een variabele wordt gebruikt moet deze eerst worden ...;gedeclareerd.;geëvalueerd.;geïmporteerd.;geanalyseerd.;Java Basis
+Welke van de volgende types is geen primitief datatype (primitive data type)?;String;int;float;char;Java Basis
+Welke van de volgende beweringen zijn waar:;Een while-loop en een for-loop zijn pretest loops, terwijl een do-while loop een posttest loop is.;Als je vooraf het aantal herhalingen weet kan je het best een while-loop gebruiken.;Een for-loop kan meer dan een while-loop.;Een do-while-loop is sneller dan een while-loop.;Java Basis
+Wat is een methode?;een stukje programma dat een bepaalde taak verricht;het type van een variabele;hetzelfde als een logische expressie;een manier om Java-code te schrijven;Java Basis
+Wat is method overloading?;Een methode heeft dezelfde naam als een andere methode, maar een andere signature.;Een methode geeft een waarde terug die te groot is voor het type.;Een methode heeft dezelfde signature als een andere methode.;Een methode heeft een te grote signature.;Java Basis
+De tijd van steden en staten is:;1000-1500;800-1000;1000-1300;1300-1500;Geschiedenis Middeleeuwen 1
+Het Byzantijnse Rijk is:;Het Oost-Romeinse Rijk;Het West-Romeinse Rijk;Het Russische Rijk;Het Rijk der Mammelukken;Geschiedenis Middeleeuwen 1
+Het Oosters Schisma is:;Oosterse Kerk accepteerde alleen het gezag van de patriarch van Constantinopel;Afscheiding van de Protestanten;Oosterse Kerk accepteerde alleen het gezag van de paus van Rome;Westere Kerk accepteerde alleen het gezag van de patriarch van Constantinopel;Geschiedenis Middeleeuwen 1
+De Investituurstrijd gaat over:;De strijd wie het hoogste gezag op aarde toekwam;De wereldlijke macht van de Paus;De wereldlijke macht van de keizer;De strijd wie de bisschoppen mocht benoemen;Geschiedenis Middeleeuwen 1
+Wat was GEEN nadeel van het leenstelsel:;De leenmannen dienden in het leger van de keizer;Het leenstelsel werd erfelijk;De bezittingen werden versnipperd;De leenmannen gingen hun eigen weg;Geschiedenis Middeleeuwen 1
+In het Concordaat van Worms in 1122 werd vastgelegd dat:;Een bisschop zowel een wereldlijk als een geestelijke taak had;Een keizer/koning zowel een wereldlijke als een geestelijke taak had;Een bisschop alleen een wereldlijke taak had;Een koning/keizer alleen een wereldlijke taak had;Geschiedenis Middeleeuwen 1
+Keizer Karel de IV vaardigde in 1356 de Gouden Bul uit:;Daarbij kregen de zeven aanzienlijkste vorsten het alleenrecht de keizer te kiezen;Daarbij erkende hij de macht van de Paus;Daarbij kregen de zeven aanzienlijkste vorsten voortaan het alleenrecht de Paus te kiezen;Daarbij kregen de zeven aanzienlijkste vorsten het recht de keizer af te zetten;Geschiedenis Middeleeuwen 1
+De Term kruistocht werd NIET gebruikt voor:;De Investituurstrijd;Het veroveren en/of bevrijden van de heilige plaatsen;Militaire offensieven zoals de Reconquista in Spanje;Oorlogen tegen niet christelijke volken zoals de heidense staten in Oost-Europa;Geschiedenis Middeleeuwen 1
+Wat was het resultaat van de Eerste Kruistocht:;Er kwam een einde aan het Oosters Schisma;De stichting van de Kruisridderstaten in Palestina;Het beëindigen van de Reconquista;De plundering van Constantinopel;Geschiedenis Middeleeuwen 1
+Het drieslagstelsel is:;De productiviteit van de landbouw nam met 1/6 toe;Een manier om een drievoudige opbrengst van de landbouw te bereiken;Met drie slagen werd men tot ridder geslagen;De productiviteit van de landbouw nam met 1/3 toe;Geschiedenis Middeleeuwen 1
+Wat is JUIST: In de twaalfde eeuw gingen de vorsten zich nadrukkelijk met het stichten van steden bezighouden vanuit:;Politiek-militaire redenen;Sociaal-economische redenen;Centralisatie-politieke redenen;Militair-strategische redenen;Geschiedenis Middeleeuwen 2
+De Hanze was:;Oorspronkelijk een machtige stedenbond van Duitse en Baltische handelssteden;Een stedenbond van de Lage landen;Een bondgenootschap tussen Brugge en Amsterdam;Een handelsonderneming uit Italië;Geschiedenis Middeleeuwen 2
+Het Oostzeegebied werd in de veertiende eeuw belangrijk omdat:;Het een belangrijke voedselleverancier voor de steden werd;Van daaruit zuivelproducten werden aangevoerd;Door de daar gehouden jaarmarkten;De stedelijke ontwikkeling als eerste opkwam;Geschiedenis Middeleeuwen 2
+'Stadslucht maakt vrij betekent':;Verschafte een horige de vrijheid;Er geen oorlog werd gevoerd;Waren door de stadsmuren beter beveiligd;Er geen belastingen hoefden te worden betaald;Geschiedenis Middeleeuwen 2
+Schepenen zijn:;Bestuurders van een stad;De bemanning van een fluitschip;Bestuurders van een domein;Bestuurders van een graafschap;Geschiedenis Middeleeuwen 2
+Het Gemeen is:;Stedelingen die niet tot het Patriciaat hoorden;De leden van een stadsbestuur;Patriciërs met een bepaald inkomen;Rijke handelaren die een plek in het stadsbestuur wilden;Geschiedenis Middeleeuwen 2
+Bij de Guldensporenslag:;Wonnen de Klauwaarts;Wonnen de Leliaarts;Nam de invloed van de Patriciërs toe;Nam de invloed van de Ridders toe;Geschiedenis Middeleeuwen 2
+Door de Guldensporenslag kregen de;De Ambachtslieden meer macht;De Patriciërs meer macht;Kreeg Filips de Schone meer macht ;Patriciërs en ambachtslieden meer macht ;Geschiedenis Middeleeuwen 2
+Waar streefden de Bourgondische Hertogen naar:;Stichting van een nieuwe staat gelegen tussen Frankrijk en het Duitse Rijk;De macht in Frankrijk in handen te krijgen;Uitbreiding van hun macht richting Italië;De versnippering in allerlei staatjes tegengaan;Geschiedenis Middeleeuwen 2
+De Honderdjarige Oorlog van 1337-1453 werd gevoerd door:;Engeland en Frankrijk;Bourgondië en Duitsland;Duitsland en Frankrijk;Engeland en Duitsland;Geschiedenis Middeleeuwen 2
+Een Rijksdag is:;Vergadering van Duitse Keurvorsten, bisschoppen en graven en vertegenwoordigers van de steden;Vergadering van de Bourgondische hertogen;Vergadering van de bisschoppen binnen het Bourgondische Rijk;Vergadering van de Franse hertogen met Filips de Goede;Geschiedenis Middeleeuwen 3
+De Tijd van de Ontdekkers en Hervormers was:;1500-1600;1600-1700;1700-1800;1500-1700;Geschiedenis Middeleeuwen 3
+Bartolomeus Diaz werd vooral bekend door het feit dat hij:;Als eerste langs Kaap de Goede Hoop zeilde;Als eerste rond Kaap Hoorn zeilde;Voor de Portugezen Madeira veroverde;Als eerste de Stille Oceaan overstak;Geschiedenis Middeleeuwen 3
+Door het verdrag Van Tordesillas (1494) werd vastgelegd dat:;Portugal de heerschappij over Azië had;Portugal het alleenhandelrecht met Afrika had;Spanje het alleenhandelrecht met Afrika had;Nederland de heerschappij over Azië had;Geschiedenis Middeleeuwen 3
+Magalhaes was:;Een Spaanse zeevaarder;Een Portugese zeevaarder;Een Nederlandse zeevaarder;Een Italiaanse zeevaarder;Geschiedenis Middeleeuwen 3
+Een OT kaart:;Paste in de Bijbelse opvatting over hoe de aarde er uit zag;Diende om de route op zee te bepalen;Diende om de route op land te bepalen;Was gebaseerd op wetenschappelijk onderzoek;Geschiedenis Middeleeuwen 3
+Een Protolaankaart werd gebruikt door:;Zeevaarders;Bedevaardgangers;Handelaars;Reguliere geestelijken;Geschiedenis Middeleeuwen 3
+De naamgever van Amerika was:;Vespucci;Colombus;Magalhaes;Mercator;Geschiedenis Middeleeuwen 3
+De Grondlegger van het Humanisme is:;Petrarca;Erasmus;Mercator;Leonardo da Vinci;Geschiedenis Middeleeuwen 3
+'Lof der Zotheid' werd geschreven door:;Erasmus;Leonardo da Vinci;Mercator;Petrarca;Geschiedenis Middeleeuwen 3
+I come ..... Italy.;from;to;at;in;Engels A 1
+Which is correct?;I am cold;I is a cold.;I has cold;I have cold.;Engels A 1
+Ann, how are you?;I'm fine, thanks. And you?;I'm a nurse.;I am working.;Good.;Engels A 1
+Whose key is that?;It's Cate's.;It's of Cate.;It's Cate.;It's to Cate.;Engels A 1
+His office is on the first ........;floor;level;ground;stage;Engels A 1
+I speak Hebrew and French but Ann ....;doesn't;don't;speaks;doesn't speaks;Engels A 1
+I can't find my glasses. Can you look for..., please?;them;they;it;their;Engels A 1
+...... there any cars on the street?;Are;Is;Am;Isn't;Engels A 1
+(On the phone) Hello, Juliet .........;speaking;speak;talking;talk;Engels A 1
+......... do you go to the gym? (Answer: twice a week);How often;Where;How;Why;Engels A 1
+I like ........ in my spare time.;to read;reading;read;to reading;Engels A 1
+Chopin .................. music when he was three.;could read;can read;can to read;can't read;Engels A 1
+I ......... born in 1992.;was;am;were;is;Engels A 2
+Where ......... Ann and Mary at 6 pm yesterday?;were;are;was;have been;Engels A 2
+I went to the bookshop .................... 'Harry Potter'.;to buy;for buying;to buying;for to buy;Engels A 2
+He is interested ......... learning Romanian.;in;on;to;for;Engels A 2
+Would you like .......... to drink, sir?;something;anything;anywhere;nothing;Engels A 2
+The doctor gave me a .......... for some medicine last week.;prescription;note;recipe;receipt;Engels A 2
+What .................... next weekend?;will you do;do you do;are you doing;did you do;Engels A 2
+'Why are you so hungry?' 'I .................... breakfast this morning.';didn't have;don't have;hadn't;haven't;Engels A 2
+Look! The bus .......................;is coming;are coming;comes;come;Engels A 2
+'I have never been to Africa.' - ' ........... have I.';Neither;Either;So;No;Engels A 2
+'Have you visited Birmingham?' '............';Not yet.;Not;Ever;Already;Engels A 2
+My mother ............. the carpet when I got home yesterday afternoon.;was hoovering;is hoovering;were hoovering;has been hoovering;Engels A 2
+My aunt .................. come to our wedding reception next month.;isn't going to;aren't going to;isn't;will;Engels A 3
+I promise I .................. study harder.;will;am going to;may;must;Engels A 3
+Is Emma ................... Carla?;as tall as;tall as;taller that;more tall;Engels A 3
+Where is ..................... chemist's please?;the nearest;nearer;the most near;more near;Engels A 3
+Is that purse ............. ?;yours;to you;you;your;Engels A 3
+I ................... my mobile phone since 2009.;have had;have;had;am having;Engels A 3
+How long .......................... English? ;have you been learning;are you learning;do you learn;you learn;Engels A 3
+We ................. the flight tickets yet.;haven't booked;don't book;have booked;didn't book;Engels A 3
+When Simon .........back tonight, he'll do the washing up.;comes;will come;come;shall come;Engels A 3
+Would you mind ............... the gate please?;closing;to close;close;closed;Engels A 3
+I ............ smoke when I was 20.;used to;use to;wouldn't;couldn't;Engels A 3
+You should ............ martial arts.;take up;get off;start up;take off;Engels A 3
