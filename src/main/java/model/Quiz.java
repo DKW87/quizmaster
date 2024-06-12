@@ -89,7 +89,8 @@ public class Quiz {
     // Selection for right questions for the right quiz not yet added to method (TODO Rob)
     // method input in UML change from Quiz quiz to Question question?
     public void addQuestion(Question question) {
-        questions.add(question);
+        if (!this.questions.contains(question))
+            this.questions.add(question);
     }
 
 
