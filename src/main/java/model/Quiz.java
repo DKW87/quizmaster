@@ -15,14 +15,18 @@ public class Quiz {
     private List<Question> questions;
     //private Difficulty difficulty;
     // TODO: @rob Add difficulty to course quiz
-    private static int PASS_MARK;
+    private static int passMark;
+    private int quizPoints;
+    private Course course;
 
     // all args constructor:
-    public Quiz(int quizId, String name, List<Question> questions, int passMark) {
+    public Quiz(int quizId, String name, List<Question> questions, int passMark, int quizPoints, Course course) {
         this.quizId = quizId;
         this.name = name;
         this.questions = questions;
-        this.PASS_MARK = passMark;
+        this.passMark = passMark;
+        this.quizPoints = quizPoints;
+        this.course = course;
     }
 
     // getters en setters * now for all attributes, delete later once not used?
@@ -51,11 +55,27 @@ public class Quiz {
     }
 
     public int getPassMark() {
-        return PASS_MARK;
+        return passMark;
     }
 
     public void setPassMark(int passMark) {
-        PASS_MARK = passMark;
+        passMark = passMark;
+    }
+
+    public int getQuizPoints() {
+        return quizPoints;
+    }
+
+    public void setQuizPoints(int quizPoints) {
+        this.quizPoints = quizPoints;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
 
@@ -75,6 +95,8 @@ public class Quiz {
         StringBuilder toStringQuiz = new StringBuilder();
         toStringQuiz.append("Quiz ID: " + this.quizId + " ");
         toStringQuiz.append("Name: " + this.name + "\n");
+        toStringQuiz.append("Quiz is part of course: " + this.course + "\n");
+        toStringQuiz.append("Total Quizpoints: " + this.quizPoints + "\n");
         toStringQuiz.append("Questions: ");
         for (Question question : this.questions) {
             QCounter++;
