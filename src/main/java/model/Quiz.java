@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +27,7 @@ public class Quiz {
         this.passMark = passMark;
         this.quizPoints = quizPoints;
         this.course = course;
+        this.questions = new ArrayList<>();
     }
 
     // getters en setters * now for all attributes, delete later once not used?
