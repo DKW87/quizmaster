@@ -17,7 +17,7 @@ public class Quiz {
     private List<Question> questions;
     //private Difficulty difficulty;
     // TODO: @rob Add difficulty to course quiz
-    private static int passMark;
+    private int passMark;
     private int quizPoints;
     private Course course;
 
