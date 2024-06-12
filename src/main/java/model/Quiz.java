@@ -20,10 +20,9 @@ public class Quiz {
     private Course course;
 
     // all args constructor:
-    public Quiz(int quizId, String name, List<Question> questions, int passMark, int quizPoints, Course course) {
+    public Quiz(int quizId, String name, int passMark, int quizPoints, Course course) {
         this.quizId = quizId;
         this.name = name;
-        this.questions = questions;
         this.passMark = passMark;
         this.quizPoints = quizPoints;
         this.course = course;
@@ -46,13 +45,16 @@ public class Quiz {
         this.name = name;
     }
 
+    /* not necessary?
     public List<Question> getQuestions() {
         return questions;
-    }
+     }
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
+     */
+
 
     public int getPassMark() {
         return passMark;
