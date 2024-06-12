@@ -1,59 +1,69 @@
 package model;
 
 public class QuizIO {
-    private String column1;
-    private String column2;
-    private int column3;
-    private String column4;
+    private String quizName;
+    private String quizDifficulty;
+    private int quizPoints;
+    private String quizCourse;
+    private int QuizId;
 
     // all args constructor
-    public QuizIO(String column1, String column2, int column3, String column4) {
-        this.column1 = column1;
-        this.column2 = column2;
-        this.column3 = column3;
-        this.column4 = column4;
+    public QuizIO(String quizName, String quizDifficulty, int quizPoints, String quizCourse) {
+        this.quizName = quizName;
+        this.quizDifficulty = quizDifficulty;
+        this.quizPoints = quizPoints;
+        this.quizCourse = quizCourse;
+
     }
 
     // getters en setters
-    public String getColumn1() {
-        return column1;
+    public String getQuizName() {
+        return quizName;
     }
 
-    public void setColumn1(String column1) {
-        this.column1 = column1;
+    public void setQuizName(String quizName) {
+        this.quizName = quizName;
     }
 
-    public String getColumn2() {
-        return column2;
+    public String getQuizDifficulty() {
+        return quizDifficulty;
+            }
+
+    public void setQuizDifficulty(String quizDifficulty) {
+        this.quizDifficulty = quizDifficulty;
     }
 
-    public void setColumn2(String column2) {
-        this.column2 = column2;
+    public int getQuizPoints() {
+        return quizPoints;
     }
 
-    public int getColumn3() {
-        return column3;
+    public void setQuizPoints(int quizPoints) {
+        this.quizPoints = quizPoints;
     }
 
-    public void setColumn3(int column3) {
-        this.column3 = column3;
+    public String getQuizCourse() {
+        return quizCourse;
+
     }
 
-    public String getColumn4() {
-        return column4;
+    public void setQuizCourse(String quizCourse) {
+        this.quizCourse = quizCourse;
     }
 
-    public void setColumn4(String column4) {
-        this.column4 = column4;
+    public int getQuizId() {
+        return QuizId;
     }
+    public void setQuizId(int QuizId) {
+        this.QuizId = QuizId;
 
+    }
 
     // toString
     @Override
     public String toString() {
         StringBuilder toStringQuizIO = new StringBuilder();
         toStringQuizIO.append(String.format("QuizName: %s QuizDifficulty: %s QuizPoints: %d Part of Course: %s "
-        , column1, column2, column3, column4));
+        , quizName, quizDifficulty, quizPoints, quizCourse));
     return toStringQuizIO.toString();
     }
 }
