@@ -7,7 +7,7 @@
 package model;
 
 
-public class User extends Role{
+public class User {
 
     private int userId;
     private String userName;
@@ -15,15 +15,16 @@ public class User extends Role{
     private String firstName;
     private String infix;
     private String lastName;
+    private Role role;
 
     public User(int userId, String userName, String password, String firstName, String infix, String lastName, Role Role) {
-        super(String.valueOf(Role));
         this.userId = userId;
         this.userName = userName;
         this.password = password;
         this.firstName = firstName;
         this.infix = infix;
         this.lastName = lastName;
+        this.role = Role;
     }
 
     public User (int userId, String userName, String password, String firstName, String lastName, Role role) {
@@ -33,7 +34,7 @@ public class User extends Role{
     public String toString() {
         return "User info: " + userId + " " + userName
                 + "\n firstName: " + firstName + " lastName: " + infix + " " + lastName
-                + "\n role: " + super.getRoleId() + " " + super.getName();
+                + "\n role: " + role;
     }
 
     public int getUserId() {
