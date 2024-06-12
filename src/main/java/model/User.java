@@ -15,7 +15,7 @@ public class User {
     private String firstName;
     private String infix;
     private String lastName;
-    private Role role;
+    private final Role role;
 
     public User(int userId, String userName, String password, String firstName, String infix, String lastName, Role Role) {
         this.userId = userId;
