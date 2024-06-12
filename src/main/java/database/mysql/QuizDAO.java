@@ -13,14 +13,13 @@ public class QuizDAO extends AbstractDAO {
 
 public void saveQuizInDB(QuizIO quiz) {
         String sql = "INSERT INTO Quiz VALUES (?, ?, ? ,?)";
-        int primaryKey = 0;
         try {
             setupPreparedStatementWithKey(sql);
             preparedStatement.setString(1,quiz.getQuizName());
             preparedStatement.setString(2,quiz.getQuizDifficulty());
             preparedStatement.setInt(3,quiz.getQuizPoints());
             preparedStatement.setString(3, quiz.getQuizCourse());
-            primaryKey = executeInsertStatementWithKey();
+            int primaryKey = executeInsertStatementWithKey();
             quiz.setQuizId(primaryKey);
         } catch (SQLException sqlError) {
             System.out.println(sqlError.getMessage());
