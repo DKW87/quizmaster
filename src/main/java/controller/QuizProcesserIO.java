@@ -35,7 +35,7 @@ public class QuizProcesserIO {
             System.out.printf("Quiznumber %d ", quizNumber);
             System.out.println(quiz);
         }
-/*
+
 //  open connection to Database
         DBAccess dbAccess = new DBAccess("jdbc:mysql://oege.ie.hva.nl:3306/zbakkum", "bakkumm", "1J.cINqCPBBcHJ");
         dbAccess.openConnection();
@@ -48,7 +48,7 @@ public class QuizProcesserIO {
 
 // close connection to Database
         dbAccess.closeConnection();
-*/
+
     }
 
 }
