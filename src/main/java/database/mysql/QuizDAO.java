@@ -22,7 +22,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
             preparedStatement.setString(1, quiz.getQuizName());
             preparedStatement.setInt (2, quiz.getQuizDifficulty().getDifficultyId());
             preparedStatement.setInt(3, quiz.getQuizPoints());
-            preparedStatement.setInt(3, quiz.getCourse().getCourseId());
+            preparedStatement.setInt(4, quiz.getCourse().getCourseId());
             int primaryKey = executeInsertStatementWithKey();
             quiz.setQuizId(primaryKey);
         } catch (SQLException sqlError) {
