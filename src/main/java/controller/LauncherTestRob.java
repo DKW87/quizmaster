@@ -1,4 +1,4 @@
-/*package controller;
+package controller;
 import model.*;
 
 public class LauncherTestRob {
@@ -11,4 +11,4 @@ public class LauncherTestRob {
 
 
     }
-}*/
+}
