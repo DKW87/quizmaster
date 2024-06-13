@@ -49,7 +49,7 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
     @Override
     public Question getById(int id) {
         Question question = null;
-        String sql = "SELECT * FROM question WHERE questionId = ?;";
+        String sql = "SELECT * FROM Question WHERE questionId = ?;";
         try {
             this.setupPreparedStatement(sql);
             this.preparedStatement.setInt(1, id);
@@ -75,7 +75,7 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
     @Override
     public Question getByName(String name) {
         Question question = null;
-        String sql = "SELECT * FROM question WHERE questionDescription = ?;";
+        String sql = "SELECT * FROM Question WHERE questionDescription = ?;";
         try {
             this.setupPreparedStatement(sql);
             this.preparedStatement.setString(1, name);
@@ -100,7 +100,7 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
 
     @Override
     public void storeOne(Question question) {
-        String sql = "INSERT INTO question(questionDescription, answerA, answerB, answerC, answerD) VALUES (?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO Question(questionDescription, answerA, answerB, answerC, answerD) VALUES (?, ?, ?, ?, ?);";
         try {
             this.setupPreparedStatementWithKey(sql);
             this.preparedStatement.setString(1, question.getQuestionDescription());
