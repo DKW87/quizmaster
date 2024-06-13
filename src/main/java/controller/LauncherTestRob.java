@@ -14,7 +14,7 @@ import java.util.List;
 public class LauncherTestRob {
     public static void main(String[] args) {
 
-        String locationQuestionCSV = "Resources/Quizzes.csv";
+        String locationQuestionCSV = "Resources/Quizzen.csv";
         DBAccess dbAccess = new DBAccess("zbakkumm","bakkumm", "1J.cINqCPBBcHJ");
         QuizDAO quizDAO = new QuizDAO(dbAccess);
         Quiz quizMethodHandler = new Quiz(0, null, 0, 0, null, null);
@@ -27,12 +27,13 @@ public class LauncherTestRob {
             System.out.println(quiz);
         }
 
-        List<Quiz> listQuizObjects = quizMethodHandler.convertListToObjects(quizInCsv);
+//  Onderstaande werkt nog niet omdat uit de DB nog data moet kunnen worden gehaald (CourseId en DifficultyId)
+ //       List<Quiz> listQuizObjects = quizMethodHandler.convertListToObjects(quizInCsv);
 
-        // prints list of Question objects
-        for (Quiz quiz : listQuizObjects) {
-            System.out.println(quiz);
-        }
+ //       // prints list of Question objects
+ //       for (Quiz quiz : listQuizObjects) {
+ //           System.out.println(quiz);
+ //       }
 
 
 
