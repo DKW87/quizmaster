@@ -16,8 +16,7 @@ public class User {
     private String lastName;
     private final Role role;
 
-    public User(int userId, String userName, String password, String firstName, String infix, String lastName, Role Role) {
-        this.userId = userId;
+    public User(String userName, String password, String firstName, String infix, String lastName, Role Role) {
         this.userName = userName;
         this.password = password;
         this.firstName = firstName;
@@ -26,8 +25,8 @@ public class User {
         this.role = Role;
     }
 
-    public User (int userId, String userName, String password, String firstName, String lastName, Role role) {
-        this(userId, userName, password, firstName, "", lastName, role);
+    public User (String userName, String password, String firstName, String lastName, Role role) {
+        this(userName, password, firstName, "", lastName, role);
     }
 
     public String toString() {
