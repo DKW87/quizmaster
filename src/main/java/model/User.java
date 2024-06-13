@@ -16,13 +16,18 @@ public class User {
     private String lastName;
     private final Role role;
 
-    public User(String userName, String password, String firstName, String infix, String lastName, Role Role) {
+    public User(int userId,String userName, String password, String firstName, String infix, String lastName, Role Role) {
+        this.userId = userId;
         this.userName = userName;
         this.password = password;
         this.firstName = firstName;
         this.infix = infix;
         this.lastName = lastName;
         this.role = Role;
+    }
+
+    public User(String userName, String password, String firstName, String infix, String lastName, Role Role) {
+      this(0, userName, password, firstName, infix, lastName, Role);
     }
 
     public User (String userName, String password, String firstName, String lastName, Role role) {
