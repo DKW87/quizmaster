@@ -6,7 +6,6 @@
 
 package model;
 
-
 public class User {
 
     private int userId;
@@ -83,5 +82,9 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public int getRole() {
+        return role.getRoleId();
     }
 }
