@@ -1,5 +1,9 @@
 package model;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Danny KWANT
  * @project Quizmaster
@@ -30,7 +34,10 @@ public class Question {
 
     // methods
 
-    // TODO @Danny
+    @Override
+    public String toString() {
+        return "Question [" + questionId + "]: " + questionDescription +".\n";
+    }
 
     // getters and setters
 

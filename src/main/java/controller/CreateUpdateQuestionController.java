@@ -1,5 +1,7 @@
 package controller;
 
+import model.Question;
+
 public class CreateUpdateQuestionController {
 
     public void setup(Question question) {}

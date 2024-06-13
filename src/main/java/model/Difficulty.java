@@ -20,7 +20,10 @@ public class Difficulty {
 
     // methods
 
-    // TODO @Danny
+    @Override
+    public String toString() {
+        return name+"\n";
+    }
 
     // getters and setters
 
