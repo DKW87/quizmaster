@@ -25,7 +25,7 @@ public class RoleDAO extends AbstractDAO implements GenericDAO<Role> {
     public Role getById(int roleId) {
         String sqlGetRole = "SELECT * FROM role WHERE roleId = ?";
         try {
-            setupPreparedStatement(sqlGetRole);
+            setupPreparedStatementWithKey(sqlGetRole);
             preparedStatement.setInt(1, roleId);
             ResultSet resultSet = executeSelectStatement();
             if (resultSet.next()) {
@@ -45,7 +45,7 @@ public class RoleDAO extends AbstractDAO implements GenericDAO<Role> {
     public Role getByName(String roleName) {
         String sqlGetRoleString = "SELECT * FROM Role WHERE name = ?";
         try {
-            setupPreparedStatement(sqlGetRoleString);
+            setupPreparedStatementWithKey(sqlGetRoleString);
             preparedStatement.setString(1, roleName);
             ResultSet resultSet = executeSelectStatement();
             if (resultSet.next()) {
@@ -87,8 +87,9 @@ public class RoleDAO extends AbstractDAO implements GenericDAO<Role> {
     @Override
     public void storeOne(Role type) {
         String sqlRoleImport = "INSERT INTO role (roleId, name) VALUES (?, ?)";
+        int primaryKey;
         try {
-            setupPreparedStatement(sqlRoleImport);
+            setupPreparedStatementWithKey(sqlRoleImport);
             preparedStatement.setInt(1, type.getRoleId());
             preparedStatement.setString(2, type.getName());
 

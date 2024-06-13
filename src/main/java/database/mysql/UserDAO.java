@@ -27,16 +27,18 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
     // Method to save a user to the DB with the given attributes.
     @Override
     public void storeOne(User user) {
-        String sqlUserImport = "INSERT INTO User(userId, username, password, firstName, infix, lastName, roleId) VALUES (?,?,?,?,?,?,?);";
+        String sqlUserImport = "INSERT INTO User(username, password, firstName, infix, lastName, roleId) VALUES (?,?,?,?,?,?);";
+        int primaryKey;
         try {
-            setupPreparedStatement(sqlUserImport);
-            preparedStatement.setInt(1, user.getUserId());
-            preparedStatement.setString(2, user.getUserName());
-            preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setString(4, user.getFirstName());
-            preparedStatement.setString(5, user.getInfix());
-            preparedStatement.setString(6, user.getLastName());
-            preparedStatement.setInt(7, user.getRole());
+            setupPreparedStatementWithKey(sqlUserImport);
+            preparedStatement.setString(1, user.getUserName());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getFirstName());
+            preparedStatement.setString(4, user.getInfix());
+            preparedStatement.setString(5, user.getLastName());
+            preparedStatement.setInt(6, user.getRole());
+            primaryKey = this.executeInsertStatementWithKey();
+            user.setUserId(primaryKey);
         } catch (SQLException sqlRuntimeError) {
             System.out.println("Error in UserDAO/saveUser: " + sqlRuntimeError.getMessage());
         }
@@ -49,7 +51,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         User user = null;
         try {
 // TO DO @mack: Dit is dubbele code ook in de methode getById, kan ik dit nog anders oplossen?
-            setupPreparedStatement(sqlGetUserName);
+            setupPreparedStatementWithKey(sqlGetUserName);
             preparedStatement.setString(1, name);
             ResultSet resultSet = executeSelectStatement();
             if (resultSet.next()) {
@@ -74,7 +76,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         String sqlGetUserID = "SELECT * FROM User WHERE userId = ?";
         User user = null;
         try {
-            setupPreparedStatement(sqlGetUserID);
+            setupPreparedStatementWithKey(sqlGetUserID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = executeSelectStatement();
             if (resultSet.next()) {
@@ -107,12 +109,12 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
                     Role userRole = this.roleDAO.getByName(userValues[5]);
                     User user = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userRole);
                     users.add(user);
+                    System.out.println("Added user with infix");
                 } if (userValues.length == IMPORT_NO_INFIX) { // For users without infix
                     Role userRole = this.roleDAO.getByName(userValues[4]);
                     User user = new User(userValues[0], userValues[1], userValues[2], userValues[3], userRole);
                     users.add(user);
-                } else {
-                    System.out.println("Error in CSV import");
+                    System.out.println("Added user with no infix");
                 }
             }
         }
@@ -125,7 +127,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         String sqlUserList = "SELECT * FROM User;";
 
         try {
-            setupPreparedStatement(sqlUserList);
+            setupPreparedStatementWithKey(sqlUserList);
             ResultSet resultSet = executeSelectStatement();
             while (resultSet.next()) {
                 String userName = resultSet.getString("username");
