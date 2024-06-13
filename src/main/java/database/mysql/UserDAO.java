@@ -60,7 +60,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
                 String infix = resultSet.getString("infix");
                 String lastName = resultSet.getString("lastName");
                 int roleId = resultSet.getInt("roleId");
-                Role role = this.roleDAO.getUserRoleById(roleId);  // Creates role with getUserRoleById method so a new user can be created.
+                Role role = this.roleDAO.getById(roleId);  // Creates role with getUserRoleById method so a new user can be created.
                 user = new User(userName, password, firstName, infix, lastName, role);
             }
         } catch (SQLException SqlException) {
@@ -85,7 +85,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
                 String infix = resultSet.getString("infix");
                 String lastName = resultSet.getString("lastName");
                 int roleId = resultSet.getInt("roleId");
-                Role role = this.roleDAO.getUserRoleById(roleId);  // Creates role with getUserRoleById method so a new user can be created.
+                Role role = this.roleDAO.getById(roleId);  // Creates role with getUserRoleById method so a new user can be created.
                 user = new User(userName, password, firstName, infix, lastName, role);
             }
         } catch (SQLException sqlRuntimeError) {
@@ -105,11 +105,11 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
             while ((line = br.readLine()) != null) {
                 String[] userValues = line.split(",");
                 if (userValues.length == IMPORT_WITH_INFIX) { // For users with infix
-                    Role userRole = this.roleDAO.getUserRoleByName(userValues[5]);
+                    Role userRole = this.roleDAO.getByName(userValues[5]);
                     User user = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userRole);
                     users.add(user);
                 } if (userValues.length == IMPORT_NO_INFIX) { // For users without infix
-                    Role userRole = this.roleDAO.getUserRoleByName(userValues[4]);
+                    Role userRole = this.roleDAO.getByName(userValues[4]);
                     User user = new User(userValues[0], userValues[1], userValues[2], userValues[3], userRole);
                     users.add(user);
                 } else {
@@ -123,7 +123,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
-        String sqlUserList = "SELECT * FROM User";
+        String sqlUserList = "SELECT * FROM User;";
 
         try {
             setupPreparedStatement(sqlUserList);
@@ -135,7 +135,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
                 String infix = resultSet.getString("infix");
                 String lastName = resultSet.getString("lastName");
                 int roleId = resultSet.getInt("roleId");
-                Role role = this.roleDAO.getUserRoleById(roleId);
+                Role role = this.roleDAO.getById(roleId);
                 users.add(new User(userName, password, firstName, infix, lastName, role));
             }
         } catch (SQLException SqlException) {
