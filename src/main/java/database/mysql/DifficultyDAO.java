@@ -1,6 +1,8 @@
 package database.mysql;
 
 import model.Difficulty;
+import model.Question;
+import model.Quiz;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,15 +35,50 @@ public class DifficultyDAO extends AbstractDAO implements GenericDAO<Difficulty>
                 difficulties.add(difficulty);
             }
         } catch (SQLException error) {
-            System.out.println("De volgende uitzondering is opgetreden: " + error.getErrorCode());
+            System.out.println("The following exception occurred: " + error.getErrorCode());
         }
         return difficulties;
     }
 
     @Override
-    public Difficulty getOneById(int id) {
-        // TODO what do we do here? I'm not following..
+    public Difficulty getById(int id) {
         Difficulty difficulty = null;
+        String sql = "SELECT * FROM difficulty WHERE difficultyId = ?;";
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, id);
+            ResultSet resultSet = this.executeSelectStatement();
+            while (resultSet.next()) {
+                int difficultyId = resultSet.getInt("difficultyId");
+                String difficultyName = resultSet.getString("name");
+                difficulty = new Difficulty(difficultyName);
+                difficulty.setDifficultyId(difficultyId);
+                return difficulty;
+            }
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        }
+        return difficulty;
+    }
+
+    @Override
+    public Difficulty getByName(String name) {
+        Difficulty difficulty = null;
+        String sql = "SELECT * FROM difficulty WHERE name = ?;";
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setString(1, name);
+            ResultSet resultSet = this.executeSelectStatement();
+            while (resultSet.next()) {
+                int difficultyId = resultSet.getInt("difficultyId");
+                String difficultyName = resultSet.getString("name");
+                difficulty = new Difficulty(difficultyName);
+                difficulty.setDifficultyId(difficultyId);
+                return difficulty;
+            }
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        }
         return difficulty;
     }
 
@@ -55,7 +92,7 @@ public class DifficultyDAO extends AbstractDAO implements GenericDAO<Difficulty>
             pKey = this.executeInsertStatementWithKey();
             difficulty.setDifficultyId(pKey);
         } catch (SQLException error) {
-            System.out.println("De volgende uitzondering is opgetreden: " + error.getErrorCode());
+            System.out.println("The following exception occurred: " + error.getErrorCode());
         }
     }
 
