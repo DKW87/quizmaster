@@ -112,13 +112,15 @@ public class QuizResultDAO extends AbstractDAO implements GenericDAO<QuizResult>
     @Override
     public void storeOne(QuizResult quizResultaat) {
         String sql = "INSERT INTO  Result (date ,userId, quizId, score) VALUES (?, ?, ?, ?)";
+        int primaryKey;
         try  {
             setupPreparedStatement(sql);
             preparedStatement.setDate(1, Date.valueOf(quizResultaat.getDate()));
             preparedStatement.setInt(2, quizResultaat.getQuiz().getQuizId());
             preparedStatement.setInt(3, quizResultaat.getStudent().getUserId());
             preparedStatement.setInt(4, quizResultaat.getScore());
-            preparedStatement.executeUpdate();
+            primaryKey = this.executeInsertStatementWithKey();
+            quizResultaat.setResultId(primaryKey);
         }
         catch (SQLException e){
             System.out.println(e.getMessage());
