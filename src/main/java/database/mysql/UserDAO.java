@@ -9,8 +9,13 @@ package database.mysql;
 import model.User;
 import model.Role;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO extends AbstractDAO {
     private final RoleDAO roleDAO;
@@ -62,4 +67,36 @@ public class UserDAO extends AbstractDAO {
         return user;
     }
 
+
+    public List<User> usersFromCSV(String csvFilePath) throws IOException {
+        List<User> users = new ArrayList<>();
+        int nextUserId = 0; // First user ID. Will pass next number to each next user created.
+        final int IMPORT_WITH_INFIX = 6;
+        final int IMPORT_NO_INFIX = 5;
+
+        //TO DO @Mack: Figure out how to store the number so with a 2nd CSV import the userId doesn't start as 1 again!!
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
+            String line;
+            br.readLine(); // Can be used if CSV has a header. It'll skip the first line.
+
+            while ((line = br.readLine()) != null) {
+                String[] userValues = line.split(",");
+
+                if (userValues.length == IMPORT_WITH_INFIX) { // For users with infix
+                    Role userRole = this.roleDAO.getUserRoleByName(userValues[5]);
+                    User user = new User(nextUserId, userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userRole);
+                    users.add(user);
+                }
+                if (userValues.length == IMPORT_NO_INFIX) { // For users without infix
+                    Role userRole = this.roleDAO.getUserRoleByName(userValues[4]);
+                    User user = new User(nextUserId, userValues[0], userValues[1], userValues[2], userValues[3], userRole);
+                    users.add(user);
+                } else {
+                    System.out.println("Error in CSV import");
+                }
+            }
+        }
+        return users;
+    }
 }

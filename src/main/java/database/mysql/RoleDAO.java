@@ -35,4 +35,23 @@ public class RoleDAO extends AbstractDAO {
         }
         return null;
     }
+
+    public Role getUserRoleByName(String roleName) {
+        String sqlGetRoleString = "SELECT * FROM role WHERE name = ?";
+        try {
+            setupPreparedStatement(sqlGetRoleString);
+            preparedStatement.setString(1, roleName);
+            ResultSet resultSet = executeSelectStatement();
+            if (resultSet.next()) {
+                String roleName2 = resultSet.getString("name");
+                int roleIdDb = resultSet.getInt("roleId");
+                Role role = new Role(roleName2);
+                role.setRoleId(roleIdDb); // Sets the roleId from the DB to the created role.
+                return role;
+            }
+        } catch (SQLException SQLException) {
+            System.out.println("Error in RoleDAO/getUserRoleByName: " + SQLException.getMessage());
+        }
+        return null;
+    }
 }
