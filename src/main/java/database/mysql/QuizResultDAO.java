@@ -39,8 +39,8 @@ public class QuizResultDAO extends AbstractDAO implements GenericDAO<QuizResult>
                 int score = resultSet.getInt("score");
 
                 // FIXME: implementeer DAO's @Rob(QuizDAO) and @Mack(UserDAO) (see above)
-//                var quiz = quizDao.getOneById(quizId);
-//                var user = userDao.getOneById(studentId);
+//                var quiz = quizDao.getById(quizId);
+//                var user = userDao.getById(studentId);
 //                var quizResult = new QuizResult(date, quiz, user, score);
                 quizResultList.add(null);
             }
@@ -69,8 +69,8 @@ public class QuizResultDAO extends AbstractDAO implements GenericDAO<QuizResult>
                 int quizId = resultSet.getInt("quizId");
                 int score = resultSet.getInt("score");
                 // FIXME: implementeer DAO's @Rob(QuizDAO) and @Mack(UserDAO) (see above)
-//                var quiz = quizDao.getOneById(quizId);
-//                var user = userDao.getOneById(studentId);
+//                var quiz = quizDao.getById(quizId);
+//                var user = userDao.getById(studentId);
 //                var quizResult = new QuizResult(date, quiz, user, score);
                 quizResultList.add(null);
             }
@@ -83,7 +83,7 @@ public class QuizResultDAO extends AbstractDAO implements GenericDAO<QuizResult>
     }
 
     @Override
-    public QuizResult getOneById(int resultId) {
+    public QuizResult getById(int resultId) {
         String sql = "SELECT * FROM Result WHERE resultId = ?";
 
         QuizResult quizResult = null;
@@ -97,8 +97,8 @@ public class QuizResultDAO extends AbstractDAO implements GenericDAO<QuizResult>
                 int studentId = resultSet.getInt("userId");
                 int score = resultSet.getInt("score");
                 // FIXME: implementeer DAO's @Rob(QuizDAO) and @Mack(UserDAO) (see above)
-//                var quiz = quizDao.getOneById(quizId);
-//                var user = userDao.getOneById(studentId);
+//                var quiz = quizDao.getById(quizId);
+//                var user = userDao.getById(studentId);
 //                quizResult = new QuizResult(date, quiz, user , score);
 
             }
@@ -108,6 +108,8 @@ public class QuizResultDAO extends AbstractDAO implements GenericDAO<QuizResult>
         return quizResult;
 
     }
+
+
 
     @Override
     public void storeOne(QuizResult quizResultaat) {
@@ -126,5 +128,9 @@ public class QuizResultDAO extends AbstractDAO implements GenericDAO<QuizResult>
             System.out.println(e.getMessage());
         }
 
+    }
+    @Override
+    public QuizResult getByName(String name) {
+        return null;
     }
 }

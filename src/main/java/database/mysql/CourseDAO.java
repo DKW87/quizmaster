@@ -86,7 +86,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     }
 
     @Override
-    public Course getOneById(int id) {
+    public Course getById(int id) {
         Course course = null;
 
         String sql = "SELECT * FROM course WHERE courseId = ?";
@@ -99,8 +99,8 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
                 int difficultyId = resultSet.getInt("difficultyId");
                 int coordinatorId = resultSet.getInt("coordinatorId");
                 // FIXME: difficultyId, coordinatorId
-//                var coordinator = userDao.getOneById(coordinatorId);
-//                var difficulty = difficultyDAO.getOneById(difficultyId);
+//                var coordinator = userDao.getById(coordinatorId);
+//                var difficulty = difficultyDAO.getById(difficultyId);
 //                course = new Course(id, name, difficultyId, coordinatorId);
                 return course;
             }
@@ -118,7 +118,8 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
      * @param courseName the name of the course to find
      * @return the course with the given name, or null if not found
      */
-    public Course findByName(String courseName) {
+    @Override
+    public Course getByName(String courseName) {
         Course course = null;
 
         String sql = "SELECT * FROM course WHERE name = ?";
@@ -131,8 +132,8 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
                 int difficultyId = resultSet.getInt("difficultyId");
                 int coordinatorId = resultSet.getInt("coordinatorId");
                 // FIXME: difficultyId, coordinatorId
-//                var coordinator = userDao.getOneById(coordinatorId);
-//                var difficulty = difficultyDAO.getOneById(difficultyId);
+//                var coordinator = userDao.getById(coordinatorId);
+//                var difficulty = difficultyDAO.getById(difficultyId);
 //                course = new Course(id, name, coordinator, difficulty);
 
             }
