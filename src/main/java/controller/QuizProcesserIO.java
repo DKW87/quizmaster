@@ -41,11 +41,11 @@ public class QuizProcesserIO {
         dbAccess.openConnection();
 
 // store data retrieved from CSV file (added to quizList) into DATABASE:
-        QuizDAO quizDAO = new QuizDAO(dbAccess);
+/*        QuizDAO quizDAO = new QuizDAO(dbAccess);
         for (QuizIO quiz : quizList) {
-            quizDAO.saveQuizInDB(quiz);
+            quizDAO.storeOne(quiz);
         }
-
+*/
 // close connection to Database
         dbAccess.closeConnection();
 
