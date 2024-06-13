@@ -27,12 +27,13 @@ public class LauncherTestRob {
             System.out.println(quiz);
         }
 
-        List<Quiz> listQuizObjects = quizMethodHandler.convertListToObjects(quizInCsv);
+//  Onderstaande werkt nog niet omdat uit de DB nog data moet kunnen worden gehaald (CourseId en DifficultyId)
+ //       List<Quiz> listQuizObjects = quizMethodHandler.convertListToObjects(quizInCsv);
 
-        // prints list of Question objects
-        for (Quiz quiz : listQuizObjects) {
-            System.out.println(quiz);
-        }
+ //       // prints list of Question objects
+ //       for (Quiz quiz : listQuizObjects) {
+ //           System.out.println(quiz);
+ //       }
 
 
 
