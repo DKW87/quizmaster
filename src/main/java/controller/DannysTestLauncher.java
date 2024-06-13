@@ -22,23 +22,25 @@ public class DannysTestLauncher {
         Question questionMethodHandler = new Question(null, null, null, null, null, null);
 
 
+        // converts CSV to a string list
         List<String> questionsInCsv = questionMethodHandler.convertCsvToList(locationQuestionCSV);
 
-        // prints list of converted CSV
         for (String question : questionsInCsv) {
             System.out.println(question);
         }
 
+        // create list of Question objects based on converted CSV
         List<Question> listQuestionObjects = questionMethodHandler.convertListToObjects(questionsInCsv);
 
-        // prints list of Question objects
         for (Question question : listQuestionObjects) {
             System.out.println(question);
         }
 
-          // can't get the saving working because the connection is null :(
+        // save list of Question objects to DB
         dbAccess.openConnection();
-        questionDAO.storeList(listQuestionObjects);
+//        questionDAO.storeList(listQuestionObjects); questions already stored in DB
+
+        // create list of all Question records in DB
         List<Question> remoteQuestions = questionDAO.getAll();
         dbAccess.closeConnection();
 

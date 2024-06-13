@@ -24,7 +24,7 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
     @Override
     public List<Question> getAll() {
         List<Question> questions = new ArrayList<Question>();
-        String sql = "SELECT * FROM question;";
+        String sql = "SELECT * FROM Question;";
         try {
             this.setupPreparedStatement(sql);
             ResultSet resultSet = this.executeSelectStatement();
