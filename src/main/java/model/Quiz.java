@@ -1,7 +1,11 @@
 package model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
 import model.*;
 
 /**
@@ -97,6 +101,43 @@ public class Quiz {
     public void addQuestion(Question question) {
         if (!this.questions.contains(question))
             this.questions.add(question);
+    }
+
+
+    // Methods:
+    // ik heb deze hier ook geimplementeerd maar moeten we niet gewoon apart zetten omdat deze voor alle hetzelfde is?
+    public List<String> convertCsvToList(String filePath) {
+        List<String> questionList = new ArrayList<>();
+        File file = new File(filePath);
+        try{
+            Scanner input = new Scanner(file);
+            while (input.hasNextLine()) {
+                questionList.add(input.nextLine());
+            }
+        }
+        catch (FileNotFoundException error) {
+            System.out.println("File not found.");
+        }
+        return questionList;
+    }
+
+    public List<Quiz> convertListToObjects(List<String> list) {
+        List<Quiz> quizList = new ArrayList<>();
+        for (String string : list) {
+            String[] splitLine = string.split(";");
+            String quizName = splitLine[0];
+            String difficulty = splitLine[1];
+            String quizPoints = splitLine[2];
+            String course = splitLine[3];
+            String quizId = null;
+            String passMark = null;
+
+            // vraag hoe los ik onderstaande op? een Quiz heeft meer attributen dan er uit de CSV komen, dus die heb ik hier op NULL gezet.
+            // ik kan alleen niet bijvoorbeeld een String als quizPoints meegeven terwijl hij een Int verwacht? Kan dat met Parse oid?
+            Quiz quiz = new Quiz(quizId,quizName,passMark,quizPoints,course,difficulty);
+            quizList.add(quiz);
+        }
+        return quizList;
     }
 
 
