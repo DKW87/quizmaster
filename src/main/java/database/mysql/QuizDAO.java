@@ -47,10 +47,10 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
                 int quizPoints = resultSet.getInt("quizPoints");
                 int difficultyId = resultSet.getInt("difficultyId");
                 int courseId = resultSet.getInt("courseId");
-                    var difficulty = DifficultyDAO.getById(difficultyId);
-                    var course = CourseDAO.getById(courseId);
-                    Quiz quiz = new Quiz(quizId, name, passmark, quizPoints, course, difficulty);
-                    quizzes.add(quiz);
+//                    var difficulty = DifficultyDAO.getById(difficultyId);
+//                    var course = CourseDAO.getById(courseId);
+//                    Quiz quiz = new Quiz(quizId, name, passmark, quizPoints, course, difficulty);
+//                    quizzes.add(quiz);
             }
         } catch (SQLException sqlError) {
             System.out.println(sqlError.getMessage());
@@ -76,9 +76,9 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
                 int courseId = resultSet.getInt("courseID");
                 // ophalen van de juiste IDs uit DB:
                 // onderstaand nog aanpassen
-                var difficulty = DifficultyDAO.getById(difficultyId);
-                var course = CourseDAO.getById(courseId);
-                quiz = new Quiz(quizId, name, passMark, quizPoints, course, difficulty);
+//                var difficulty = DifficultyDAO.getById(difficultyId);
+//                var course = CourseDAO.getById(courseId);
+//                quiz = new Quiz(quizId, name, passMark, quizPoints, course, difficulty);
             }
         } catch (SQLException sqlError) {
             System.out.println("SQL Fout" + sqlError.getMessage());
@@ -102,9 +102,9 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
                 int courseId = resultSet.getInt("courseID");
                 // ophalen van de juiste IDs uit DB:
                 // onderstaand nog aanpassen
-                var difficulty = DifficultyDAO.getById(difficultyId);
-                var course = CourseDAO.getById(courseId);
-                quiz = new Quiz(quizId, name, passMark, quizPoints, course, difficulty);
+//                var difficulty = DifficultyDAO.getById(difficultyId);
+//                var course = CourseDAO.getById(courseId);
+//                quiz = new Quiz(quizId, name, passMark, quizPoints, course, difficulty);
             }
         } catch (SQLException sqlError) {
             System.out.println("SQL Fout" + sqlError.getMessage());

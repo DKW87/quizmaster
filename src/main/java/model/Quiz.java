@@ -134,8 +134,8 @@ public class Quiz {
             int quizId = 0;
             int passMark = 0;
             int quizPoints = Integer.parseInt(quizPointsString);
-            var difficulty = DifficultyDAO.getByName(difficultyString);
-            var course = CourseDAO.getByName(courseString);
+//            var difficulty = DifficultyDAO.getByName(difficultyString);
+ //           var course = CourseDAO.getByName(courseString);
             // hopelijk werkt het zo, ik kan het niet testen alleen....en getByName kan ik niet aanroepen terwijl die al wel bij CourseDAO bestaat (nog niet bij DifficultyDAO)
             Quiz quiz = new Quiz(quizId,quizName,passMark,quizPoints,course,difficulty);
             quizList.add(quiz);

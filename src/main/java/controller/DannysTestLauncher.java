@@ -37,14 +37,14 @@ public class DannysTestLauncher {
         }
 
           // can't get the saving working because the connection is null :(
-//        dbAccess.openConnection();
-//        questionDAO.storeList(listQuestionObjects);
-//        List<Question> remoteQuestions = questionDAO.getAll();
-//        dbAccess.closeConnection();
-//
-//        for (Question question : remoteQuestions) {
-//            System.out.println(question);
-//        }
+        dbAccess.openConnection();
+        questionDAO.storeList(listQuestionObjects);
+        List<Question> remoteQuestions = questionDAO.getAll();
+        dbAccess.closeConnection();
+
+        for (Question question : remoteQuestions) {
+            System.out.println(question);
+        }
 
 
     } // main
