@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private static  final String DBNAME = "zbakkum";
+    private static  final String DBNAME = "zbakkumm";
     private static  final String DB_USER = "bakkumm";
     private static  final String DB_PASS = "1J.cINqCPBBcHJ";
 
@@ -40,6 +40,7 @@ public class Main extends Application {
      */
     public static DBAccess getdBaccess() {
         if (dBaccess == null) {
+            // Create an instance of the DBAccess class
             dBaccess = new DBAccess(DBNAME, DB_USER, DB_PASS);
             dBaccess.openConnection();
         }

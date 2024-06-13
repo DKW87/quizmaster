@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static utils.Util.convertCsvToArray;
-import static utils.Util.generateCsvListToCourses;
+
 
 /**
  * @author Zahir Ekrem SARITEKE
@@ -17,26 +17,24 @@ import static utils.Util.generateCsvListToCourses;
  * @created 13 June 2024 - 11:08
  */
 public  class TextIOLauncher {
-    private final static DBAccess dBaccess = Main.getdBaccess();
-    private static final CourseDAO courseDao = new CourseDAO(dBaccess);
+private final static DBAccess dbAccess = Main.getdBaccess();
+
 
 
     public static void main(String[] args) throws SQLException {
+        CourseDAO courseDao = new CourseDAO(dbAccess);
 
         // Stap 1: bulk create gebruikers TODO: @MacK
-        //        List<User> users = generateCsvListToUsers(convertCsvToArray("resources/Gebruikers.csv"));
-        //        userDao.bulkCreate(courses);
-
-        // Stap 2: bulk create courses
-        List<Course> courses = generateCsvListToCourses(convertCsvToArray("resources/Cursussen.csv"));
-        //courseDao.bulkCreate(courses);
-
+         //Stap 2: bulk create courses
+            bulkCreateCourses();
         // Stap 3: bulk create Quizzen TODO: @Rob
-        //        List<Quiz> quizs = generateCsvListToQuizzes(convertCsvToArray("resources/Quizzen.csv"));
-        //        quizDao.bulkCreate(quizs);
-
         // Stap 4: bulk create vragen TODO: @Danny
-        //        List<Question> questions = generateCsvListToQuestions(convertCsvToArray("resources/Vragen.csv"));
-        //        quizDao.bulkCreate(quizzen);
+    }
+
+    private static void  bulkCreateCourses() throws SQLException {
+        CourseDAO courseDao = new CourseDAO(dbAccess);
+        List<Course> courses = courseDao.generateCsvListToCourses(convertCsvToArray("resources/Cursussen.csv"));
+        courseDao.bulkCreate(courses);
+        System.out.println("Cursussen succesvol toegevoegd");
     }
 }
