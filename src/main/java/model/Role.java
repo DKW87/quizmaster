@@ -6,7 +6,11 @@
 
 package model;
 
-public class Role {
+import database.mysql.GenericDAO;
+
+import java.util.List;
+
+public class Role implements GenericDAO {
 
     private int roleId;
     private String name;
@@ -34,5 +38,25 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public List getAll() {
+        return List.of();
+    }
+
+    @Override
+    public Object getById(int id) {
+        return null;
+    }
+
+    @Override
+    public Object getByName(String name) {
+        return null;
+    }
+
+    @Override
+    public void storeOne(Object type) {
+
     }
 }
