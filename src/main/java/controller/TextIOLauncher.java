@@ -8,8 +8,8 @@ import view.Main;
 import java.sql.SQLException;
 import java.util.List;
 
-import static utils.Util.convertCvsToArray;
-import static utils.Util.generateCvsListToCourses;
+import static utils.Util.convertCsvToArray;
+import static utils.Util.generateCsvListToCourses;
 
 /**
  * @author Zahir Ekrem SARITEKE
@@ -24,19 +24,19 @@ public  class TextIOLauncher {
     public static void main(String[] args) throws SQLException {
 
         // Stap 1: bulk create gebruikers TODO: @MacK
-        //        List<User> users = generateCvsListToUsers(convertCvsToArray("resources/Gebruikers.csv"));
+        //        List<User> users = generateCsvListToUsers(convertCsvToArray("resources/Gebruikers.csv"));
         //        userDao.bulkCreate(courses);
 
         // Stap 2: bulk create courses
-        List<Course> courses = generateCvsListToCourses(convertCvsToArray("resources/Cursussen.csv"));
-        courseDao.bulkCreate(courses);
+        List<Course> courses = generateCsvListToCourses(convertCsvToArray("resources/Cursussen.csv"));
+        //courseDao.bulkCreate(courses);
 
         // Stap 3: bulk create Quizzen TODO: @Rob
-        //        List<Quiz> quizs = generateCvsListToQuizzes(convertCvsToArray("resources/Quizzen.csv"));
+        //        List<Quiz> quizs = generateCsvListToQuizzes(convertCsvToArray("resources/Quizzen.csv"));
         //        quizDao.bulkCreate(quizs);
 
         // Stap 4: bulk create vragen TODO: @Danny
-        //        List<Question> questions = generateCvsListToQuestions(convertCvsToArray("resources/Vragen.csv"));
+        //        List<Question> questions = generateCsvListToQuestions(convertCsvToArray("resources/Vragen.csv"));
         //        quizDao.bulkCreate(quizzen);
     }
 }

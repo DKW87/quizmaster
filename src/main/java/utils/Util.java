@@ -20,43 +20,43 @@ public class Util {
     /**
      * Converts a CSV file into a list of strings.
      *
-     * @param  cvsPath  the path to the CSV file
+     * @param  csvPath  the path to the CSV file
      * @return            a list of strings representing each line in the CSV file
      */
-    public static List<String> convertCvsToArray(String cvsPath) {
-        List<String> cvsList = new ArrayList<>();
-        File cvsFile = new File(cvsPath);
+    public static List<String> convertCsvToArray(String csvPath) {
+        List<String> csvList = new ArrayList<>();
+        File csvFile = new File(csvPath);
         try {
-            Scanner fileReader   = new Scanner(cvsFile);
+            Scanner fileReader   = new Scanner(csvFile);
             while (fileReader.hasNextLine()) {
-                cvsList.add(fileReader.nextLine());
+                csvList.add(fileReader.nextLine());
             }
         } catch (FileNotFoundException e) {
             System.out.println( e.getMessage());
         }
-        return cvsList;
+        return csvList;
     }
 
     /**
      * Generates a list of Course objects from a list of CSV strings.
      *
-     * @param  cvsList  a list of CSV strings representing courses
+     * @param  csvList  a list of CSV strings representing courses
      * @return          a list of Course objects created from the CSV strings
      */
-    public static List<Course> generateCvsListToCourses(List<String> cvsList) {
-        List<Course> cursusLijst = new ArrayList<>();
-        if (!cvsList.isEmpty()) {
-            for (String string : cvsList) {
-                String[] regelArray = string.split(",");
-                String name = regelArray[0];
-                String difficultyName = regelArray[1];
+    public static List<Course> generateCsvListToCourses(List<String> csvList) {
+        List<Course> courses= new ArrayList<>();
+        if (!csvList.isEmpty()) {
+            for (String string : csvList) {
+                String[] line = string.split(",");
+                String name = line[0];
+                String difficultyName = line[1];
                 // FIXME : userDao and difficultyDao not implemented
-//                User coordinator = userDao.getByName((regelArray[2]));
+//                User coordinator = userDao.getByName((line[2]));
 //                Difficulty difficulty = difficultyDao.getByName(difficultyName);
 //                cursusLijst.add(new Course(name, difficulty, coordinator));
             }
         }
-        return cursusLijst;
+        return courses;
     }
 
 }
