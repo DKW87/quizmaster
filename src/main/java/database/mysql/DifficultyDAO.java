@@ -84,7 +84,7 @@ public class DifficultyDAO extends AbstractDAO implements GenericDAO<Difficulty>
 
     @Override
     public void storeOne(Difficulty difficulty) {
-        String sql = "INSERT INTO difficulty(name) VALUES ?;";
+        String sql = "INSERT INTO Difficulty(name) VALUES ?;";
         int pKey = 0;
         try {
             this.setupPreparedStatementWithKey(sql);
