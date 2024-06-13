@@ -1,12 +1,18 @@
 package view;
 
+import database.mysql.DBAccess;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    private static  final String DBNAME = "zbakkum";
+    private static  final String DB_USER = "bakkumm";
+    private static  final String DB_PASS = "1J.cINqCPBBcHJ";
+
     private static SceneManager sceneManager = null;
     private static Stage primaryStage = null;
+    private static DBAccess dBaccess = null;
 
     public static void main(String[] args) {
         launch(args);
@@ -25,6 +31,19 @@ public class Main extends Application {
             sceneManager = new SceneManager(primaryStage);
         }
         return sceneManager;
+    }
+
+    /**
+     * Returns an instance of the DBAccess class, creating it if it doesn't already exist.
+     *
+     * @return an instance of the DBAccess class
+     */
+    public static DBAccess getdBaccess() {
+        if (dBaccess == null) {
+            dBaccess = new DBAccess(DBNAME, DB_USER, DB_PASS);
+            dBaccess.openConnection();
+        }
+        return dBaccess;
     }
 
     public static Stage getPrimaryStage() {
