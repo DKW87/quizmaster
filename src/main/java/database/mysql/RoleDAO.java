@@ -43,7 +43,7 @@ public class RoleDAO extends AbstractDAO implements GenericDAO<Role> {
     // Method so information from the Role can be retrieved from just the name.
     @Override
     public Role getByName(String roleName) {
-        String sqlGetRoleString = "SELECT * FROM role WHERE name = ?";
+        String sqlGetRoleString = "SELECT * FROM Role WHERE name = ?";
         try {
             setupPreparedStatement(sqlGetRoleString);
             preparedStatement.setString(1, roleName);

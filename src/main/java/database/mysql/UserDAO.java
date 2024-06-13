@@ -18,11 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO extends AbstractDAO implements GenericDAO<User> {
-    private final RoleDAO roleDAO;
+    private final RoleDAO roleDAO = new RoleDAO(dbAccess);
 
-    public UserDAO(DBAccess dbAccess, RoleDAO roleDAO) {
+    public UserDAO(DBAccess dbAccess) {
         super(dbAccess);
-        this.roleDAO = new RoleDAO(dbAccess);
     }
 
     // Method to save a user to the DB with the given attributes.
