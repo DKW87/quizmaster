@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import database.mysql.CourseDAO;
+import database.mysql.DifficultyDAO;
 import model.*;
 
 /**
@@ -126,14 +128,15 @@ public class Quiz {
         for (String string : list) {
             String[] splitLine = string.split(";");
             String quizName = splitLine[0];
-            String difficulty = splitLine[1];
-            String quizPoints = splitLine[2];
-            String course = splitLine[3];
-            String quizId = null;
-            String passMark = null;
-
-            // vraag hoe los ik onderstaande op? een Quiz heeft meer attributen dan er uit de CSV komen, dus die heb ik hier op NULL gezet.
-            // ik kan alleen niet bijvoorbeeld een String als quizPoints meegeven terwijl hij een Int verwacht? Kan dat met Parse oid?
+            String difficultyString = splitLine[1];
+            String quizPointsString = splitLine[2];
+            String courseString = splitLine[3];
+            int quizId = 0;
+            int passMark = 0;
+            int quizPoints = Integer.parseInt(quizPointsString);
+            var difficulty = DifficultyDAO.getByName(difficultyString);
+            var course = CourseDAO.getByName(courseString);
+            // hopelijk werkt het zo, ik kan het niet testen alleen....en getByName kan ik niet aanroepen terwijl die al wel bij CourseDAO bestaat (nog niet bij DifficultyDAO)
             Quiz quiz = new Quiz(quizId,quizName,passMark,quizPoints,course,difficulty);
             quizList.add(quiz);
         }
