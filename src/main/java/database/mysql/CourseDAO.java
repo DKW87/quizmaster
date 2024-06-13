@@ -53,8 +53,8 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     /**
      * Retrieves a list of courses associated with a given coordinator ID.
      *
-     * @param  coordinatorId  the ID of the coordinator
-     * @return                a list of Course objects representing the courses associated with the coordinator
+     * @param coordinatorId the ID of the coordinator
+     * @return a list of Course objects representing the courses associated with the coordinator
      */
     public List<Course> getCoursesByCoordinator(int coordinatorId) {
         List<Course> courses = new ArrayList<>();
@@ -165,7 +165,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     /**
      * Deletes a course from the database with the given course ID.
      *
-     * @param  courseId  the ID of the course to be deleted
+     * @param courseId the ID of the course to be deleted
      */
     public void deleteOneById(int courseId) {
         String sql = "DELETE FROM Course WHERE courseId = ?;";
@@ -196,6 +196,17 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
             this.executeManipulateStatement();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Bulk creates courses in the database by reading a CSV file and storing each course object.
+     *
+     * @throws SQLException if there is an error executing the SQL statement
+     */
+    public void bulkCreate(List<Course> courses) throws SQLException {
+        for (Course course : courses) {
+            this.storeOne(course);
         }
     }
 
