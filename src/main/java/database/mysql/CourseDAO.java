@@ -1,6 +1,8 @@
 package database.mysql;
 
 import model.Course;
+import model.Difficulty;
+import model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,8 +17,8 @@ import java.util.List;
 public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
 
     // FIXME: implementeer DAO's
-//    private final DifficultyDAO difficultyDao = new DifficultyDAO(dbAccess);
-//    private final UserDAO  userDao = new UserDAO(dbAccess);
+    private final DifficultyDAO difficultyDao = new DifficultyDAO(dbAccess);
+    private final UserDAO userDao = new UserDAO(dbAccess);
 
     public CourseDAO(DBAccess dbAccess) {
         super(dbAccess);
@@ -25,8 +27,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     @Override
     public List<Course> getAll() {
         List<Course> courses = new ArrayList<>();
-        String sql = "SELECT * FROM course";
-
+        String sql = "SELECT * FROM Course";
         try {
             this.setupPreparedStatement(sql);
             ResultSet resultSet = this.executeSelectStatement();
@@ -35,13 +36,10 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
                 String name = resultSet.getString("name");
                 int coordinatorId = resultSet.getInt("coordinatorId");
                 int difficultyId = resultSet.getInt("difficultyId");
-                // TODO: @MacK and @Danny --> Ik heb userDao en difficultyDao nodig
-                //                 var coordinator = userDao.getOneById(coordinatorId);
-//                 var difficulty = difficultyDao.getOneById(difficultyId);
-
-                //Course course = new Course(courseId, name, coordinator, difficulty);
-                // FIXME : courses.add(course);
-                courses.add(null);
+                var difficulty = difficultyDao.getById(difficultyId);
+                var coordinator = userDao.getById(coordinatorId);
+                Course course = new Course(courseId, name, coordinator, difficulty);
+                courses.add(course);
 
             }
         } catch (SQLException e) {
@@ -88,7 +86,6 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     @Override
     public Course getById(int id) {
         Course course = null;
-
         String sql = "SELECT * FROM course WHERE courseId = ?";
         try {
             this.setupPreparedStatementWithKey(sql);
@@ -99,15 +96,13 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
                 int difficultyId = resultSet.getInt("difficultyId");
                 int coordinatorId = resultSet.getInt("coordinatorId");
                 // FIXME: difficultyId, coordinatorId
-//                var coordinator = userDao.getById(coordinatorId);
-//                var difficulty = difficultyDAO.getById(difficultyId);
-//                course = new Course(id, name, difficultyId, coordinatorId);
-                return course;
+                var coordinator = userDao.getById(coordinatorId);
+                var difficulty = difficultyDao.getById(difficultyId);
+                course = new Course(id, name, coordinator, difficulty);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return course;
     }
 
@@ -129,13 +124,12 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
             ResultSet resultSet = this.executeSelectStatement();
             if (resultSet.next()) {
                 String name = resultSet.getString("name");
+                int courseId = resultSet.getInt("courseId");
                 int difficultyId = resultSet.getInt("difficultyId");
                 int coordinatorId = resultSet.getInt("coordinatorId");
-                // FIXME: difficultyId, coordinatorId
-//                var coordinator = userDao.getById(coordinatorId);
-//                var difficulty = difficultyDAO.getById(difficultyId);
-//                course = new Course(id, name, coordinator, difficulty);
-
+                var coordinator = userDao.getById(coordinatorId);
+                var difficulty = difficultyDao.getById(difficultyId);
+                course = new Course(courseId, name, coordinator, difficulty);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -151,12 +145,10 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
         try {
             this.setupPreparedStatementWithKey(sql);
             this.preparedStatement.setString(1, cursus.getName());
-            // FIXME: difficultyId, coordinatorId
-//            preparedStatement.setInt(2, cursus.getDifficulty().getId());
-//            preparedStatement.setInt(3, cursus.getCoordinator().getId());
+            preparedStatement.setInt(2, cursus.getDifficulty().getDifficultyId());
+            preparedStatement.setInt(3, cursus.getCoordinator().getUserId());
             primaryKey = this.executeInsertStatementWithKey();
             cursus.setCourseId(primaryKey);
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -208,6 +200,25 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
         for (Course course : courses) {
             this.storeOne(course);
         }
+    }
+    /**
+     * Generates a list of Course objects from a list of CSV strings.
+     *
+     * @param  csvList  a list of CSV strings representing courses
+     * @return          a list of Course objects created from the CSV strings
+     */
+    public  List<Course> generateCsvListToCourses(List<String> csvList) {
+        List<Course> courses= new ArrayList<>();
+        if (!csvList.isEmpty()) {
+            for (String string : csvList) {
+                String[] line = string.split(",");
+                String name = line[0];
+                User coordinator = userDao.getByName((line[2]));
+                Difficulty difficulty = difficultyDao.getByName(line[1]);
+                courses.add(new Course(name, coordinator, difficulty));
+            }
+        }
+        return courses;
     }
 
 }

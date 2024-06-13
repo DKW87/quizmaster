@@ -23,13 +23,13 @@ public class RoleDAO extends AbstractDAO implements GenericDAO<Role> {
     // Method so users retrieved from DB can get their role assigned in the creation of the user. See UserDAO.getUserPerId
     @Override
     public Role getById(int roleId) {
-        String sqlGetRole = "SELECT * FROM role WHERE roleId = ?";
+        String sqlGetRole = "SELECT * FROM Role WHERE roleId = ?";
         try {
             setupPreparedStatementWithKey(sqlGetRole);
             preparedStatement.setInt(1, roleId);
             ResultSet resultSet = executeSelectStatement();
             if (resultSet.next()) {
-                String roleName = resultSet.getString("roleName");
+                String roleName = resultSet.getString("name");
                 Role role = new Role(roleName);
                 role.setRoleId(roleId);
                 return role;

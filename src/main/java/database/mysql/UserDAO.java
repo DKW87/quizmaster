@@ -61,8 +61,9 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
                 String infix = resultSet.getString("infix");
                 String lastName = resultSet.getString("lastName");
                 int roleId = resultSet.getInt("roleId");
+                int userId = resultSet.getInt("userId");
                 Role role = this.roleDAO.getById(roleId);  // Creates role with getUserRoleById method so a new user can be created.
-                user = new User(userName, password, firstName, infix, lastName, role);
+                user = new User(userId,userName, password, firstName, infix, lastName, role);
             }
         } catch (SQLException SqlException) {
             System.out.println("Error in UserDAO/saveUser: " + SqlException.getMessage());
@@ -86,8 +87,9 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
                 String infix = resultSet.getString("infix");
                 String lastName = resultSet.getString("lastName");
                 int roleId = resultSet.getInt("roleId");
+                int userId = resultSet.getInt("userId");
                 Role role = this.roleDAO.getById(roleId);  // Creates role with getUserRoleById method so a new user can be created.
-                user = new User(userName, password, firstName, infix, lastName, role);
+                user = new User(userId,userName, password, firstName, infix, lastName, role);
             }
         } catch (SQLException sqlRuntimeError) {
             System.out.println("Error in UserDAO/getUserPerID: " + sqlRuntimeError.getMessage());

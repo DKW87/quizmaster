@@ -43,7 +43,7 @@ public class DifficultyDAO extends AbstractDAO implements GenericDAO<Difficulty>
     @Override
     public Difficulty getById(int id) {
         Difficulty difficulty = null;
-        String sql = "SELECT * FROM difficulty WHERE difficultyId = ?;";
+        String sql = "SELECT * FROM Difficulty WHERE difficultyId = ?;";
         try {
             this.setupPreparedStatement(sql);
             this.preparedStatement.setInt(1, id);
@@ -64,7 +64,7 @@ public class DifficultyDAO extends AbstractDAO implements GenericDAO<Difficulty>
     @Override
     public Difficulty getByName(String name) {
         Difficulty difficulty = null;
-        String sql = "SELECT * FROM difficulty WHERE name = ?;";
+        String sql = "SELECT * FROM Difficulty WHERE name = ?;";
         try {
             this.setupPreparedStatement(sql);
             this.preparedStatement.setString(1, name);
@@ -77,7 +77,7 @@ public class DifficultyDAO extends AbstractDAO implements GenericDAO<Difficulty>
                 return difficulty;
             }
         } catch (SQLException error) {
-            System.out.println("The following exception occurred: " + error.getErrorCode());
+            System.out.println("The following exception occurred: " + error.getMessage());
         }
         return difficulty;
     }
