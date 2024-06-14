@@ -39,15 +39,7 @@ public class StudentCourse {
         return enrollDate;
     }
 
-    public void setEnrollDate(LocalDate enrollDate) {
-        this.enrollDate = enrollDate;
-    }
-
     public LocalDate getDropoutDate() {
         return dropoutDate;
-    }
-
-    public void setDropoutDate(LocalDate dropoutDate) {
-        this.dropoutDate = dropoutDate;
     }
 }

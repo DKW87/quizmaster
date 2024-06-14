@@ -56,7 +56,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
      */
     public List<Course> getCoursesByCoordinator(int coordinatorId) {
         List<Course> courses = new ArrayList<>();
-        String sql = "SELECT * FROM course WHERE coordinatorId = ?";
+        String sql = "SELECT * FROM Course WHERE coordinatorId = ?";
 
         try {
             this.setupPreparedStatementWithKey(sql);
@@ -86,7 +86,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     @Override
     public Course getById(int id) {
         Course course = null;
-        String sql = "SELECT * FROM course WHERE courseId = ?";
+        String sql = "SELECT * FROM Course WHERE courseId = ?";
         try {
             this.setupPreparedStatementWithKey(sql);
             this.preparedStatement.setInt(1, id);
@@ -117,7 +117,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     public Course getByName(String courseName) {
         Course course = null;
 
-        String sql = "SELECT * FROM course WHERE name = ?";
+        String sql = "SELECT * FROM Course WHERE name = ?";
         try {
             this.setupPreparedStatementWithKey(sql);
             this.preparedStatement.setString(1, courseName);
@@ -201,25 +201,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
             this.storeOne(course);
         }
     }
-    /**
-     * Generates a list of Course objects from a list of CSV strings.
-     *
-     * @param  csvList  a list of CSV strings representing courses
-     * @return          a list of Course objects created from the CSV strings
-     */
-    public  List<Course> generateCsvListToCourses(List<String> csvList) {
-        List<Course> courses= new ArrayList<>();
-        if (!csvList.isEmpty()) {
-            for (String string : csvList) {
-                String[] line = string.split(",");
-                String name = line[0];
-                User coordinator = userDao.getByName((line[2]));
-                Difficulty difficulty = difficultyDao.getByName(line[1]);
-                courses.add(new Course(name, coordinator, difficulty));
-            }
-        }
-        return courses;
-    }
+
 
 }
 

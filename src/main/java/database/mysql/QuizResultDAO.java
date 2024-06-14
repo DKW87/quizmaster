@@ -117,7 +117,7 @@ public class QuizResultDAO extends AbstractDAO implements GenericDAO<QuizResult>
         int primaryKey;
         try  {
             setupPreparedStatement(sql);
-            preparedStatement.setDate(1, Date.valueOf(quizResultaat.getDate()));
+//            preparedStatement.setTimestamp(1, Date.valueOf(quizResultaat.getDate()));
             preparedStatement.setInt(2, quizResultaat.getQuiz().getQuizId());
             preparedStatement.setInt(3, quizResultaat.getStudent().getUserId());
             preparedStatement.setInt(4, quizResultaat.getScore());
