@@ -1,13 +1,10 @@
 package utils;
 
-import database.mysql.DifficultyDAO;
-import database.mysql.UserDAO;
-import model.Course;
-import model.Difficulty;
-import model.User;
+import database.mysql.*;
+import model.*;
+import view.Main;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,6 +15,15 @@ import java.util.Scanner;
  * @created 12 Juni 2024 - 21:13
  */
 public class Util {
+    private final static DBAccess dbAccess = Main.getdBaccess();
+    private final static DifficultyDAO difficultyDao = new DifficultyDAO(dbAccess);
+    private final static UserDAO userDao = new UserDAO(dbAccess);
+    private final static RoleDAO roleDAO = new RoleDAO(dbAccess);
+    private final static CourseDAO courseDAO = new CourseDAO(dbAccess);
+    private final static QuizDAO quizDAO = new QuizDAO(dbAccess);
+
+
+
     /**
      * Converts a CSV file into a list of strings.
      *
@@ -37,7 +43,84 @@ public class Util {
         }
         return csvList;
     }
+    /**
+     * Generates a list of Course objects from a list of CSV strings.
+     *
+     * @param  csvList  a list of CSV strings representing courses
+     * @return          a list of Course objects created from the CSV strings
+     */
+    public static List<Course> generateCsvListToCourses(List<String> csvList) {
+        List<Course> courses= new ArrayList<>();
+        if (!csvList.isEmpty()) {
+            for (String string : csvList) {
+                String[] line = string.split(",");
+                String name = line[0];
+                User coordinator = userDao.getByName((line[2]));
+                Difficulty difficulty = difficultyDao.getByName(line[1]);
+                courses.add(new Course(name, coordinator, difficulty));
+            }
+        }
+        return courses;
+    }
 
+    public static List<User> convertListToUsers(String csvFilePath) throws IOException {
+        List<User> users = new ArrayList<>();
+        final int IMPORT_WITH_INFIX = 6;
+        final int IMPORT_NO_INFIX = 5;
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
+            String line;
+            br.readLine(); // Can be used if CSV has a header. It'll skip the first line.
+            while ((line = br.readLine()) != null) {
+                String[] userValues = line.split(",");
+                if (userValues.length == IMPORT_WITH_INFIX) { // For users with infix
+                    Role userRole = roleDAO.getByName(userValues[5]);
+                    User user = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userRole);
+                    users.add(user);
+                    System.out.println("Added user with infix");
+                } if (userValues.length == IMPORT_NO_INFIX) { // For users without infix
+                    Role userRole = roleDAO.getByName(userValues[4]);
+                    User user = new User(userValues[0], userValues[1], userValues[2], userValues[3], userRole);
+                    users.add(user);
+                    System.out.println("Added user with no infix");
+                }
+            }
+        }
+        return users;
+    }
+
+    public static List<Question> convertQuestionListToObjects(List<String> list) {
+        List<Question> questionList = new ArrayList<>();
+        for (String string : list) {
+            String[] splitLine = string.split(";");
+            String questionDescription = splitLine[0];
+            String answerA = splitLine[1];
+            String answerB = splitLine[2];
+            String answerC = splitLine[3];
+            String answerD = splitLine[4];
+            Quiz quiz = quizDAO.getByName(splitLine[5]);
+            Question question = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
+            questionList.add(question);
+        }
+        return questionList;
+    }
+    public static List<Quiz> convertQuizListToObjects(List<String> list) {
+        List<Quiz> quizList = new ArrayList<>();
+        for (String string : list) {
+            String[] splitLine = string.split(",");
+            String quizName = splitLine[0];
+            String difficultyString = splitLine[1];
+            String quizPointsString = splitLine[2];
+            String courseString = splitLine[3];
+            int quizId = 0;
+            int passMark = 0;
+            int quizPoints = Integer.parseInt(quizPointsString);
+            var difficulty = difficultyDao.getByName(difficultyString);
+            var course = courseDAO.getByName(courseString);
+            Quiz quiz = new Quiz(quizId,quizName,passMark,quizPoints,course,difficulty);
+            quizList.add(quiz);
+        }
+        return quizList;
+    }
 
 
 }

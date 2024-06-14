@@ -100,7 +100,7 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
 
     @Override
     public void storeOne(Question question) {
-        String sql = "INSERT INTO Question(questionDescription, answerA, answerB, answerC, answerD) VALUES (?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO Question(questionDescription, answerA, answerB, answerC, answerD, quizId) VALUES (?, ?, ?, ?, ?, ?);";
         try {
             this.setupPreparedStatementWithKey(sql);
             this.preparedStatement.setString(1, question.getQuestionDescription());
@@ -108,6 +108,7 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
             this.preparedStatement.setString(3, question.getAnswerB());
             this.preparedStatement.setString(4, question.getAnswerC());
             this.preparedStatement.setString(5, question.getAnswerD());
+            this.preparedStatement.setInt(6, question.getQuiz().getQuizId());
             int pKey = this.executeInsertStatementWithKey();
             question.setQuestionId(pKey);
         } catch (SQLException error) {

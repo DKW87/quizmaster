@@ -49,16 +49,8 @@ public class Course {
         return coordinator;
     }
 
-    public void setCoordinator(User coordinator) {
-        this.coordinator = coordinator;
-    }
-
     public Difficulty getDifficulty() {
         return difficulty;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
     }
 
     @Override

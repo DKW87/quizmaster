@@ -97,32 +97,6 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         return user;
     }
 
-
-    public List<User> usersFromCSV(String csvFilePath) throws IOException {
-        List<User> users = new ArrayList<>();
-        final int IMPORT_WITH_INFIX = 6;
-        final int IMPORT_NO_INFIX = 5;
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
-            String line;
-            br.readLine(); // Can be used if CSV has a header. It'll skip the first line.
-            while ((line = br.readLine()) != null) {
-                String[] userValues = line.split(",");
-                if (userValues.length == IMPORT_WITH_INFIX) { // For users with infix
-                    Role userRole = this.roleDAO.getByName(userValues[5]);
-                    User user = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userRole);
-                    users.add(user);
-                    System.out.println("Added user with infix");
-                } if (userValues.length == IMPORT_NO_INFIX) { // For users without infix
-                    Role userRole = this.roleDAO.getByName(userValues[4]);
-                    User user = new User(userValues[0], userValues[1], userValues[2], userValues[3], userRole);
-                    users.add(user);
-                    System.out.println("Added user with no infix");
-                }
-            }
-        }
-        return users;
-    }
-
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();

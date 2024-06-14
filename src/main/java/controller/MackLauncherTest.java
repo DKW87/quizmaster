@@ -8,13 +8,13 @@ package controller;
 
 import database.mysql.DBAccess;
 import model.User;
-import model.Role;
 import database.mysql.UserDAO;
 import database.mysql.RoleDAO;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
+import static utils.Util.convertListToUsers;
 
 public class MackLauncherTest {
 
@@ -27,18 +27,10 @@ public class MackLauncherTest {
         UserDAO userDAO = new UserDAO(dbAccess);
 
         // Small CSV to check import into Java.
-        String csvFilePath = "C:\\Users\\mackb\\IdeaProjects\\quizmaster\\src\\main\\resources\\GebruikersV6.csv";
-        List<User> importUsersTest = userDAO.usersFromCSV(csvFilePath);
+        String csvFilePath = "resources/gebruikersV6.csv";
+        List<User> importUsersTest = convertListToUsers(csvFilePath);
 
-        for (User user : importUsersTest) {
-            userDAO.storeOne(user);
-            System.out.printf("User %s added to DB\n", user.getUserName());
-        }
-    }
-}
-
-
-// test print from import above.
+        // test print from import above.
 //        for (User user : importUsersTest) {
 //            System.out.println(user.getUserName());
 //            System.out.println(user.getPassword());
@@ -51,6 +43,15 @@ public class MackLauncherTest {
 //            System.out.println();
 //        }
 
+        for (User user : importUsersTest) {
+            userDAO.storeOne(user);
+            System.out.printf("User %s added to DB\n", user.getUserName());
+        }
+
+
+    }
+
+}
 
     /*           Role Student = new Role("Student");
         Student.setRoleId(1);
@@ -84,5 +85,3 @@ public class MackLauncherTest {
         }
     }
     */
-
-

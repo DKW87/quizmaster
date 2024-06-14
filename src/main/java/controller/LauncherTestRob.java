@@ -2,8 +2,11 @@ package controller;
 import model.*;
 import database.mysql.QuizDAO;
 import database.mysql.DBAccess;
+import view.Main;
 
 import java.util.List;
+
+import static utils.Util.convertCsvToArray;
 
 /*
  * @author Rob JANSEN
@@ -12,15 +15,15 @@ import java.util.List;
  */
 
 public class LauncherTestRob {
+    private final static DBAccess dbAccess = Main.getdBaccess();
     public static void main(String[] args) {
 
         String locationQuestionCSV = "Resources/Quizzen.csv";
-        DBAccess dbAccess = new DBAccess("zbakkumm","bakkumm", "1J.cINqCPBBcHJ");
         QuizDAO quizDAO = new QuizDAO(dbAccess);
         Quiz quizMethodHandler = new Quiz(0, null, 0, 0, null, null);
 
 
-        List<String> quizInCsv = quizMethodHandler.convertCsvToList(locationQuestionCSV);
+        List<String> quizInCsv = convertCsvToArray(locationQuestionCSV);
 
         // prints list of converted CSV
         for (String quiz : quizInCsv) {

@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * @author Zahir Ekrem SARITEKE
@@ -11,7 +12,7 @@ public class QuizResult implements Comparable<QuizResult> {
 
 
     private int resultId;
-    private LocalDate date;
+    private LocalDateTime date;
     private User student;
     private Quiz quiz;
     private int score;
@@ -22,7 +23,7 @@ public class QuizResult implements Comparable<QuizResult> {
         this.student = student;
         this.quiz = quiz;
         this.score = score;
-        this.date = LocalDate.now();
+        this.date = LocalDateTime.now();
     }
 
     public int getResultId() {
@@ -33,12 +34,8 @@ public class QuizResult implements Comparable<QuizResult> {
         this.resultId = resultId;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public User getStudent() {
@@ -59,10 +56,6 @@ public class QuizResult implements Comparable<QuizResult> {
 
     public int getScore() {
         return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     /**
