@@ -12,10 +12,8 @@ import static constants.Constant.STUDENT_TASKS;
 
 public class WelcomeController {
 
-    private static final UserSession userSession = Main.getUserSession();
-    private static final SceneManager sceneManager = Main.getSceneManager();
-
-
+    private  final UserSession userSession = Main.getUserSession();
+    private  final SceneManager sceneManager = Main.getSceneManager();
 
     @FXML
     private Label welcomeLabel;

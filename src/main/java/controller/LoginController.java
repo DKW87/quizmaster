@@ -13,7 +13,7 @@ import static constants.Constant.*;
 
 public class LoginController {
 
-    private final static UserDAO userDao = new UserDAO(Main.getdBaccess());
+    private final  UserDAO userDao = new UserDAO(Main.getdBaccess());
 
     @FXML
     public Label errorLabel;
