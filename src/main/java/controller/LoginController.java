@@ -27,7 +27,7 @@ public class LoginController {
         String userName = nameTextField.getText();
         String password = passwordField.getText();
         if (!validate(userName, password)) {
-            errorLabel.setText("Please enter username and password");
+            errorLabel.setText("Gebruikersnaam en wachtwoord mogen niet leeg zijn!");
             setErrorStyle();
             return;
         }
@@ -74,18 +74,16 @@ public class LoginController {
     private boolean authenticate(String userName, String password) {
         var user = userDao.getByName(userName);
         if (user == null) {
-            errorLabel.setText("Invalid Credentials");
+            errorLabel.setText("Gebruikersnaam en wachtwoord combinatie niet gevonden of wachtwoord incorrect. Probeer het opnieuw.");
             setErrorStyle();
             return false;
         }
         if (!user.getPassword().equals(password)) {
-            errorLabel.setText("Invalid Credentials");
+            errorLabel.setText("Gebruikersnaam en wachtwoord combinatie niet gevonden of wachtwoord incorrect. Probeer het opnieuw.");
             setErrorStyle();
             return false;
         }
-        // Set session
-        errorLabel.setStyle("-fx-text-fill: " + SUCCESS_COLOR);
-        errorLabel.setText("Login Successful");
+        // Set session user
         resetStyle();
         Main.getUserSession().setUser(user);
         return true;
