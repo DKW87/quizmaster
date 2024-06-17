@@ -35,11 +35,12 @@ public class Quiz {
         this.difficulty = difficulty;
     }
 
-    // getters en setters * now for all attributes, delete later once not used?
+    // getters en setters
     public int getQuizId() {
         return quizId;
     }
 
+    // nu nog 1 Setter - aanvullen waar nodig.
     public void setQuizId(int quizId) {
         this.quizId = quizId;
     }
@@ -60,9 +61,12 @@ public class Quiz {
         return course;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
-    }
+    // nog verwijderen?
+    // public void setCourse(Course course) {
+    //    this.course = course;
+    //}
+
+
 
     public Difficulty getQuizDifficulty() {
         return difficulty;
@@ -78,7 +82,6 @@ public class Quiz {
         toStringQuiz.append("Name: " + this.name + "\n");
         toStringQuiz.append("Quiz is part of course: " + this.course + "\n");
         toStringQuiz.append("Total Quizpoints: " + this.quizPoints + "\n");
-        toStringQuiz.append("Questions: ");
         return toStringQuiz.toString();
     }
 

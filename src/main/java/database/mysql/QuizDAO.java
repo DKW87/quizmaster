@@ -67,7 +67,6 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
             this.setupPreparedStatement(sql);
             preparedStatement.setInt(1, quizId);
             ResultSet resultSet = executeSelectStatement();
-            // below will not work as quizPoints is not yet a column in DB TODO add quizPoints to DB
             if (resultSet.next()) {
                 String name = resultSet.getString("name");
                 int passMark = resultSet.getInt("passMark");
@@ -108,6 +107,14 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
             System.out.println("SQL Fout" + sqlError.getMessage());
         } return quiz;
     }
+
+    @Override
+    public void updateOne(Quiz quiz){};
+    // todo RJ: aanvullen.
+
+    @Override
+    public void deleteOneById(int quizId) {};
+    // todo RJ: aanvullen.
 
 
 }
