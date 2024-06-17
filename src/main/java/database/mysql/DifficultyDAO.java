@@ -1,5 +1,6 @@
 package database.mysql;
 
+import model.Course;
 import model.Difficulty;
 import model.Question;
 import model.Quiz;
@@ -91,6 +92,31 @@ public class DifficultyDAO extends AbstractDAO implements GenericDAO<Difficulty>
             this.preparedStatement.setString(1, difficulty.getName());
             pKey = this.executeInsertStatementWithKey();
             difficulty.setDifficultyId(pKey);
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        }
+    }
+
+    @Override
+    public void updateOne(Difficulty difficulty) {
+        String sql = "UPDATE Difficulty SET name = ? WHERE difficultyId = ?";
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setString(1, difficulty.getName());
+            this.preparedStatement.setInt(2, difficulty.getDifficultyId());
+            this.executeManipulateStatement();
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        }
+    }
+
+    @Override
+    public void deleteOneById(int difficultyId) {
+        String sql = "DELETE FROM Difficulty WHERE difficultyId = ?";
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, difficultyId);
+            this.preparedStatement.executeUpdate();
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
         }
