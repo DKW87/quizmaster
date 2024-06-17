@@ -9,5 +9,6 @@ public interface GenericDAO<T> {
     public T getById(int id);
     public T getByName(String name);
     public void storeOne(T type);
-
+    public void updateOne(T type);
+    public void deleteOneById(int id);
 }
