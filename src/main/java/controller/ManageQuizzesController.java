@@ -14,19 +14,21 @@ import java.util.List;
 
 
 public class ManageQuizzesController {
-    private final DBAccess dDacces;
+    private final DBAccess dDacces = Main.getdBaccess();
     private final SceneManager sceneManager = Main.getSceneManager();
+    QuizDAO quizDAO = new QuizDAO(dDacces);
 
     @FXML
     ListView<Quiz> quizList;
 
     @FXML
-    TextField waarschuwingTextField;
-    public ManageQuizzesController() {this.dDacces = Main.getdBaccess();}
+    TextField errorfield; // nog toe te voegen
+
+
 
     // setup bij openen van het QuizList scherm waarbij de bestaande Quizes uit de DB worden gehaald.
     public void setup() {
-        QuizDAO quizDAO = new QuizDAO(dDacces);
+
         List<Quiz> quizzen = quizDAO.getAll();
         for (Quiz quiz : quizzen) {
             quizList.getItems().add(quiz);
@@ -37,16 +39,19 @@ public class ManageQuizzesController {
 
     @FXML
     public void doCreateQuiz(ActionEvent event){sceneManager.showCreateUpdateQuizScene(null);}
+    // TO DO: eerst een nieuwe quiz in de DB creeren, daarvan id ophalen? en daarmee een nieuwe Scene oproepen met input de nieuwe quiz?
+
 
     @FXML
     public void doUpdateQuiz(ActionEvent event){
+        // voor als je iets wilt gebruiken van de SELECTIE uit een lijst
         Quiz quiz = quizList.getSelectionModel().getSelectedItem();
         sceneManager.showCreateUpdateQuizScene(quiz);
     }
 
     @FXML
     public void doDeleteQuiz(ActionEvent event){
-        QuizDAO quizDAO = new QuizDAO(dDacces);
+        // voor als je iets wilt gebruiken van de SELECTIE uit een lijst
         Quiz quiz = quizList.getSelectionModel().getSelectedItem();
         quizList.getItems().remove(quiz);
         quizDAO.deleteOneById(quiz.getQuizId());
