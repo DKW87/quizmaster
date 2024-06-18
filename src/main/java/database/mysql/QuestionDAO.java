@@ -122,4 +122,35 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
         }
     }
 
+    @Override
+    public void updateOne(Question question) {
+        String sql = "UPDATE Question SET questionDescription = ?, answerA = ?, answerB = ?," +
+                " answerC = ?, answerD = ?, quizId = ? WHERE questionId = ?";
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setString(1, question.getQuestionDescription());
+            this.preparedStatement.setString(2, question.getAnswerA());
+            this.preparedStatement.setString(3, question.getAnswerB());
+            this.preparedStatement.setString(4, question.getAnswerC());
+            this.preparedStatement.setString(5, question.getAnswerD());
+            this.preparedStatement.setInt(6, question.getQuiz().getQuizId());
+            this.preparedStatement.setInt(7, question.getQuestionId());
+            this.executeManipulateStatement();
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        }
+    }
+
+    @Override
+    public void deleteOneById(int questionId) {
+        String sql = "DELETE FROM Question WHERE questionId = ?";
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, questionId);
+            this.preparedStatement.executeUpdate();
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        }
+    }
+
 } // class

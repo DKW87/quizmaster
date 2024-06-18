@@ -1,11 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import model.Role;
+import javafx.scene.control.*;
 import model.UserSession;
 import view.Main;
 import view.SceneManager;
@@ -78,22 +74,24 @@ public class WelcomeController {
         taskMenuButton.getItems().clear();
         taskMenuButton.getItems().addAll(COORDINATOR_TASKS);
     }
+
+    // temporarily added all manage views to all roles for testing purposes
     private void switchToRole(int roleId){
         switch(roleId) {
             case 1:
-                setStudentSetup();
+                setAllManageViews();
                 break;
             case 2:
-                setCoordinatorSetup();
+                setAllManageViews();
                 break;
             case 3:
-
+                setAllManageViews();
                 break;
             case 4:
-
+                setAllManageViews();
                 break;
             case 5:
-
+                setAllManageViews();
                 break;
             default:
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -105,4 +103,21 @@ public class WelcomeController {
                 break;
         }
     }
+
+    // temporary set all manage views for all roles for testing purposes
+    private void setAllManageViews() {
+        MenuItem manageUser = new MenuItem("Beheer gebruikers");
+        manageUser.setOnAction(event -> sceneManager.showManageUserScene());
+        taskMenuButton.getItems().add(manageUser);
+        MenuItem manageCourse = new MenuItem("Beheer cursussen");
+        manageCourse.setOnAction(event -> sceneManager.showManageCoursesScene());
+        taskMenuButton.getItems().add(manageCourse);
+        MenuItem manageQuiz = new MenuItem("Beheer quizzen");
+        manageQuiz.setOnAction(event -> sceneManager.showManageQuizScene());
+        taskMenuButton.getItems().add(manageQuiz);
+        MenuItem manageQuestion = new MenuItem("Beheer vragen");
+        manageQuestion.setOnAction(event -> sceneManager.showManageQuestionsScene());
+        taskMenuButton.getItems().add(manageQuestion);
+    }
+
 }
