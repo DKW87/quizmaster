@@ -49,12 +49,6 @@ public class CreateUpdateQuizController {
         quizCourse.setValue(quiz.getCourse());
     }
 
-//    @FXML
-//    public void doCreateUpdateQuiz(ActionEvent event) {
-//        Quiz quiz = quizLijst.getSelectionModel().getSelectedItem();
-//        Main.getSceneManager().showCreateUpdateQuizScene(quiz);
-//    }
-
     @FXML
     public void doGoToQuizzesList(ActionEvent actionEvent) {sceneManager.showManageQuizScene();
     }
