@@ -97,4 +97,14 @@ public class RoleDAO extends AbstractDAO implements GenericDAO<Role> {
             System.out.println("Error in RoleDAO/storeOne: " + SqlException.getMessage());
         }
     }
+
+    @Override
+    public void updateOne(Role type) {
+
+    }
+
+    @Override
+    public void deleteOneById(int id) {
+
+    }
 }
