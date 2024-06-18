@@ -118,7 +118,7 @@ public class ManageCoursesController {
         difficulty.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getDifficulty().getName()));
         coordinator.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getCoordinator().getFullName()));
+                new SimpleStringProperty(cellData.getValue().getCoordinator().getUserFullName()));
         studentCount.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getStudentCount())));
         courseTable.getSelectionModel().selectFirst();

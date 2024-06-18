@@ -131,6 +131,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
      *
      * @param courseId the ID of the course to be deleted
      */
+    @Override
     public void deleteOneById(int courseId) {
         String sql = "DELETE FROM Course WHERE courseId = ?;";
         try {
@@ -147,6 +148,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
      *
      * @param course the course object containing the updated values
      */
+    @Override
     public void updateOne(Course course)  {
         String sql = "UPDATE Course SET name = ?, difficultyId = ?, coordinatorId = ? WHERE courseId = ?;";
         try {

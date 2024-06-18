@@ -98,23 +98,21 @@ public class CreateUpdateCourseController {
      *
      */
     private void setupCourseCoordinatorComboBox(){
-        // FIXME @Ekrem  userDao.getByRoleID(2); get coordinators
         coordinatorComboBox.getItems()
-                .addAll(FXCollections.observableArrayList(userDao.getCoordinators()));
+                .addAll(FXCollections.observableArrayList(userDao.getByRoleID(2)));
         // Custom cell factory to display coordinator name
         coordinatorComboBox.setCellFactory(comboBox -> new ListCell<>() {
             @Override
             protected void updateItem(User u, boolean empty) {
                 super.updateItem(u, empty);
-                // fixme: @Ekrem get coordinator name u.getUserFullName
-                setText(empty ? null : u.getFullName());
+                setText(empty ? null : u.getUserFullName());
             }
         });
         // Custom converter to display coordinator name
         coordinatorComboBox.setConverter(new StringConverter<>() {
             @Override
             public String toString(User u) {
-                return u != null ? u.getFullName() : null;
+                return u != null ? u.getUserFullName() : null;
             }
 
             @Override
