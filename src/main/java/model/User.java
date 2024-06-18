@@ -40,6 +40,10 @@ public class User {
                 + "\n role: " + role;
     }
 
+    public String getUserFullName(String firstName, String infix, String lastName) {
+        return firstName + " " + infix + " " + lastName;
+    }
+
     public int getUserId() {
         return userId;
     }
