@@ -129,6 +129,17 @@ public class QuizResultDAO extends AbstractDAO implements GenericDAO<QuizResult>
         }
 
     }
+
+    @Override
+    public void updateOne(QuizResult type) {
+
+    }
+
+    @Override
+    public void deleteOneById(int id) {
+
+    }
+
     @Override
     public QuizResult getByName(String name) {
         return null;

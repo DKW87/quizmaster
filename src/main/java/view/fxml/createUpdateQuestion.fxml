@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox layoutX="19.0" layoutY="26.0" prefHeight="510.0" prefWidth="372.0">
@@ -37,7 +36,7 @@
                      <children>
                         <Label text="Antwoord A:">
                            <font>
-                              <Font size="16.0" />
+                              <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
                         <TextField fx:id="antwoordA" minWidth="250.0" prefHeight="26.0" prefWidth="486.0" />
