@@ -40,7 +40,7 @@ public class User {
                 + "\n role: " + role;
     }
 
-    public String getUserFullName(String firstName, String infix, String lastName) {
+    public String getUserFullName() {
         return firstName + " " + infix + " " + lastName;
     }
 
