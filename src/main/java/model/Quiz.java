@@ -76,12 +76,13 @@ public class Quiz {
     // toString
     @Override
     public String toString() {
-        int QCounter = 0;
         StringBuilder toStringQuiz = new StringBuilder();
         toStringQuiz.append("Quiz ID: " + this.quizId + " ");
-        toStringQuiz.append("Name: " + this.name + "\n");
-        toStringQuiz.append("Quiz is part of course: " + this.course + "\n");
-        toStringQuiz.append("Total Quizpoints: " + this.quizPoints + "\n");
+        toStringQuiz.append("Name: " + this.name + " ");
+        toStringQuiz.append("Course: " + this.course.getName() + " ");
+        toStringQuiz.append("Quizpoints: " + this.quizPoints + " ");
+        toStringQuiz.append("Difficulty: " + this.difficulty.getName() + " ");
+        toStringQuiz.append("Passmark: " + this.passMark + " ");
         return toStringQuiz.toString();
     }
 

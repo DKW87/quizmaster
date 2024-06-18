@@ -6,6 +6,7 @@ module QuizMaster {
     requires mysql.connector.j;
     requires lightcouch;
     requires com.google.gson;
+    requires java.desktop;
 
     opens view to javafx.graphics, javafx.fxml;
     opens controller to javafx.fxml;
