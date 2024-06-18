@@ -26,9 +26,18 @@ public class MackLauncherTest {
         RoleDAO roleDAO = new RoleDAO(dbAccess);
         UserDAO userDAO = new UserDAO(dbAccess);
 
-        // Small CSV to check import into Java.
-        String csvFilePath = "resources/gebruikersV6.csv";
-        List<User> importUsersTest = convertListToUsers(csvFilePath);
+        List<User> users = userDAO.getAll();
+        List<User> users2 = userDAO.getByRoleID(2);
+        User user = userDAO.getByName("talmama");
+
+        System.out.println(user);
+
+
+
+
+//        // Small CSV to check import into Java.
+//        String csvFilePath = "resources/gebruikersV6.csv";
+//        List<User> importUsersTest = convertListToUsers(csvFilePath);
 
         // test print from import above.
 //        for (User user : importUsersTest) {
@@ -42,11 +51,11 @@ public class MackLauncherTest {
 //            System.out.println("----");
 //            System.out.println();
 //        }
-
-        for (User user : importUsersTest) {
-            userDAO.storeOne(user);
-            System.out.printf("User %s added to DB\n", user.getUserName());
-        }
+//
+//        for (User user : importUsersTest) {
+//            userDAO.storeOne(user);
+//            System.out.printf("User %s added to DB\n", user.getUserName());
+//        }
 
 
     }

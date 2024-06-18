@@ -53,7 +53,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
             setupPreparedStatementWithKey(sqlGetUserName);
             preparedStatement.setString(1, name);
             ResultSet resultSet = executeSelectStatement();
-            user = getUser(user, resultSet);
+            if (resultSet.next()) {  user = getUser(resultSet);}
         } catch (SQLException SqlException) {
             System.out.println("Error in UserDAO/saveUser: " + SqlException.getMessage());
         }
@@ -69,7 +69,8 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
             setupPreparedStatementWithKey(sqlGetUserID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = executeSelectStatement();
-            user = getUser(user, resultSet);
+            if (resultSet.next()) {  user = getUser(resultSet);}
+
         } catch (SQLException sqlRuntimeError) {
             System.out.println("Error in UserDAO/getUserPerID: " + sqlRuntimeError.getMessage());
         }
@@ -83,8 +84,8 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         try {
             setupPreparedStatementWithKey(sqlUserList);
             ResultSet resultSet = executeSelectStatement();
-            User user;
-            while ((user = getUser(null, resultSet)) != null) {
+            while (resultSet.next()) {
+                User user = getUser(resultSet);
                 users.add(user);
             }
         } catch (SQLException SqlException) {
@@ -93,8 +94,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         return users;
     }
 
-    private User getUser(User user, ResultSet resultSet) throws SQLException {
-        if (resultSet.next()) {
+    private User getUser(ResultSet resultSet) throws SQLException {
             String userName = resultSet.getString("username");
             String password = resultSet.getString("password");
             String firstName = resultSet.getString("firstname");
@@ -103,9 +103,9 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
             int roleId = resultSet.getInt("roleId");
             int userId = resultSet.getInt("userId");
             Role role = this.roleDAO.getById(roleId);  // Creates role with getUserRoleById method so a new user can be created.
-            user = new User(userId,userName, password, firstName, infix, lastName, role);
-        }
-        return user;
+            return new User(userId,userName, password, firstName, infix, lastName, role);
+
+
     }
 
     // Method to return all users from the DB by the given roleId.
@@ -117,9 +117,10 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
             preparedStatement.setInt(1, roleId);
             ResultSet resultSet = executeSelectStatement();
             while (resultSet.next()) {
-                User user = getUser(null, resultSet);
+                User user = getUser(resultSet);
                 users.add(user);
             }
+
         } catch (SQLException sqlRuntimeError) {
             System.out.println("Error in UserDAO/getUserPerID: " + sqlRuntimeError.getMessage());
         }
