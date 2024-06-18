@@ -33,8 +33,6 @@ public class MackLauncherTest {
         System.out.println(user);
 
 
-
-
 //        // Small CSV to check import into Java.
 //        String csvFilePath = "resources/gebruikersV6.csv";
 //        List<User> importUsersTest = convertListToUsers(csvFilePath);
