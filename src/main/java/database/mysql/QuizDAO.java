@@ -1,6 +1,6 @@
 package database.mysql;
 
-import model.Quiz;
+import model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -109,12 +109,34 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
     }
 
     @Override
-    public void updateOne(Quiz quiz){};
-    // todo RJ: aanvullen.
+    public void updateOne(Quiz quiz){
+        String sql = "UPDATE Quiz SET name = ?, difficultyId = ?, passMark = ?," +
+                " quizPoints = ?, courseId = ? WHERE quizId = ?";
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setString(1, quiz.getQuizName());
+            this.preparedStatement.setInt(2, quiz.getQuizDifficulty().getDifficultyId());
+            this.preparedStatement.setInt(3, quiz.getPassMark());
+            this.preparedStatement.setInt(4, quiz.getQuizPoints());
+            this.preparedStatement.setInt(5, quiz.getCourse().getCourseId());
+            this.preparedStatement.setInt(6, quiz.getQuizId());
+            this.executeManipulateStatement();
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        }
+    };
+
 
     @Override
-    public void deleteOneById(int quizId) {};
-    // todo RJ: aanvullen.
-
+    public void deleteOneById(int quizId) {
+        String sql = "DELETE FROM Quiz WHERE quizId = ?";
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, quizId);
+            this.preparedStatement.executeUpdate();
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        }
+    };
 
 }
