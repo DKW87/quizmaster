@@ -55,6 +55,23 @@ public class StudentCourseDAO extends AbstractDAO {
         return studentCourses;
     }
 
+    public int getCourseByStudentCount(int courseId) {
+        String sql = "select count(*) as studentCount from StudentCourse where courseId = ?";
+
+       int studentCount = 0;
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, courseId);
+            ResultSet resultSet = this.executeSelectStatement();
+            while (resultSet.next()) {
+                studentCount = resultSet.getInt("studentCount");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return studentCount;
+    }
+
 
     public void storeOne(StudentCourse studentCourse) {
 
