@@ -1,8 +1,6 @@
 package database.mysql;
 
 import model.Course;
-import model.Difficulty;
-import model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +17,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     // FIXME: implementeer DAO's
     private final DifficultyDAO difficultyDao = new DifficultyDAO(dbAccess);
     private final UserDAO userDao = new UserDAO(dbAccess);
+    private final StudentCourseDAO studentCourseDAO = new StudentCourseDAO(dbAccess);
 
     public CourseDAO(DBAccess dbAccess) {
         super(dbAccess);
@@ -32,18 +31,14 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
             this.setupPreparedStatement(sql);
             ResultSet resultSet = this.executeSelectStatement();
             while (resultSet.next()) {
-                int courseId = resultSet.getInt("courseId");
-                String name = resultSet.getString("name");
-                int coordinatorId = resultSet.getInt("coordinatorId");
-                int difficultyId = resultSet.getInt("difficultyId");
-                var difficulty = difficultyDao.getById(difficultyId);
-                var coordinator = userDao.getById(coordinatorId);
-                Course course = new Course(courseId, name, coordinator, difficulty);
+                Course course  = createCourseFromResultSet(resultSet);
+                var studentCount = studentCourseDAO.getCourseByStudentCount(course.getCourseId());
+                course.setStudentCount(studentCount);
                 courses.add(course);
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error in CourseDAO/getAll: " + e.getMessage());
         }
         return courses;
     }
@@ -63,22 +58,13 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
             this.preparedStatement.setInt(1, coordinatorId);
             ResultSet resultSet = this.executeSelectStatement();
             while (resultSet.next()) {
-                int courseId = resultSet.getInt("courseId");
-                String name = resultSet.getString("name");
-
-                int difficultyId = resultSet.getInt("difficultyId");
-                // TODO: @MacK and @Danny --> Ik heb userDao en difficultyDao nodig
-
-//                 var difficulty = difficultyDao.getOneById(difficultyId);
-//                    var coordinator = userDao.getOneById(coordinatorId);
-
-                //Course course = new Course(courseId, name, coordinator, difficulty);
-                // FIXME : courses.add(course);
+                Course course = createCourseFromResultSet(resultSet);
+                var studentCount = studentCourseDAO.getCourseByStudentCount(course.getCourseId());
+                course.setStudentCount(studentCount);
                 courses.add(null);
-
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error in CourseDAO/getCoursesByCoordinator: " + e.getMessage());
         }
         return courses;
     }
@@ -92,16 +78,10 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
             this.preparedStatement.setInt(1, id);
             ResultSet resultSet = this.executeSelectStatement();
             if (resultSet.next()) {
-                String name = resultSet.getString("name");
-                int difficultyId = resultSet.getInt("difficultyId");
-                int coordinatorId = resultSet.getInt("coordinatorId");
-                // FIXME: difficultyId, coordinatorId
-                var coordinator = userDao.getById(coordinatorId);
-                var difficulty = difficultyDao.getById(difficultyId);
-                course = new Course(id, name, coordinator, difficulty);
+               course = createCourseFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error in CourseDAO/getCourseById: " + e.getMessage());
         }
         return course;
     }
@@ -123,16 +103,10 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
             this.preparedStatement.setString(1, courseName);
             ResultSet resultSet = this.executeSelectStatement();
             if (resultSet.next()) {
-                String name = resultSet.getString("name");
-                int courseId = resultSet.getInt("courseId");
-                int difficultyId = resultSet.getInt("difficultyId");
-                int coordinatorId = resultSet.getInt("coordinatorId");
-                var coordinator = userDao.getById(coordinatorId);
-                var difficulty = difficultyDao.getById(difficultyId);
-                course = new Course(courseId, name, coordinator, difficulty);
+                course = createCourseFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error in CourseDAO/getCourseByName: " + e.getMessage());
         }
 
         return course;
@@ -144,9 +118,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
         int primaryKey;
         try {
             this.setupPreparedStatementWithKey(sql);
-            this.preparedStatement.setString(1, cursus.getName());
-            preparedStatement.setInt(2, cursus.getDifficulty().getDifficultyId());
-            preparedStatement.setInt(3, cursus.getCoordinator().getUserId());
+            setCourseToQuery(cursus);
             primaryKey = this.executeInsertStatementWithKey();
             cursus.setCourseId(primaryKey);
         } catch (SQLException e) {
@@ -170,20 +142,16 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
         }
     }
 
-
     /**
      * Updates a course in the database with the provided course object.
      *
      * @param course the course object containing the updated values
-     * @throws SQLException if there is an error executing the SQL statement
      */
-    public void updateOne(Course course) {
+    public void updateOne(Course course)  {
         String sql = "UPDATE Course SET name = ?, difficultyId = ?, coordinatorId = ? WHERE courseId = ?;";
         try {
-            this.setupPreparedStatementWithKey(sql);
-            this.preparedStatement.setString(1, course.getName());
-            this.preparedStatement.setInt(2, course.getDifficulty().getDifficultyId());
-            this.preparedStatement.setInt(3, course.getCoordinator().getUserId());
+            this.setupPreparedStatement(sql);
+            setCourseToQuery(course);
             this.preparedStatement.setInt(4, course.getCourseId());
             this.executeManipulateStatement();
         } catch (SQLException e) {
@@ -200,6 +168,34 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
         for (Course course : courses) {
             this.storeOne(course);
         }
+    }
+
+    /**
+     * Creates a Course object from the given ResultSet.
+     *
+     * @param resultSet the ResultSet containing the data for the Course
+     * @return a Course object created from the data in the ResultSet
+     * @throws SQLException if there is an error retrieving data from the ResultSet
+     */
+    private Course createCourseFromResultSet(ResultSet resultSet) throws SQLException {
+        String name = resultSet.getString("name");
+        int difficultyId = resultSet.getInt("difficultyId");
+        int coordinatorId = resultSet.getInt("coordinatorId");
+        int courseId = resultSet.getInt("courseId");
+        var difficulty = difficultyDao.getById(difficultyId);
+        var coordinator = userDao.getById(coordinatorId);
+        return new Course(courseId, name, coordinator, difficulty);
+    }
+
+    /**
+     * Sets the given Course object to the prepared statement for querying.
+     *
+     * @param  course  the Course object to set to the query
+     */
+    private void setCourseToQuery(Course course) throws SQLException {
+        this.preparedStatement.setString(1, course.getName());
+        this.preparedStatement.setInt(2, course.getDifficulty().getDifficultyId());
+        this.preparedStatement.setInt(3, course.getCoordinator().getUserId());
     }
 
 
