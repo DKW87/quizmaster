@@ -62,7 +62,7 @@
                 <Font name="Verdana Bold" size="24.0" />
             </font>
         </Label>
-        <Button fx:id="saveButton" layoutX="30.0" layoutY="524.0" mnemonicParsing="false" onAction="#doCreateUpdateCourse" prefHeight="44.0" prefWidth="540.0" style="-fx-background-color: #156082;" text="Save" textFill="WHITE">
+        <Button fx:id="saveButton" layoutX="30.0" layoutY="524.0" mnemonicParsing="false" onAction="#doCreateUpdateCourse" prefHeight="44.0" prefWidth="540.0" style="-fx-background-color: #156082;" text="Opslaan" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
@@ -70,7 +70,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
         </Button>
-        <Button fx:id="backButton" layoutX="30.0" layoutY="589.0" mnemonicParsing="false" onAction="#doMenu" prefHeight="44.0" prefWidth="540.0" style="-fx-background-color: #E89C31;" text="Go to Menu" textAlignment="CENTER" textFill="WHITE">
+        <Button fx:id="backButton" layoutX="30.0" layoutY="589.0" mnemonicParsing="false" onAction="#doMenu" prefHeight="44.0" prefWidth="540.0" style="-fx-background-color: #E89C31;" text="Terug naar Menu" textAlignment="CENTER" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>

@@ -20,6 +20,8 @@ public class Course {
         this(0, name, coordinator, difficulty);
 
     }
+
+    //FIXME: @Ekrem fix studentCount
     public Course(int courseId, String name, User coordinator, Difficulty difficulty) {
         this.courseId = courseId;
         setName(name);
