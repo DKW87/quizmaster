@@ -24,7 +24,7 @@ public class Course {
     //FIXME: @Ekrem fix studentCount
     public Course(int courseId, String name, User coordinator, Difficulty difficulty) {
         this.courseId = courseId;
-        setName(name);
+        this.name = name;
         this.coordinator = coordinator;
         this.difficulty = difficulty;
         this.studentCount = 0;
@@ -43,13 +43,7 @@ public class Course {
         return name;
     }
 
-    public void setName(String name) {
-        // ? check if name is not blank
-        if (name.isBlank() ) {
-            throw new IllegalArgumentException("Name cannot be blank");
-        }
-        this.name = name;
-    }
+
     public void setStudentCount(int studentCount) {
         this.studentCount = studentCount;
     }
