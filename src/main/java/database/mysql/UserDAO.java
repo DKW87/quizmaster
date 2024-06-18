@@ -31,12 +31,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         int primaryKey;
         try {
             setupPreparedStatementWithKey(sqlUserImport);
-            preparedStatement.setString(1, user.getUserName());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, user.getFirstName());
-            preparedStatement.setString(4, user.getInfix());
-            preparedStatement.setString(5, user.getLastName());
-            preparedStatement.setInt(6, user.getRole());
+            storeUserString(user);
             primaryKey = this.executeInsertStatementWithKey();
             user.setUserId(primaryKey);
         } catch (SQLException sqlRuntimeError) {
@@ -94,6 +89,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         return users;
     }
 
+    // Used in getByName, getByid & getAll. Avoids duplicate code.
     private User getUser(ResultSet resultSet) throws SQLException {
             String userName = resultSet.getString("username");
             String password = resultSet.getString("password");
@@ -104,8 +100,6 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
             int userId = resultSet.getInt("userId");
             Role role = this.roleDAO.getById(roleId);  // Creates role with getUserRoleById method so a new user can be created.
             return new User(userId,userName, password, firstName, infix, lastName, role);
-
-
     }
 
     // Method to return all users from the DB by the given roleId.
@@ -120,21 +114,44 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
                 User user = getUser(resultSet);
                 users.add(user);
             }
-
         } catch (SQLException sqlRuntimeError) {
             System.out.println("Error in UserDAO/getUserPerID: " + sqlRuntimeError.getMessage());
         }
         return users;
     }
 
-
-
     @Override
-    public void updateOne(User type) {
+    public void updateOne(User user) {
+        String sqlUpdateUser = "UPDATE User SET username = ?, password = ?, firstName = ?, infix = ?, lastName = ?, roleId = ? WHERE userId = ?";
+        try {
+            setupPreparedStatement(sqlUpdateUser);
+            storeUserString(user);
+            preparedStatement.setInt(7, user.getUserId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException sqlRuntimeError) {
+            System.out.println("Error in UserDAO/updateOne: " + sqlRuntimeError.getMessage());
+        }
     }
 
     @Override
     public void deleteOneById(int id) {
+        String sqlDeleteUserId = "DELETE FROM User WHERE userId = ?";
+        try {
+            setupPreparedStatement(sqlDeleteUserId);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException sqlRuntimeError) {
+            System.out.println("Error in UserDAO/deleteOneById: " + sqlRuntimeError.getMessage());
+        }
     }
 
+    // Used in storeOne & updateOne. Avoids duplicate code in methods.
+    private void storeUserString(User user) throws SQLException {
+        preparedStatement.setString(1, user.getUserName());
+        preparedStatement.setString(2, user.getPassword());
+        preparedStatement.setString(3, user.getFirstName());
+        preparedStatement.setString(4, user.getInfix());
+        preparedStatement.setString(5, user.getLastName());
+        preparedStatement.setInt(6, user.getRole());
+    }
 }
