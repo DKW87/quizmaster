@@ -50,7 +50,6 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         String sqlGetUserName = "SELECT * FROM User WHERE Username = ?";
         User user = null;
         try {
-// TO DO @mack: Dit is dubbele code ook in de methode getById, kan ik dit nog anders oplossen?
             setupPreparedStatementWithKey(sqlGetUserName);
             preparedStatement.setString(1, name);
             ResultSet resultSet = executeSelectStatement();
@@ -109,14 +108,32 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         return user;
     }
 
+    // Method to return all users from the DB by the given roleId.
+    public List<User> getByRoleID(int roleId) {
+        List <User> users = new ArrayList<>();
+        String sqlGetUserID = "SELECT * FROM User WHERE roleId = ?";
+        try {
+            setupPreparedStatementWithKey(sqlGetUserID);
+            preparedStatement.setInt(1, roleId);
+            ResultSet resultSet = executeSelectStatement();
+            while (resultSet.next()) {
+                User user = getUser(null, resultSet);
+                users.add(user);
+            }
+        } catch (SQLException sqlRuntimeError) {
+            System.out.println("Error in UserDAO/getUserPerID: " + sqlRuntimeError.getMessage());
+        }
+        return users;
+    }
+
+
+
     @Override
     public void updateOne(User type) {
-
     }
 
     @Override
     public void deleteOneById(int id) {
-
     }
 
 }
