@@ -115,15 +115,15 @@ public class CreateUpdateQuestionController {
     }
 
     private boolean checkAllFieldsFilled() {
-        if (questionDescription.getText().isEmpty()) {
+        if (questionDescription.getText().isEmpty() || questionDescription.getText().isBlank()) {
             return false;
-        } else if (answerA.getText().isEmpty()) {
+        } else if (answerA.getText().isEmpty() || answerA.getText().isBlank()) {
             return false;
-        } else if (answerB.getText().isEmpty()) {
+        } else if (answerB.getText().isEmpty() || answerB.getText().isBlank()) {
             return false;
-        } else if (answerC.getText().isEmpty()) {
+        } else if (answerC.getText().isEmpty() || answerC.getText().isBlank()) {
             return false;
-        } else if (answerD.getText().isEmpty()) {
+        } else if (answerD.getText().isEmpty() || answerD.getText().isBlank()) {
             return false;
         } else if (quizList.getSelectionModel().getSelectedItem() == null) {
             return false;
