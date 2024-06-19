@@ -3,12 +3,9 @@ package controller;
 import database.mysql.DBAccess;
 import database.mysql.UserDAO;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import model.User;
 import view.Main;
-
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 
 import java.util.List;
 
@@ -59,11 +56,30 @@ public class ManageUsersController {
     public void doDeleteUser() {
         User user = userList.getSelectionModel().getSelectedItem();
         if (user == null) {
-            errorField.setVisible(true);
-            errorField.setText("Je moet een gebruiker selecteren om te verwijderen!");
-        } else {
+            showError("Je moet een gebruiker selecteren om te verwijderen!");
+            return;
+        }
+        if (showConfirmDialog("Gebruiker verwijderen", "Weet u zeker dat u de gebruiker '" + user.getUserName() + "' wilt verwijderen?")) {
             userDAO.deleteOneById(user.getUserId());
             userList.getItems().remove(user);
+            errorField.setVisible(false);
         }
     }
+
+    // Helper method to display an error
+    private void showError(String message) {
+        errorField.setVisible(true);
+        errorField.setText(message);
+    }
+
+    // Helper method to show a confirmation dialog
+    private boolean showConfirmDialog(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, content, ButtonType.OK, ButtonType.CANCEL);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        return alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK;
+    }
 }
+
+
+
