@@ -1,9 +1,6 @@
 package database.mysql;
 
-import model.Course;
 import model.Difficulty;
-import model.Question;
-import model.Quiz;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

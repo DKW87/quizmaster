@@ -5,67 +5,112 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.shape.Line?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<BorderPane fx:controller="controller.LoginController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-    <left>
-        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #156082;" BorderPane.alignment="CENTER">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #154360;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+   <VBox prefHeight="600.0" prefWidth="900.0">
+      <children>
+         <VBox prefHeight="560.0" prefWidth="850.0" style="-fx-background-color: FFFFFF;">
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" layoutY="143.0" prefHeight="23.0" prefWidth="192.0" text="Ouiz Master" textAlignment="CENTER" textFill="#f5f5f5" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <HBox prefHeight="100.0" prefWidth="200.0">
+                  <children>
+                     <ImageView fitHeight="114.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../resources/college_logo.png" />
+                        </image>
+                        <effect>
+                           <Blend mode="OVERLAY" />
+                        </effect>
+                     </ImageView>
+                     <VBox prefHeight="114.0" prefWidth="446.0">
+                        <children>
+                            <Label alignment="CENTER" prefHeight="54.0" prefWidth="900.0" text="Prlwytzkofsky College">
+                                <font>
+                                    <Font name="Arial" size="36.0" />
+                                </font>
+                            </Label>
+                            <Label alignment="CENTER" prefHeight="29.0" prefWidth="900.0" text="Welkom bij de QuizMaster">
+                                <font>
+                                    <Font size="24.0" />
+                                </font>
+                            </Label>
+                        </children>
+                     </VBox>
+                  </children>
+               </HBox>
+               <HBox prefHeight="100.0" prefWidth="200.0" />
+                <Label text="Gebruikersnaam:">
                     <font>
-                        <Font name="Verdana Bold" size="18.0" />
+                        <Font size="18.0" />
                     </font>
                 </Label>
-                <Line endX="100.0" layoutX="100.5" layoutY="173.0" startX="-100.0" stroke="#f8f6f6" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                      <Image url="@resources/logo_drem_stacks.png" />
-
-                </ImageView>
+                <TextField fx:id="nameTextField" prefHeight="90.0" prefWidth="335.0" />
+               <Label text="VOOR SPACING" visible="false">
+                  <font>
+                     <Font size="15.0" />
+                  </font>
+               </Label>
+                <Label text="Wachtwoord:">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <PasswordField fx:id="passwordField" prefHeight="90.0" prefWidth="300.0" />
+               <Label text="VOOR SPACING" visible="false">
+                  <font>
+                     <Font size="5.0" />
+                  </font>
+               </Label>
+               <Label fx:id="loginError" text="Deze gebruiker is niet gevonden. Probeer het opnieuw of neem contact op met je administrator." textFill="RED" visible="false" />
+               <HBox prefHeight="100.0" prefWidth="538.0" />
+               <HBox prefHeight="102.0" prefWidth="562.0" spacing="15.0">
+                  <children>
+                      <Button mnemonicParsing="false" onAction="#doQuit" prefHeight="25.0" prefWidth="75.0" style="-fx-border-color: 000000; -fx-border-style: SOLID; -fx-background-color: FFFFFF;" text="Stop">
+                          <font>
+                              <Font size="16.0" />
+                          </font>
+                      </Button>
+                      <Button defaultButton="true" mnemonicParsing="false" onAction="#doLogin" prefHeight="25.0" prefWidth="450.0" style="-fx-background-color: #154360;" text="Log in" textFill="WHITE">
+                          <font>
+                              <Font name="System Bold" size="16.0" />
+                          </font>
+                      </Button>
+                  </children>
+               </HBox>
+               <HBox prefHeight="100.0" prefWidth="538.0" />
+               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="538.0">
+                  <children>
+                     <Label alignment="TOP_LEFT" text="Powered by: ">
+                        <font>
+                           <Font size="10.0" />
+                        </font>
+                     </Label>
+                     <Label text="D-REM STACKS" textFill="#154360">
+                        <font>
+                           <Font name="System Bold" size="10.0" />
+                        </font>
+                     </Label>
+                     <Label text=" © 2024">
+                        <font>
+                           <Font size="10.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </HBox>
             </children>
-        </AnchorPane>
-    </left>
-    <center>
-        <AnchorPane prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
-            <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="104.0" layoutY="46.0" prefHeight="48.0" prefWidth="194.0" text="Login " textAlignment="CENTER" textFill="#156082" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
-                    <font>
-                        <Font name="Verdana Bold" size="24.0" />
-                    </font>
-                </Label>
-                <Label layoutX="42.0" layoutY="128.0" prefHeight="19.0" prefWidth="84.0" text="Gebruikersnaam:" AnchorPane.bottomAnchor="255.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="128.0" />
-                <TextField fx:id="nameTextField" layoutX="30.0" layoutY="160.0" prefHeight="40.0" prefWidth="300.0" promptText="jouw gebruikersnaam" style="-fx-background-color: white; -fx-border-color: #156082;" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="160.0">
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding>
-                </TextField>
-                <Label layoutX="30.0" layoutY="201.0" prefHeight="19.0" prefWidth="84.0" text="Wachtwoord:" AnchorPane.leftAnchor="40.0" />
-                <PasswordField fx:id="passwordField" layoutX="30.0" layoutY="225.0" prefHeight="40.0" prefWidth="300.0" promptText="jouw wachtwoord" style="-fx-border-color: #156082; -fx-background-color: white;" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="60.0">
-                    <padding>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                    </padding>
-                </PasswordField>
-                <Button onAction="#doQuit"    alignment="CENTER" layoutX="30.0" layoutY="329.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="300.0" style="-fx-background-color: #f77167;" text="Cancel" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="60.0">
-                    <padding>
-                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
-                    </padding>
-                </Button>
-                <Button onAction="#doLogin" alignment="CENTER" layoutX="30.0" layoutY="287.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="300.0" style="-fx-background-color: #156082;" text="Login" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="60.0">
-                    <padding>
-                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
-                    </padding>
-                </Button>
-                <Label fx:id="errorLabel" alignment="CENTER" layoutX="105.0" layoutY="102.0"  textAlignment="CENTER" textFill="#f77167" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
-                </Label>
-
-            </children>
-        </AnchorPane>
-    </center>
-</BorderPane>
+            <padding>
+               <Insets bottom="15.0" left="50.0" right="50.0" top="50.0" />
+            </padding>
+         </VBox>
+      </children>
+      <padding>
+         <Insets bottom="30.0" left="130.0" right="130.0" top="30.0" />
+      </padding>
+   </VBox>
+</AnchorPane>
