@@ -2,12 +2,14 @@ package utils;
 
 import database.mysql.*;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import model.*;
 import view.Main;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 /**
@@ -145,6 +147,15 @@ public class Util {
         alert.setContentText(message);
         alert.setContentText(contentText);
         alert.show();
+    }
+    public static boolean confirmMessage(String title,String message) {
+        Alert alert = new Alert(javafx.scene.control.Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        Optional<ButtonType> option = alert.showAndWait();
+        return option.get().equals(ButtonType.OK);
+
     }
 
 
