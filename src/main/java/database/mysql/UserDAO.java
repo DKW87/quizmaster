@@ -89,7 +89,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         return users;
     }
 
-    // Used in getByName, getByid & getAll. Avoids duplicate code.
+    // Helper method to avoid duplicate code. Used in getByName, getByid & getAll.
     private User getUser(ResultSet resultSet) throws SQLException {
             String userName = resultSet.getString("username");
             String password = resultSet.getString("password");
@@ -145,7 +145,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         }
     }
 
-    // Used in storeOne & updateOne. Avoids duplicate code in methods.
+    // Helper method to avoid duplicate code Used in storeOne & updateOne.
     private void storeUserString(User user) throws SQLException {
         preparedStatement.setString(1, user.getUserName());
         preparedStatement.setString(2, user.getPassword());

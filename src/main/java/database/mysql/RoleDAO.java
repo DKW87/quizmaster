@@ -64,8 +64,8 @@ public class RoleDAO extends AbstractDAO implements GenericDAO<Role> {
     // Method to get an overview of all Roles.
     @Override
     public List<Role> getAll() {
-        List<Role> roles = new ArrayList<Role>();
-        String sqlRoleList = "SELECT * FROM role;";
+        List<Role> roles = new ArrayList<>();
+        String sqlRoleList = "SELECT * FROM Role;";
 
         try {
             setupPreparedStatement(sqlRoleList);
@@ -75,6 +75,7 @@ public class RoleDAO extends AbstractDAO implements GenericDAO<Role> {
                 String name = resultSet.getString("name");
                 Role role = new Role(name);
                 role.setRoleId(roleId);
+                System.out.println("role-----"+role);
                 roles.add(role);
             }
         } catch (SQLException SqlException) {
