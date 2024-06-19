@@ -35,9 +35,7 @@ public class User {
     }
 
     public String toString() {
-        return "User info: " + userId + " " + userName
-                + "\n firstName: " + firstName + " lastName: " + infix + " " + lastName
-                + "\n role: " + role;
+        return userId + " " + userName + " " + firstName + " " + infix + " " + lastName + " " + role;
     }
 
     public String getUserFullName() {

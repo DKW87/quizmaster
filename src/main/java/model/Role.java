@@ -17,7 +17,7 @@ public class Role {
     }
 
     public String toString(){
-        return "Role ID + Name: " + roleId + " " + name;
+        return roleId + " " + name;
     }
 
     public int getRoleId() {

@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -18,24 +19,25 @@
         </font>
     </Label>
     <ListView fx:id="userList" layoutX="16.0" layoutY="92.0" prefHeight="200.0" prefWidth="245.0" />
-    <Button layoutX="14.0" layoutY="319.0" mnemonicParsing="false" onAction="#doCreateUser" text="Nieuw">
+    <Button fx:id="createUserId" layoutX="14.0" layoutY="319.0" mnemonicParsing="false" onAction="#doCreateUser" text="Nieuw">
         <font>
             <Font size="14.0" />
         </font>
     </Button>
-    <Button layoutX="100.0" layoutY="319.0" mnemonicParsing="false" onAction="#doUpdateUser" text="Wijzig">
+    <Button fx:id="updateUserId" layoutX="100.0" layoutY="319.0" mnemonicParsing="false" onAction="#doUpdateUser" text="Wijzig">
         <font>
             <Font size="14.0" />
         </font>
     </Button>
-    <Button layoutX="178.0" layoutY="318.0" mnemonicParsing="false" onAction="#doDeleteUser" text="Verwijder">
+    <Button fx:id="deleteUserId" layoutX="178.0" layoutY="318.0" mnemonicParsing="false" onAction="#doDeleteUser" text="Verwijder">
         <font>
             <Font size="14.0" />
         </font>
     </Button>
-    <Button layoutX="16.0" layoutY="364.0" mnemonicParsing="false" onAction="#doMenu" text="Terug">
+    <Button layoutX="16.0" layoutY="364.0" mnemonicParsing="false" onAction="#doMenu" text="Menu">
         <font>
             <Font size="14.0" />
         </font>
     </Button>
+   <TextField fx:id="errorField" layoutX="352.0" layoutY="233.0" visible="false" />
 </AnchorPane>
