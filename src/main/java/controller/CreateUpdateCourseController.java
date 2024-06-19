@@ -53,6 +53,10 @@ public class CreateUpdateCourseController {
 
     @FXML
     public void doMenu() {
+        sceneManager.showWelcomeScene();
+    }
+
+    public void goList(ActionEvent actionEvent) {
         sceneManager.showManageCoursesScene();
     }
 
@@ -175,6 +179,7 @@ public class CreateUpdateCourseController {
         }
 
     }
+
 
 }
 
