@@ -36,7 +36,7 @@ public class CreateUpdateUserController {
     @FXML
     private MenuButton rolDropdown;
 
-    public CreateUpdateUserController(UserDAO userDAO) {
+    public CreateUpdateUserController() {
         this.userDAO = new UserDAO(Main.getdBaccess());
     }
 

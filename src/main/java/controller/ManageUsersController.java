@@ -3,6 +3,7 @@ package controller;
 import database.mysql.DBAccess;
 import database.mysql.UserDAO;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import model.User;
 import view.Main;
 
@@ -16,8 +17,13 @@ public class ManageUsersController {
     private final UserDAO userDAO = new UserDAO(dbAccess);
 
     @FXML
+    public Button updateUserId;
+    @FXML
+    public Button deleteUserId;
+    @FXML
+    public Button createUserId;
+    @FXML
     TextField errorField;
-
     @FXML
     ListView<User> userList;
 
@@ -37,6 +43,7 @@ public class ManageUsersController {
         Main.getSceneManager().showCreateUpdateUserScene(null); // Hoe moet ik hier een user doorgeven? Ik moet op een nieuwe scene komen om daar een user aan te maken.
     }
 
+    @FXML
     public void doUpdateUser() {
         User user = userList.getSelectionModel().getSelectedItem();
         if (user == null) {
@@ -47,6 +54,7 @@ public class ManageUsersController {
         }
     }
 
+    @FXML
     // Method will delete a user from the DB
     public void doDeleteUser() {
         User user = userList.getSelectionModel().getSelectedItem();

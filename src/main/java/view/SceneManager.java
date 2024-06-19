@@ -49,6 +49,7 @@ public class SceneManager {
     }
 
     public void showCreateUpdateUserScene(User user) {
+        System.out.println(user);
         FXMLLoader loader = getScene("/view/fxml/createUpdateUser.fxml");
         CreateUpdateUserController controller = loader.getController();
         controller.setup(user);
