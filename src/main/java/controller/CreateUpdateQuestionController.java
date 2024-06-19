@@ -90,7 +90,6 @@ public class CreateUpdateQuestionController {
         answerB.setText(question.getAnswerB());
         answerC.setText(question.getAnswerC());
         answerD.setText(question.getAnswerD());
-        System.out.println(question.getQuiz());
         quizList.getSelectionModel().select(quizDAO.getById(question.getQuiz().getQuizId()));
     }
 
@@ -155,7 +154,6 @@ public class CreateUpdateQuestionController {
 
     private void updateQuestion(Question question) {
         questionDAO.updateOne(question);
-        System.out.println(question);
         Alert updateQuestion = new Alert(Alert.AlertType.INFORMATION);
         updateQuestion.setTitle("Vraag Gewijzigd");
         updateQuestion.setHeaderText(null);
