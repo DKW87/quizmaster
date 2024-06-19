@@ -41,12 +41,7 @@ public class CreateUpdateQuizController {
 
 
     public void setup(Quiz quiz) {
-        quizID.setText(String.valueOf(quiz.getQuizId()));
-        quizName.setText(quiz.getQuizName());
-        quizDifficulty.setValue(quiz.getQuizDifficulty());
-        quizPassmark.setText(String.valueOf(quiz.getPassMark()));
-        quizPoints.setText(String.valueOf(quiz.getQuizPoints()));
-        quizCourse.setValue(quiz.getCourse());
+        setDefaultQuiz(quiz);
     }
 
     @FXML
@@ -57,5 +52,16 @@ public class CreateUpdateQuizController {
     public void doMenu(ActionEvent actionEvent){sceneManager.showWelcomeScene();}
 
     public void doCreateUpdateQuiz() {
+    }
+
+    private void setDefaultQuiz(Quiz quiz) {
+        if (quiz != null) {
+            quizID.setText(String.valueOf(quiz.getQuizId()));
+            quizName.setText(quiz.getQuizName());
+            quizDifficulty.setValue(quiz.getQuizDifficulty());
+            quizPassmark.setText(String.valueOf(quiz.getPassMark()));
+            quizPoints.setText(String.valueOf(quiz.getQuizPoints()));
+            quizCourse.setValue(quiz.getCourse());
+        }
     }
 }
