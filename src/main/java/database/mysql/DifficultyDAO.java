@@ -23,8 +23,8 @@ public class DifficultyDAO extends AbstractDAO implements GenericDAO<Difficulty>
 
     @Override
     public List<Difficulty> getAll() {
-        List<Difficulty> difficulties = new ArrayList<Difficulty>();
-        String sql = "SELECT * FROM difficulty;";
+        List<Difficulty> difficulties = new ArrayList<>();
+        String sql = "SELECT * FROM Difficulty;";
         try {
             this.setupPreparedStatement(sql);
             ResultSet resultSet = this.executeSelectStatement();

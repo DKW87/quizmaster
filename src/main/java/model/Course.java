@@ -12,15 +12,22 @@ public class Course {
     private User coordinator;
     private Difficulty difficulty;
 
+    private int studentCount;
+
+
+
     public Course(String name, User coordinator, Difficulty difficulty) {
         this(0, name, coordinator, difficulty);
 
     }
+
+    //FIXME: @Ekrem fix studentCount
     public Course(int courseId, String name, User coordinator, Difficulty difficulty) {
         this.courseId = courseId;
-        setName(name);
+        this.name = name;
         this.coordinator = coordinator;
         this.difficulty = difficulty;
+        this.studentCount = 0;
 
     }
 
@@ -36,14 +43,14 @@ public class Course {
         return name;
     }
 
-    public void setName(String name) {
-        // ? check if name is not blank
-        if (name.isBlank() ) {
-            throw new IllegalArgumentException("Name cannot be blank");
-        }
-        this.name = name;
+
+    public void setStudentCount(int studentCount) {
+        this.studentCount = studentCount;
     }
 
+    public int getStudentCount() {
+        return studentCount;
+    }
 
     public User getCoordinator() {
         return coordinator;
@@ -55,11 +62,6 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" +
-                "courseId=" + courseId +
-                ", name='" + name + '\'' +
-                ", coordinator=" + coordinator +
-                ", difficulty=" + difficulty +
-                '}';
+        return this.name;
     }
 }
