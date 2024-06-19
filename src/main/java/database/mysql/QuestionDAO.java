@@ -64,7 +64,8 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
                 String answerB = resultSet.getString("answerB");
                 String answerC = resultSet.getString("answerC");
                 String answerD = resultSet.getString("answerD");
-                Quiz quiz = quizdao.getById(id);
+                int quizId = resultSet.getInt("quizId");
+                Quiz quiz = quizdao.getById(quizId);
                 question = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
                 question.setQuestionId(questionId);
                 return question;

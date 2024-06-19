@@ -79,8 +79,7 @@ public class CreateUpdateQuestionController {
         quizList.getItems().addAll(quizDAO.getAll());
     }
 
-    public void setupCreate() {
-        headerLabel.setText("Vraag aanmaken");
+    public void setupCreate() { headerLabel.setText("Vraag aanmaken");
     }
 
     public void setupUpdate(Question question) {
@@ -91,7 +90,6 @@ public class CreateUpdateQuestionController {
         answerB.setText(question.getAnswerB());
         answerC.setText(question.getAnswerC());
         answerD.setText(question.getAnswerD());
-        System.out.println(question.getQuiz());
         quizList.getSelectionModel().select(quizDAO.getById(question.getQuiz().getQuizId()));
     }
 
@@ -108,20 +106,24 @@ public class CreateUpdateQuestionController {
             alertAllFieldsRequired();
             return null;
         } else {
-            return new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
+            Question question = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
+            if (!questionIdLabel.getText().isEmpty()) {
+                question.setQuestionId(Integer.parseInt(questionIdLabel.getText()));
+            }
+            return question;
         }
     }
 
     private boolean checkAllFieldsFilled() {
-        if (questionDescription.getText().isEmpty()) {
+        if (questionDescription.getText().isEmpty() || questionDescription.getText().isBlank()) {
             return false;
-        } else if (answerA.getText().isEmpty()) {
+        } else if (answerA.getText().isEmpty() || answerA.getText().isBlank()) {
             return false;
-        } else if (answerB.getText().isEmpty()) {
+        } else if (answerB.getText().isEmpty() || answerB.getText().isBlank()) {
             return false;
-        } else if (answerC.getText().isEmpty()) {
+        } else if (answerC.getText().isEmpty() || answerC.getText().isBlank()) {
             return false;
-        } else if (answerD.getText().isEmpty()) {
+        } else if (answerD.getText().isEmpty() || answerD.getText().isBlank()) {
             return false;
         } else if (quizList.getSelectionModel().getSelectedItem() == null) {
             return false;
@@ -141,7 +143,7 @@ public class CreateUpdateQuestionController {
     private void storeQuestion(Question question) {
         questionDAO.storeOne(question);
         Alert storeQuestion = new Alert(Alert.AlertType.INFORMATION);
-        storeQuestion.setTitle("Opgeslagen");
+        storeQuestion.setTitle("Vraag Toegevoegd");
         storeQuestion.setHeaderText(null);
         storeQuestion.setContentText("Je nieuwe vraag is opgeslagen! Klik op OK om terug naar de lijst te gaan.");
         Optional<ButtonType> result = storeQuestion.showAndWait();
@@ -153,7 +155,7 @@ public class CreateUpdateQuestionController {
     private void updateQuestion(Question question) {
         questionDAO.updateOne(question);
         Alert updateQuestion = new Alert(Alert.AlertType.INFORMATION);
-        updateQuestion.setTitle("Opgeslagen");
+        updateQuestion.setTitle("Vraag Gewijzigd");
         updateQuestion.setHeaderText(null);
         updateQuestion.setContentText("Je wijzigingen zijn opgeslagen! Klik op OK om terug naar de lijst te gaan.");
         Optional<ButtonType> result = updateQuestion.showAndWait();
