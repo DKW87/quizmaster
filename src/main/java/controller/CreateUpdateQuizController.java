@@ -1,67 +1,120 @@
 package controller;
 
+import database.mysql.CourseDAO;
 import database.mysql.DBAccess;
+import database.mysql.DifficultyDAO;
 import database.mysql.QuizDAO;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import model.Course;
+import model.Difficulty;
 import model.Quiz;
 import view.Main;
 import view.SceneManager;
 
-import java.util.List;
-
 public class CreateUpdateQuizController {
-    private final QuizDAO quizDAO;
     private final SceneManager sceneManager = Main.getSceneManager();
+    private final DBAccess dbAccess = Main.getdBaccess();
+    private final QuizDAO quizDAO = new QuizDAO(dbAccess);
+    private final DifficultyDAO difficultyDAO = new DifficultyDAO(dbAccess);
+    private final CourseDAO courseDao = new CourseDAO(dbAccess);
 
 
     @FXML
-   private TextField quizID;
+    public TextField quizIdField;
 
-   @FXML
-   private TextField quizName;
+    @FXML
+    public TextField quizNameField;
 
-   @FXML
-   private ChoiceBox quizDifficulty;
+    @FXML
+    public ComboBox<Difficulty> difficultyComboBox;
 
-   @FXML
-   private TextField quizPassmark;
+    @FXML
+    public TextField quizPassmarkField;
 
-   @FXML
-   private TextField quizPoints;
+    @FXML
+    public TextField quizPointsField;
 
-   @FXML
-   private ChoiceBox quizCourse;
+    @FXML
+    public ComboBox<Course> courseComboBox;
 
-    public CreateUpdateQuizController() {this.quizDAO = new QuizDAO(Main.getdBaccess());}
+    @FXML
+    public Label errorMsg;
+    public Button saveQuiz;
+    public Button QuizzesList;
+    public Button menu;
+
+    private Quiz selectedQuiz;
+
+
 
 
     public void setup(Quiz quiz) {
+        difficultyComboBox.getItems().addAll(FXCollections.observableArrayList(difficultyDAO.getAll()));
+        courseComboBox.getItems().addAll(FXCollections.observableArrayList(courseDao.getAll()));
         setDefaultQuiz(quiz);
     }
 
     @FXML
-    public void doGoToQuizzesList(ActionEvent actionEvent) {sceneManager.showManageQuizScene();
+    public void doGoToQuizzesList(ActionEvent actionEvent) {
+        sceneManager.showManageQuizScene();
     }
 
     @FXML
-    public void doMenu(ActionEvent actionEvent){sceneManager.showWelcomeScene();}
+    public void doMenu(ActionEvent actionEvent) {
+        sceneManager.showWelcomeScene();
+    }
 
-    public void doCreateUpdateQuiz() {
+    public void doCreateUpdateQuiz(ActionEvent event) {
+        Quiz quiz = getQuiz();
+        if (quiz != null) {
+            selectAction(quiz);
+            sceneManager.showManageQuizScene();
+        }
     }
 
     private void setDefaultQuiz(Quiz quiz) {
         if (quiz != null) {
-            quizID.setText(String.valueOf(quiz.getQuizId()));
-            quizName.setText(quiz.getQuizName());
-            quizDifficulty.setValue(quiz.getQuizDifficulty());
-            quizPassmark.setText(String.valueOf(quiz.getPassMark()));
-            quizPoints.setText(String.valueOf(quiz.getQuizPoints()));
-            quizCourse.setValue(quiz.getCourse());
+            selectedQuiz = quiz;
+            quizIdField.setText(String.valueOf(quiz.getQuizId()));
+            quizNameField.setText(quiz.getQuizName());
+            difficultyComboBox.setValue(quiz.getQuizDifficulty());
+            quizPassmarkField.setText(String.valueOf(quiz.getPassMark()));
+            quizPointsField.setText(String.valueOf(quiz.getQuizPoints()));
+            courseComboBox.setValue(quiz.getCourse());
         }
+    }
+
+    private Quiz getQuiz() {
+        String quizname = quizNameField.getText();
+        // Check if name is not blank or empty
+        if (quizname.isBlank() || quizname.isEmpty()) {
+            errorMsg.setText("Quiz naam mag niet leeg zijn!");
+            return null;
+        }
+        int quizId = 0;
+        if (!quizIdField.getText().isEmpty()) {
+            quizId = Integer.parseInt(quizIdField.getText());
+        }
+        Difficulty difficulty = (Difficulty) difficultyComboBox.getValue();
+        int passMark = Integer.parseInt(quizPassmarkField.getText());
+        int points = Integer.parseInt(quizPointsField.getText());
+        Course course = (Course) courseComboBox.getValue();
+
+        return new Quiz(quizId,quizname,passMark,points,course,difficulty);
+    }
+
+    private boolean isExistingQuiz(Quiz quiz) {return quizDAO.getByName(quiz.getQuizName()) != null;}
+
+
+    private void selectAction(Quiz quiz){
+        if (quiz.getQuizId() ==0 ) {
+            if (isExistingQuiz(quiz)) {
+                errorMsg.setText("Quiz bestaat al!");
+            }
+            quizDAO.storeOne(quiz);
+        } else quizDAO.updateOne(quiz);
     }
 }

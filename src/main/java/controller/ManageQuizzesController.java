@@ -43,10 +43,10 @@ public class ManageQuizzesController {
 
 
     @FXML
-    public void doUpdateQuiz(ActionEvent event){
+    public void doUpdateQuiz(){
         // voor als je iets wilt gebruiken van de SELECTIE uit een lijst
-        Quiz quiz = quizList.getSelectionModel().getSelectedItem();
-        sceneManager.showCreateUpdateQuizScene(quiz);
+        Quiz selectedQuiz = quizList.getSelectionModel().getSelectedItem();
+        sceneManager.showCreateUpdateQuizScene(selectedQuiz);
     }
 
     @FXML
