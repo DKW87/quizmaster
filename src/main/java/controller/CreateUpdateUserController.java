@@ -60,8 +60,6 @@ public class CreateUpdateUserController {
             AchternaamTextfield.setText(String.valueOf(user.getLastName()));
             rolComboBox.getSelectionModel().select(user.getRole());
         }
-        System.out.println(roleDAO.getAll().size());
-
     }
 
     @FXML
