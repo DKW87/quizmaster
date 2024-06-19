@@ -1,6 +1,7 @@
 package utils;
 
 import database.mysql.*;
+import javafx.scene.control.Alert;
 import model.*;
 import view.Main;
 
@@ -120,6 +121,30 @@ public class Util {
             quizList.add(quiz);
         }
         return quizList;
+    }
+
+    /**
+     * Displays an alert with the specified alert type, title, and message.
+     *
+     * @param  alertType  the type of alert to display
+     * @param  title      the title of the alert
+     * @param  message    the message to display in the alert
+     */
+    public static void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+    }
+
+    public static void showAlert(Alert.AlertType alertType, String title, String message, String contentText) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.setContentText(contentText);
+        alert.show();
     }
 
 

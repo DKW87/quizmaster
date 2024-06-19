@@ -15,6 +15,8 @@ import view.SceneManager;
 import java.util.List;
 import java.util.Optional;
 
+import static utils.Util.showAlert;
+
 public class ManageCoursesController {
     private final DBAccess dbAccess = Main.getdBaccess();
     private final SceneManager sceneManager = Main.getSceneManager();
@@ -40,10 +42,6 @@ public class ManageCoursesController {
     @FXML
     public TableColumn<Course, String> studentCount;
 
-
-    @FXML
-    private ListView<Course> courseList;
-
     @FXML
     private TableView<Course> courseTable;
 
@@ -53,15 +51,12 @@ public class ManageCoursesController {
 
 
     public void setup() {
-
         List<Course> courses = courseDao.getAll();
-//        courseList.getItems().addAll(courses);
-//        courseList.getSelectionModel().selectFirst();
-
          // set up table data
         ObservableList<Course> coursesData = FXCollections.observableArrayList(courses);
         courseTable.getItems().addAll(coursesData);
         courseTable.getSelectionModel().selectFirst();
+        selectedCourse = courseTable.getSelectionModel().getSelectedItem();
         // event listeners for selection
         courseTable.getSelectionModel().selectedItemProperty().addListener(this::onChangeCourse);
         generateCourseTable();
@@ -78,33 +73,16 @@ public class ManageCoursesController {
     }
 
     public void doUpdateCourse() {
-//        var course = courseTable.getSelectionModel().getSelectedItem();
         if (selectedCourse != null) {
             sceneManager.showCreateUpdateCourseScene(selectedCourse);
         }
     }
 
     public void doDeleteCourse() {
-//        var course = courseTable.getSelectionModel().getSelectedItem();
-        // FIXME @Ekrem maak een generic DeleteAlert method
         if (selectedCourse != null) {
-            Alert confirmLogOut = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmLogOut.setTitle("Delete Course");
-            confirmLogOut.setHeaderText(null);
-            confirmLogOut.setContentText("Weet je zeker dat je course wil verwijderen?");
-            Optional<ButtonType> result = confirmLogOut.showAndWait();
-            if (result.get() == ButtonType.OK) {
-//            courseDao.deleteOneById(course.getCourseId());
-//            courseTable.getItems().remove(course);
-                courseDao.deleteOneById(selectedCourse.getCourseId());
-                courseTable.getItems().remove(selectedCourse);
-            }
+            showConfirmAlert();
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Selecteer eerst een cursus");
-            alert.showAndWait();
+            showAlert(Alert.AlertType.ERROR, "Fout", "Selecteer eerst een cursus");
         }
 
 
@@ -126,6 +104,18 @@ public class ManageCoursesController {
 
     private void onChangeCourse(ObservableValue<? extends Course> observable, Course oldValue, Course newValue) {
         selectedCourse = newValue;
+    }
+
+    private void showConfirmAlert() {
+        Alert confirmLogOut = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmLogOut.setTitle("Course Verwijderen");
+        confirmLogOut.setHeaderText(null);
+        confirmLogOut.setContentText("Weet je zeker dat je course wil verwijderen?");
+        Optional<ButtonType> result = confirmLogOut.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            courseDao.deleteOneById(selectedCourse.getCourseId());
+            courseTable.getItems().remove(selectedCourse);
+        }
     }
 
 }
