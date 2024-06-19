@@ -4,6 +4,8 @@ import database.mysql.DBAccess;
 import database.mysql.QuizDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.Quiz;
@@ -11,6 +13,7 @@ import view.Main;
 import view.SceneManager;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public class ManageQuizzesController {
@@ -21,8 +24,8 @@ public class ManageQuizzesController {
     @FXML
     ListView<Quiz> quizList;
 
-    @FXML
-    TextField errorfield; // nog toe te voegen
+//    @FXML
+//    TextField errorfield; // nog toe te voegen
 
 
 
@@ -43,18 +46,32 @@ public class ManageQuizzesController {
 
 
     @FXML
-    public void doUpdateQuiz(ActionEvent event){
+    public void doUpdateQuiz(){
         // voor als je iets wilt gebruiken van de SELECTIE uit een lijst
-        Quiz quiz = quizList.getSelectionModel().getSelectedItem();
-        sceneManager.showCreateUpdateQuizScene(quiz);
+        Quiz selectedQuiz = quizList.getSelectionModel().getSelectedItem();
+        sceneManager.showCreateUpdateQuizScene(selectedQuiz);
     }
 
     @FXML
     public void doDeleteQuiz(ActionEvent event){
         // voor als je iets wilt gebruiken van de SELECTIE uit een lijst
         Quiz quiz = quizList.getSelectionModel().getSelectedItem();
-        quizList.getItems().remove(quiz);
-        quizDAO.deleteOneById(quiz.getQuizId());
-
+        if (quizList != null){
+            Alert confirmLogOut = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmLogOut.setTitle("Delete Quiz");
+            confirmLogOut.setHeaderText(null);
+            confirmLogOut.setContentText("Weet je zeker dat je de Quiz wilt verwijderen?");
+            Optional<ButtonType> result = confirmLogOut.showAndWait();
+            if (result.get() == ButtonType.OK){
+                quizList.getItems().remove(quiz);
+                quizDAO.deleteOneById(quiz.getQuizId());
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Selecteer eerst een quiz");
+            alert.showAndWait();
+        }
     }
 }

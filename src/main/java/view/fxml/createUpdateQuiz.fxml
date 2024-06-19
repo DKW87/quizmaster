@@ -7,6 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.ComboBox?>
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateUpdateQuizController">
    <children>
       <Text layoutX="137.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Beheer Quiz:" wrappingWidth="395.21630859375">
@@ -39,9 +40,9 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="quizID" editable="false" layoutX="343.0" layoutY="184.0" prefHeight="26.0" prefWidth="207.0" promptText="Quiz ID" />
-      <TextField fx:id="quizPassmark" layoutX="343.0" layoutY="301.0" prefHeight="26.0" prefWidth="207.0" />
-      <TextField fx:id="quizPoints" layoutX="343.0" layoutY="344.0" prefHeight="26.0" prefWidth="207.0" />
+      <TextField fx:id="quizIdField" editable="false" layoutX="343.0" layoutY="184.0" prefHeight="26.0" prefWidth="207.0" promptText="Quiz ID" />
+      <TextField fx:id="quizPassmarkField" layoutX="343.0" layoutY="301.0" prefHeight="26.0" prefWidth="207.0" />
+      <TextField fx:id="quizPointsField" layoutX="343.0" layoutY="344.0" prefHeight="26.0" prefWidth="207.0" />
       <Button fx:id="saveQuiz" layoutX="143.0" layoutY="456.0" mnemonicParsing="false" onAction="#doCreateUpdateQuiz" prefHeight="26.0" prefWidth="111.0" text="Opslaan" />
       <Button fx:id="QuizzesList" layoutX="294.0" layoutY="456.0" mnemonicParsing="false" onAction="#doGoToQuizzesList" prefHeight="26.0" prefWidth="111.0" text="Quiz Lijst" />
       <Button fx:id="menu" layoutX="439.0" layoutY="456.0" mnemonicParsing="false" onAction="#doMenu" prefHeight="26.0" prefWidth="111.0" text="Menu" />
@@ -50,8 +51,8 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="quizName" layoutX="343.0" layoutY="221.0" prefHeight="26.0" prefWidth="207.0" />
-      <ChoiceBox fx:id="quizDifficulty" layoutX="343.0" layoutY="260.0" prefHeight="26.0" prefWidth="207.0" />
-      <ChoiceBox fx:id="quizCourse" layoutX="343.0" layoutY="386.0" prefHeight="26.0" prefWidth="207.0" />
+      <TextField fx:id="quizNameField" layoutX="343.0" layoutY="221.0" prefHeight="26.0" prefWidth="207.0" />
+      <ComboBox fx:id="difficultyComboBox" layoutX="343.0" layoutY="260.0" prefHeight="26.0" prefWidth="207.0" />
+      <ComboBox fx:id="courseComboBox" layoutX="343.0" layoutY="386.0" prefHeight="26.0" prefWidth="207.0" />
    </children>
 </AnchorPane>
