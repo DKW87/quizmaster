@@ -15,6 +15,8 @@ import model.User;
 import view.Main;
 import view.SceneManager;
 
+import static utils.Util.showAlert;
+
 public class CreateUpdateCourseController {
 
     private final SceneManager sceneManager = Main.getSceneManager();
@@ -38,8 +40,7 @@ public class CreateUpdateCourseController {
     public ComboBox<User> coordinatorComboBox;
     @FXML
     public Label formTitle;
-    @FXML
-    public Label errorMsg;
+
 
     private Course selectedCourse;
 
@@ -67,7 +68,6 @@ public class CreateUpdateCourseController {
         if (course != null) {
              // select create or update action
             selectAction(course);
-            sceneManager.showManageCoursesScene();
         }
     }
 
@@ -83,7 +83,7 @@ public class CreateUpdateCourseController {
         String name = courseNameField.getText();
         // Check if name is not blank or empty
         if (name.isBlank() || name.isEmpty()) {
-            errorMsg.setText("Cursusnaam mag niet leeg zijn!");
+            showAlert(Alert.AlertType.ERROR, "Fout", "Cursusnaam mag niet leeg zijn!");
             return null;
         }
         int courseId = 0;
@@ -102,8 +102,9 @@ public class CreateUpdateCourseController {
      *
      */
     private void setupCourseCoordinatorComboBox(){
+        var coordinators = userDao.getByRoleID(2);
         coordinatorComboBox.getItems()
-                .addAll(FXCollections.observableArrayList(userDao.getByRoleID(2)));
+                .addAll(FXCollections.observableArrayList(coordinators));
         // Custom cell factory to display coordinator name
         coordinatorComboBox.setCellFactory(comboBox -> new ListCell<>() {
             @Override
@@ -168,17 +169,34 @@ public class CreateUpdateCourseController {
         if (course.getCourseId() == 0) {
             // Check if name is unique
             if(isExistingCourse(course)) {
-                errorMsg.setText("Cursusnaam bestaat al!");
+                showAlert(Alert.AlertType.ERROR, "Fout", "Cursusnaam bestaat al!");
                 return;
             }
             // Store the new course in the database
             courseDao.storeOne(course);
+            // reset form
+            resetForm();
+            // Display success message
+            showAlert(Alert.AlertType.INFORMATION, "Succes", "Cursus succesvol aangepast");
         } else {
             // Update the existing course in the database
             courseDao.updateOne(course);
+            // Display success message
+            showAlert(Alert.AlertType.INFORMATION, "Succes", "Cursus succesvol aangepast");
+
         }
 
     }
+
+    private void resetForm() {
+        courseIdField.clear();
+        courseNameField.clear();
+        difficultyComboBox.getSelectionModel().selectFirst();
+        coordinatorComboBox.getSelectionModel().selectFirst();
+
+    }
+
+
 
 
 }
