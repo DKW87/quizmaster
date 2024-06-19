@@ -1,23 +1,27 @@
-//package controller;
-//
-//import database.mysql.DBAccess;
-//import database.mysql.QuestionDAO;
-//import model.*;
-//import view.Main;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-///**
-// * @author Danny KWANT
-// * @project Quizmaster
-// * @created 13/06/2024 - 10:46
-// */
-//public class DannysTestLauncher {
-//
-//    private final static DBAccess dbAccess = Main.getdBaccess();
-//
-//    public static void main(String[] args) {
+package controller;
+
+import database.mysql.DBAccess;
+import database.mysql.QuestionDAO;
+import model.*;
+import view.Main;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author Danny KWANT
+ * @project Quizmaster
+ * @created 13/06/2024 - 10:46
+ */
+public class DannysTestLauncher {
+
+    private final static DBAccess dbAccess = Main.getdBaccess();
+
+    public static void main(String[] args) {
+
+        Question question = new Question("adjasdjadhja", "a", "b",
+                "c", "d", null);
+        System.out.println(question);
 //
 //        String locationQuestionCSV = "Resources/Vragen.csv";
 //        QuestionDAO questionDAO = new QuestionDAO(dbAccess);
@@ -49,7 +53,7 @@
 //            System.out.println(question);
 //        }
 //
-//
-//    } // main
-//
-//} // class
+
+    } // main
+
+} // class

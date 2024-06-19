@@ -37,7 +37,7 @@ public class Question {
 
     @Override
     public String toString() {
-        return "Question [" + questionId + "]: " + questionDescription +".\n";
+        return "Vraag [" + questionId + "]: " + questionDescription +".\n";
     }
 
     // getters and setters

@@ -1,6 +1,7 @@
 package controller;
 
 import database.mysql.UserDAO;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -9,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import view.Main;
 
+import java.util.Optional;
+
 import static constants.Constant.*;
 
 public class LoginController {
@@ -16,7 +19,7 @@ public class LoginController {
     private final  UserDAO userDao = new UserDAO(Main.getdBaccess());
 
     @FXML
-    public Label errorLabel;
+    public Label loginError;
     @FXML
     private TextField nameTextField;
     @FXML
@@ -27,8 +30,7 @@ public class LoginController {
         String userName = nameTextField.getText();
         String password = passwordField.getText();
         if (!validate(userName, password)) {
-            errorLabel.setText("Gebruikersnaam en wachtwoord mogen niet leeg zijn!");
-            setErrorStyle();
+            loginError.setVisible(true);
             return;
         }
         if (authenticate(userName, password)) {
@@ -40,15 +42,17 @@ public class LoginController {
 
     @FXML
     public void doQuit() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Afsluiten");
-        alert.setHeaderText("Weet u zeker dat u af wilt sluiten?");
-
-        if (alert.showAndWait().get() == ButtonType.OK) {
+        Alert confirmQuit = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmQuit.setTitle("Afsluiten");
+        confirmQuit.setHeaderText(null);
+        confirmQuit.setContentText("Weet je zeker dat je het programma wil afsluiten?");
+        Optional<ButtonType> result = confirmQuit.showAndWait();
+        if (result.get() == ButtonType.OK) {
             Main.getdBaccess().closeConnection();
-            System.exit(0);
+            Platform.exit();
         }
     }
+
 
     private void resetStyle() {
         nameTextField.setStyle("-fx-border-color: " + PRIMARY_COLOR);
@@ -74,17 +78,12 @@ public class LoginController {
     private boolean authenticate(String userName, String password) {
         var user = userDao.getByName(userName);
         if (user == null) {
-            errorLabel.setText("Gebruikersnaam en wachtwoord combinatie niet gevonden of wachtwoord incorrect. Probeer het opnieuw.");
-            setErrorStyle();
             return false;
         }
         if (!user.getPassword().equals(password)) {
-            errorLabel.setText("Gebruikersnaam en wachtwoord combinatie niet gevonden of wachtwoord incorrect. Probeer het opnieuw.");
-            setErrorStyle();
             return false;
         }
         // Set session user
-        resetStyle();
         Main.getUserSession().setUser(user);
         return true;
 

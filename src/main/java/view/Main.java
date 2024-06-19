@@ -24,6 +24,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         Main.primaryStage = primaryStage;
         primaryStage.setTitle("Make IT Work | D-rem Stacks - Quizmaster");
+        primaryStage.setResizable(false);
         getSceneManager().showLoginScene();
         primaryStage.show();
     }

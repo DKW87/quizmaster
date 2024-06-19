@@ -1,9 +1,8 @@
 package database.mysql;
 
-import model.Course;
-import model.Difficulty;
 import model.Question;
 import model.Quiz;
+import view.Main;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,9 +16,12 @@ import java.util.List;
  */
 public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
 
+    private final QuizDAO quizdao = new QuizDAO(Main.getdBaccess());
+
     public QuestionDAO(DBAccess dbAccess) {
         super(dbAccess);
     }
+
 
     @Override
     public List<Question> getAll() {
@@ -35,7 +37,8 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
                 String answerB = resultSet.getString("answerB");
                 String answerC = resultSet.getString("answerC");
                 String answerD = resultSet.getString("answerD");
-                Quiz quiz = null; // TODO implement quiz.getByName.getById
+                int quizId = resultSet.getInt("quizId");
+                Quiz quiz = quizdao.getById(quizId);
                 Question question = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
                 question.setQuestionId(questionId);
                 questions.add(question);
@@ -61,7 +64,7 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
                 String answerB = resultSet.getString("answerB");
                 String answerC = resultSet.getString("answerC");
                 String answerD = resultSet.getString("answerD");
-                Quiz quiz = null; // TODO implement quiz.getByName.getById
+                Quiz quiz = quizdao.getById(id);
                 question = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
                 question.setQuestionId(questionId);
                 return question;
@@ -87,7 +90,8 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
                 String answerB = resultSet.getString("answerB");
                 String answerC = resultSet.getString("answerC");
                 String answerD = resultSet.getString("answerD");
-                Quiz quiz = null; // TODO implement quiz.getByName.getById
+                int quizId = resultSet.getInt("quizId");
+                Quiz quiz = quizdao.getById(quizId);
                 question = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
                 question.setQuestionId(questionId);
                 return question;
