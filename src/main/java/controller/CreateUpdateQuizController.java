@@ -84,6 +84,9 @@ public class CreateUpdateQuizController {
             quizPassmarkField.setText(String.valueOf(quiz.getPassMark()));
             quizPointsField.setText(String.valueOf(quiz.getQuizPoints()));
             courseComboBox.setValue(quiz.getCourse());
+        } else {
+            courseComboBox.getSelectionModel().selectFirst();
+            difficultyComboBox.getSelectionModel().selectFirst();
         }
     }
 
