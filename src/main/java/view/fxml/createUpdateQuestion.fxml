@@ -19,7 +19,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="questionIdLabel">
+            <Label fx:id="questionIdLabel" visible="false">
                <font>
                   <Font size="20.0" />
                </font>

@@ -54,6 +54,10 @@ public class Question {
         return questionDescription;
     }
 
+    public void setQuestionDescription(String questionDescription) {
+        this.questionDescription = questionDescription;
+    }
+
     public String getAnswerA() {
         return answerA;
     }

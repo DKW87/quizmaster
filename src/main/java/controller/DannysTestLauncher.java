@@ -17,11 +17,18 @@ public class DannysTestLauncher {
 
     private final static DBAccess dbAccess = Main.getdBaccess();
 
+    private final static QuestionDAO questionDAO = new QuestionDAO(Main.getdBaccess());
+
     public static void main(String[] args) {
 
-        Question question = new Question("adjasdjadhja", "a", "b",
-                "c", "d", null);
+        Question question = questionDAO.getById(90);
         System.out.println(question);
+        question.setQuestionDescription("456");
+        System.out.println(question);
+        System.out.println(question.getQuiz().getQuizId());
+        questionDAO.updateOne(question);
+        Question question2 = questionDAO.getById(90);
+        System.out.println(question2);
 //
 //        String locationQuestionCSV = "Resources/Vragen.csv";
 //        QuestionDAO questionDAO = new QuestionDAO(dbAccess);
