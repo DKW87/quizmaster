@@ -119,7 +119,8 @@ public class Util {
             int quizPoints = Integer.parseInt(quizPointsString);
             var difficulty = difficultyDao.getByName(difficultyString);
             var course = courseDAO.getByName(courseString);
-            Quiz quiz = new Quiz(quizId,quizName,passMark,quizPoints,course,difficulty);
+            var questionInQuizCount = quizDAO.getQuestionsInQuizCount(quizId);
+            Quiz quiz = new Quiz(quizId,quizName,passMark,quizPoints,course,difficulty,questionInQuizCount);
             quizList.add(quiz);
         }
         return quizList;

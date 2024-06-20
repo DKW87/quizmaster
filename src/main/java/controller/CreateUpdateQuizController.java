@@ -1,9 +1,6 @@
 package controller;
 
-import database.mysql.CourseDAO;
-import database.mysql.DBAccess;
-import database.mysql.DifficultyDAO;
-import database.mysql.QuizDAO;
+import database.mysql.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +17,7 @@ public class CreateUpdateQuizController {
     private final QuizDAO quizDAO = new QuizDAO(dbAccess);
     private final DifficultyDAO difficultyDAO = new DifficultyDAO(dbAccess);
     private final CourseDAO courseDao = new CourseDAO(dbAccess);
+    private final QuestionDAO questionDAO = new QuestionDAO(dbAccess);
 
 
     @FXML
@@ -41,10 +39,14 @@ public class CreateUpdateQuizController {
     public ComboBox<Course> courseComboBox;
 
     @FXML
+    public TextField questionsInQuizCountField;
+
+    @FXML
     public Label errorMsg;
     public Button saveQuiz;
     public Button QuizzesList;
     public Button menu;
+
 
     private Quiz selectedQuiz;
 
@@ -84,6 +86,7 @@ public class CreateUpdateQuizController {
             quizPassmarkField.setText(String.valueOf(quiz.getPassMark()));
             quizPointsField.setText(String.valueOf(quiz.getQuizPoints()));
             courseComboBox.setValue(quiz.getCourse());
+            questionsInQuizCountField.setText(String.valueOf(quiz.getQuestionsInQuizCount()));
         } else {
             courseComboBox.getSelectionModel().selectFirst();
             difficultyComboBox.getSelectionModel().selectFirst();
@@ -104,9 +107,11 @@ public class CreateUpdateQuizController {
         Difficulty difficulty = (Difficulty) difficultyComboBox.getValue();
         int passMark = Integer.parseInt(quizPassmarkField.getText());
         int points = Integer.parseInt(quizPointsField.getText());
+        int questionsInQuizCount = Integer.parseInt(questionsInQuizCountField.getText());
         Course course = (Course) courseComboBox.getValue();
 
-        return new Quiz(quizId,quizname,passMark,points,course,difficulty);
+
+        return new Quiz(quizId,quizname,passMark,points,course,difficulty,questionsInQuizCount);
     }
 
     private boolean isExistingQuiz(Quiz quiz) {return quizDAO.getByName(quiz.getQuizName()) != null;}

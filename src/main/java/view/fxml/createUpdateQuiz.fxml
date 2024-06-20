@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.ComboBox?>
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateUpdateQuizController">
    <children>
       <Text layoutX="137.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Beheer Quiz:" wrappingWidth="395.21630859375">
@@ -20,39 +19,44 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="143.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz moeilijkheidsgraad:" wrappingWidth="159.5">
+      <Text layoutX="143.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz moeilijkheidsgraad:" wrappingWidth="159.5">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="143.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz cesuur:" wrappingWidth="111.21630859375">
+      <Text layoutX="143.0" layoutY="392.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benodigde aantal goede vragen om quiz te halen:" wrappingWidth="159.5">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="143.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz punten:" wrappingWidth="111.21630859375">
+      <Text layoutX="143.0" layoutY="442.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz punten:" wrappingWidth="111.21630859375">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="143.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Onderdeel van cursus:" wrappingWidth="135.21630859375">
+      <Text layoutX="143.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Onderdeel van cursus:" wrappingWidth="135.21630859375">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="quizIdField" editable="false" layoutX="343.0" layoutY="184.0" prefHeight="26.0" prefWidth="207.0" promptText="Quiz ID" />
-      <TextField fx:id="quizPassmarkField" layoutX="343.0" layoutY="301.0" prefHeight="26.0" prefWidth="207.0" />
-      <TextField fx:id="quizPointsField" layoutX="343.0" layoutY="344.0" prefHeight="26.0" prefWidth="207.0" />
-      <Button fx:id="saveQuiz" layoutX="143.0" layoutY="456.0" mnemonicParsing="false" onAction="#doCreateUpdateQuiz" prefHeight="26.0" prefWidth="111.0" text="Opslaan" />
-      <Button fx:id="QuizzesList" layoutX="294.0" layoutY="456.0" mnemonicParsing="false" onAction="#doGoToQuizzesList" prefHeight="26.0" prefWidth="111.0" text="Quiz Lijst" />
-      <Button fx:id="menu" layoutX="439.0" layoutY="456.0" mnemonicParsing="false" onAction="#doMenu" prefHeight="26.0" prefWidth="111.0" text="Menu" />
+      <TextField fx:id="quizIdField" editable="false" layoutX="392.0" layoutY="184.0" opacity="0.4" prefHeight="26.0" prefWidth="207.0" promptText="Quiz ID" />
+      <TextField fx:id="quizPassmarkField" layoutX="392.0" layoutY="382.0" prefHeight="26.0" prefWidth="207.0" />
+      <TextField fx:id="quizPointsField" layoutX="392.0" layoutY="424.0" prefHeight="26.0" prefWidth="207.0" />
+      <Button fx:id="saveQuiz" layoutX="143.0" layoutY="496.0" mnemonicParsing="false" onAction="#doCreateUpdateQuiz" prefHeight="26.0" prefWidth="111.0" text="Opslaan" />
+      <Button fx:id="QuizzesList" layoutX="294.0" layoutY="496.0" mnemonicParsing="false" onAction="#doGoToQuizzesList" prefHeight="26.0" prefWidth="111.0" text="Quiz Lijst" />
+      <Button fx:id="menu" layoutX="488.0" layoutY="496.0" mnemonicParsing="false" onAction="#doMenu" prefHeight="26.0" prefWidth="111.0" text="Menu" />
       <Text layoutX="143.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz naam:" wrappingWidth="111.21630859375">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="quizNameField" layoutX="343.0" layoutY="221.0" prefHeight="26.0" prefWidth="207.0" />
-      <ComboBox fx:id="difficultyComboBox" layoutX="343.0" layoutY="260.0" prefHeight="26.0" prefWidth="207.0" />
-      <ComboBox fx:id="courseComboBox" layoutX="343.0" layoutY="386.0" prefHeight="26.0" prefWidth="207.0" />
+      <TextField fx:id="quizNameField" layoutX="392.0" layoutY="221.0" prefHeight="26.0" prefWidth="207.0" />
+      <ComboBox fx:id="difficultyComboBox" layoutX="392.0" layoutY="303.0" prefHeight="26.0" prefWidth="207.0" />
+      <ComboBox fx:id="courseComboBox" layoutX="392.0" layoutY="261.0" prefHeight="26.0" prefWidth="207.0" />
+      <Text layoutX="143.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bestaande aantal vragen in Quiz:" wrappingWidth="188.21630859375">
+         <font>
+            <Font size="14.0" />
+         </font></Text>
+      <TextField fx:id="questionsInQuizCountField" editable="false" layoutX="392.0" layoutY="344.0" opacity="0.4" prefHeight="26.0" prefWidth="207.0" />
    </children>
 </AnchorPane>
