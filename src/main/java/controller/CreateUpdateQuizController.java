@@ -1,6 +1,7 @@
 package controller;
 
 import database.mysql.*;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,9 @@ import model.Quiz;
 import view.Main;
 import view.SceneManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CreateUpdateQuizController {
     private final SceneManager sceneManager = Main.getSceneManager();
     private final DBAccess dbAccess = Main.getdBaccess();
@@ -18,7 +22,7 @@ public class CreateUpdateQuizController {
     private final DifficultyDAO difficultyDAO = new DifficultyDAO(dbAccess);
     private final CourseDAO courseDao = new CourseDAO(dbAccess);
     private final QuestionDAO questionDAO = new QuestionDAO(dbAccess);
-
+    private List<Difficulty> difficulties = difficultyDAO.getAll();
 
     @FXML
     public TextField quizIdField;
@@ -54,8 +58,8 @@ public class CreateUpdateQuizController {
 
 
     public void setup(Quiz quiz) {
-        difficultyComboBox.getItems().addAll(FXCollections.observableArrayList(difficultyDAO.getAll()));
         courseComboBox.getItems().addAll(FXCollections.observableArrayList(courseDao.getAll()));
+        courseComboBox.getSelectionModel().selectedItemProperty().addListener(this::onChangeCourse);
         setDefaultQuiz(quiz);
     }
 
@@ -92,6 +96,8 @@ public class CreateUpdateQuizController {
             questionsInQuizCountField.setText(String.valueOf(quiz.getQuestionsInQuizCount()));
         } else {
             courseComboBox.getSelectionModel().selectFirst();
+            var selectedCourseDifficultyId = courseComboBox.getSelectionModel().getSelectedItem().getDifficulty().getDifficultyId();
+            setDifficultyComboBoxItems(selectedCourseDifficultyId);
             difficultyComboBox.getSelectionModel().selectFirst();
         }
     }
@@ -126,4 +132,27 @@ public class CreateUpdateQuizController {
             quizDAO.storeOne(quiz);
         } else quizDAO.updateOne(quiz);
     }
+
+    private void onChangeCourse(ObservableValue<? extends Course> observable, Course oldValue, Course newValue) {
+        int difficultyId = newValue.getDifficulty().getDifficultyId();
+        setDifficultyComboBoxItems(difficultyId);
+    }
+    private void setDifficultyComboBoxItems(int difficultyId){
+        List<Difficulty> filteredDifficulty = new ArrayList<>();
+        for (Difficulty difficulty : difficulties) {
+            if (difficultyId!=3) {
+                if (difficulty.getDifficultyId() <= difficultyId) {
+                    filteredDifficulty.add(difficulty);
+                }
+            } else {
+                if (difficulty.getDifficultyId() == difficultyId ||difficulty.getDifficultyId() + 1 == difficultyId) {
+                    filteredDifficulty.add(difficulty);
+                }
+            }
+        }
+        difficultyComboBox.getItems().clear();
+        difficultyComboBox.getItems().addAll(FXCollections.observableArrayList(filteredDifficulty));
+        difficultyComboBox.getSelectionModel().selectFirst();
+    }
+
 }

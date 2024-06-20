@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import database.mysql.CourseDAO;
 import database.mysql.DifficultyDAO;
+import database.mysql.QuizDAO;
 import model.*;
 
 /**
