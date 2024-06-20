@@ -1,6 +1,5 @@
 package controller;
 
-import database.mysql.DBAccess;
 import database.mysql.RoleDAO;
 import database.mysql.UserDAO;
 import javafx.collections.FXCollections;
@@ -9,6 +8,9 @@ import javafx.scene.control.*;
 import model.Role;
 import model.User;
 import view.Main;
+import utils.Util;
+
+import java.util.List;
 
 
 public class CreateUpdateUserController {
@@ -21,25 +23,18 @@ public class CreateUpdateUserController {
 
     @FXML
     private Label titelLabel;
-
     @FXML
     private TextField GebruikersIdTextField;
-
     @FXML
     private TextField GebruikersNaamTextField;
-
     @FXML
     private PasswordField WachtwoordTextField;
-
     @FXML
     private TextField VoornaamTextField;
-
     @FXML
     private TextField TussenvoegselTextField;
-
     @FXML
     private TextField AchternaamTextfield;
-
     @FXML
     public ComboBox<Role> rolComboBox;
 
@@ -49,54 +44,74 @@ public class CreateUpdateUserController {
     }
 
     public void setup(User user) {
-        rolComboBox.getItems().addAll(FXCollections.observableArrayList(roleDAO.getAll()));
+        List<Role> allRoles = roleDAO.getAll();
+        rolComboBox.setItems(FXCollections.observableArrayList(allRoles));
         if (user != null) {
             titelLabel.setText("Wijzig gebruiker");
-            GebruikersIdTextField.setText(String.valueOf(user.getUserId()));
-            GebruikersNaamTextField.setText(String.valueOf(user.getUserName()));
-            WachtwoordTextField.setText(String.valueOf(user.getPassword()));
-            VoornaamTextField.setText(String.valueOf(user.getFirstName()));
-            TussenvoegselTextField.setText(String.valueOf(user.getInfix()));
-            AchternaamTextfield.setText(String.valueOf(user.getLastName()));
-            rolComboBox.getSelectionModel().select(user.getRole());
+            populateFields(user);
         }
     }
 
+    // Method to go back to main menu.
     @FXML
     public void doMenu() {
         Main.getSceneManager().showWelcomeScene();
     }
 
+    // Method to go back to User List.
     public void doGebruikerslijst() {
         Main.getSceneManager().showManageUserScene();
     }
 
+    // Method to create a user if saving button is pressed.
     @FXML
     public void doCreateUpdateUser() {
         User user = createUser();
         if (user != null) {
             userDAO.storeOne(user);
-            Alert savedUser = new Alert(Alert.AlertType.INFORMATION);
-            savedUser.setContentText("Gebruiker opgeslagen");
-            savedUser.show();
+            Util.showAlert(Alert.AlertType.INFORMATION, "UserSaved", "Gebruiker is opgeslagen");
         }
     }
 
+    // Method to create new user with passed values.
     public User createUser() {
-        StringBuilder error = new StringBuilder();
-        boolean correctInput = true;
-
+        if (!inputIsValid()) {
+            Util.showAlert(Alert.AlertType.ERROR, "InvalidInput", "Vul alle gegevens in! Alleen een tussenvoegsel is niet verplicht.");
+            return null;
+        }
         String userName = GebruikersNaamTextField.getText();
         String password = WachtwoordTextField.getText();
         String firstName = VoornaamTextField.getText();
         String infix = TussenvoegselTextField.getText();
         String lastName = AchternaamTextfield.getText();
         Role role = rolComboBox.getSelectionModel().getSelectedItem();
-        if (userName.isEmpty()) {
-            error.append("Vul alle waardes in! Alleen een tussenvoegsel is niet nodig.\n");
-            correctInput = false;
-        }
         return new User(userName, password, firstName, infix, lastName, role);
+    }
+
+    // Helper method to populate the fields in the scene.
+    private void populateFields(User user) {
+        GebruikersIdTextField.setText(String.valueOf(user.getUserId()));
+        GebruikersNaamTextField.setText(user.getUserName());
+        WachtwoordTextField.setText(user.getPassword());
+        VoornaamTextField.setText(user.getFirstName());
+        TussenvoegselTextField.setText(user.getInfix());
+        AchternaamTextfield.setText(user.getLastName());
+
+        for (Role role : rolComboBox.getItems()) {
+            if (role.getRoleId() == user.getRole()) {
+                rolComboBox.getSelectionModel().select(role);
+                break;
+            }
+        }
+    }
+
+    // Helper method to check if input is valid
+    private boolean inputIsValid() {
+        return !GebruikersNaamTextField.getText().isEmpty() &&
+                !WachtwoordTextField.getText().isEmpty() &&
+                !VoornaamTextField.getText().isEmpty() &&
+                !AchternaamTextfield.getText().isEmpty() &&
+                rolComboBox.getValue() != null;
     }
 }
 

@@ -1,7 +1,5 @@
 package database.mysql;
 
-
-
 import java.util.List;
 
 public interface GenericDAO<T> {
