@@ -6,8 +6,6 @@
 
 package model;
 
-import java.util.Objects;
-
 public class Role {
 
     private int roleId;

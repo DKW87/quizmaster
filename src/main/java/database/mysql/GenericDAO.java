@@ -1,8 +1,5 @@
 package database.mysql;
 
-
-
-import java.sql.SQLException;
 import java.util.List;
 
 public interface GenericDAO<T> {
