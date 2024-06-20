@@ -37,23 +37,39 @@ public class ManageQuestionsController {
     }
 
     @FXML
-    public void doUpdateQuestion() {
-        Question question = questionList.getSelectionModel().getSelectedItem();
-        Main.getSceneManager().showCreateUpdateQuestionScene(question);
+    private void doUpdateQuestion() {
+        if (questionList.getSelectionModel().getSelectedItem() == null) {
+            noSelectionError();
+        } else {
+            Question question = questionList.getSelectionModel().getSelectedItem();
+            Main.getSceneManager().showCreateUpdateQuestionScene(question);
+        }
     }
 
     @FXML
-    public void doDeleteQuestion() {
-        Question question = questionList.getSelectionModel().getSelectedItem();
-        Alert confirmDelete = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmDelete.setTitle("Verwijder Vraag");
-        confirmDelete.setHeaderText(null);
-        confirmDelete.setContentText("Weet je zeker dat je deze vraag wil verwijderen?");
-        Optional<ButtonType> result = confirmDelete.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            questionDAO.deleteOneById(question.getQuestionId());
-            questionList.getItems().remove(question);
+    private void doDeleteQuestion() {
+        if (questionList.getSelectionModel().getSelectedItem() == null) {
+            noSelectionError();
+        } else {
+            Question question = questionList.getSelectionModel().getSelectedItem();
+            Alert confirmDelete = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmDelete.setTitle("Verwijder Vraag");
+            confirmDelete.setHeaderText(null);
+            confirmDelete.setContentText("Weet je zeker dat je deze vraag wil verwijderen?");
+            Optional<ButtonType> result = confirmDelete.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                questionDAO.deleteOneById(question.getQuestionId());
+                questionList.getItems().remove(question);
+            }
         }
+    }
+
+    private void noSelectionError() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Foutmelding");
+        alert.setHeaderText(null);
+        alert.setContentText("Je moet eerst een vraag selecteren.");
+        alert.showAndWait();
     }
 
 }
