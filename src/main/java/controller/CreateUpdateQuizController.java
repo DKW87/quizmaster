@@ -73,6 +73,9 @@ public class CreateUpdateQuizController {
         Quiz quiz = getQuiz();
         if (quiz != null) {
             selectAction(quiz);
+            Alert savedUser = new Alert(Alert.AlertType.INFORMATION);
+            savedUser.setContentText("Quiz (wijzigingen) opgeslagen");
+            savedUser.show();
             sceneManager.showManageQuizScene();
         }
     }
