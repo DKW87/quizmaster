@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import database.mysql.CourseDAO;
 import database.mysql.DifficultyDAO;
+import database.mysql.QuizDAO;
 import model.*;
 
 /**
@@ -24,8 +25,19 @@ public class Quiz {
     private int passMark;
     private int quizPoints;
     private Course course;
+    private int questionsInQuizCount;
 
     // all args constructor:
+    public Quiz(int quizId, String name, int passMark, int quizPoints, Course course, Difficulty difficulty, int questionsInQuizCount) {
+        this.quizId = quizId;
+        this.name = name;
+        this.passMark = passMark;
+        this.quizPoints = quizPoints;
+        this.course = course;
+        this.difficulty = difficulty;
+        this.questionsInQuizCount = questionsInQuizCount;
+    }
+
     public Quiz(int quizId, String name, int passMark, int quizPoints, Course course, Difficulty difficulty) {
         this.quizId = quizId;
         this.name = name;
@@ -33,6 +45,7 @@ public class Quiz {
         this.quizPoints = quizPoints;
         this.course = course;
         this.difficulty = difficulty;
+        this.questionsInQuizCount = 0;
     }
 
     // getters en setters
@@ -61,15 +74,14 @@ public class Quiz {
         return course;
     }
 
-    // nog verwijderen?
-    // public void setCourse(Course course) {
-    //    this.course = course;
-    //}
-
 
 
     public Difficulty getQuizDifficulty() {
         return difficulty;
+    }
+
+    public int getQuestionsInQuizCount() {
+        return questionsInQuizCount;
     }
 
 
@@ -83,6 +95,7 @@ public class Quiz {
         toStringQuiz.append("Quizpoints: " + this.quizPoints + " ");
         toStringQuiz.append("Difficulty: " + this.difficulty.getName() + " ");
         toStringQuiz.append("Passmark: " + this.passMark + " ");
+        toStringQuiz.append("#Questions in Quiz: " + this.questionsInQuizCount + " ");
         return toStringQuiz.toString();
     }
 
