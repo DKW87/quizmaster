@@ -12,7 +12,9 @@ import view.Main;
 
 import java.util.Optional;
 
-import static constants.Constant.*;
+import static constants.Constant.ERROR_COLOR;
+import static constants.Constant.PRIMARY_COLOR;
+import static utils.Util.confirmMessage;
 
 public class LoginController {
 
@@ -42,12 +44,7 @@ public class LoginController {
 
     @FXML
     public void doQuit() {
-        Alert confirmQuit = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmQuit.setTitle("Afsluiten");
-        confirmQuit.setHeaderText(null);
-        confirmQuit.setContentText("Weet je zeker dat je het programma wil afsluiten?");
-        Optional<ButtonType> result = confirmQuit.showAndWait();
-        if (result.get() == ButtonType.OK) {
+        if (confirmMessage("Afsluiten", "Weet je zeker dat je het programma wil afsluiten?")) {
             Main.getdBaccess().closeConnection();
             Platform.exit();
         }

@@ -187,7 +187,10 @@ public class CreateUpdateCourseController {
         }
 
     }
-
+    /**
+     * Resets the form by clearing courseIdField, courseNameField, and selecting the first items in
+     * difficultyComboBox and coordinatorComboBox.
+     */
     private void resetForm() {
         courseIdField.clear();
         courseNameField.clear();
@@ -195,9 +198,6 @@ public class CreateUpdateCourseController {
         coordinatorComboBox.getSelectionModel().selectFirst();
 
     }
-
-
-
 
 }
 
