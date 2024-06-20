@@ -1,7 +1,9 @@
 package controller;
 
+import database.mysql.RoleDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import model.User;
 import model.UserSession;
 import view.Main;
 import view.SceneManager;
@@ -13,8 +15,9 @@ import static utils.Util.showAlert;
 
 public class WelcomeController {
 
-    private  final UserSession userSession = Main.getUserSession();
-    private  final SceneManager sceneManager = Main.getSceneManager();
+    private final UserSession userSession = Main.getUserSession();
+    private final SceneManager sceneManager = Main.getSceneManager();
+    private final RoleDAO roleDAO = new RoleDAO(Main.getdBaccess());
 
     @FXML
     private Label welcomeLabel;
@@ -31,8 +34,8 @@ public class WelcomeController {
         // FIXME : @Mack role name is missing (userSession.getUser().getRole() -> Role)
 
         // Set welcome message
-        welcomeLabel.setText(String.format("Inloggen als %s. \n Welcome %s!",
-                userSession.getUser().getUserName(), userSession.getUser().getUserId()));
+        welcomeLabel.setText(String.format("Ingelogd als %s, welkom %s!", roleDAO.getById(userSession.getRoleId()).getName(),
+                userSession.getUser().getFirstName()));
 
         //TODO:  Set tasks for different roles (e.g. student and coordinator)
         // -> Docent(3),Administrator(4),Functioneel Beheerder(5)

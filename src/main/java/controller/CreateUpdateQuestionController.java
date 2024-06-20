@@ -91,6 +91,7 @@ public class CreateUpdateQuestionController {
         answerC.setText(question.getAnswerC());
         answerD.setText(question.getAnswerD());
         quizList.getSelectionModel().select(quizDAO.getById(question.getQuiz().getQuizId()));
+        questionDescription.positionCaret(questionDescription.getLength());
     }
 
     private Question createQuestion() {

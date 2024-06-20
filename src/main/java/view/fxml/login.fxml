@@ -71,7 +71,7 @@
                <HBox prefHeight="100.0" prefWidth="538.0" />
                <HBox prefHeight="102.0" prefWidth="562.0" spacing="15.0">
                   <children>
-                      <Button mnemonicParsing="false" onAction="#doQuit" prefHeight="25.0" prefWidth="75.0" style="-fx-border-color: 000000; -fx-border-style: SOLID; -fx-background-color: FFFFFF;" text="Stop">
+                      <Button mnemonicParsing="false" onAction="#doQuit" prefHeight="25.0" prefWidth="75.0" style="-fx-border-color: #cc3300; -fx-border-style: SOLID; -fx-background-color: #FFFFFF;" text="Stop">
                           <font>
                               <Font size="16.0" />
                           </font>

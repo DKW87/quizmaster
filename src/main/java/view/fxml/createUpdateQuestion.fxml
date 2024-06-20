@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -10,106 +11,117 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateUpdateQuestionController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #154360;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateUpdateQuestionController">
    <children>
-      <VBox layoutX="19.0" layoutY="26.0" prefHeight="510.0" prefWidth="372.0">
+      <VBox prefHeight="600.0" prefWidth="900.0">
          <children>
-            <Label fx:id="headerLabel" text="Vraag aanmaken/wijzigen">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="questionIdLabel" visible="false">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label text="Vraag omschrijving:">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <TextArea fx:id="questionDescription" minHeight="100.0" prefHeight="150.0" prefWidth="500.0" wrapText="true" />
-            <Label text="SPACING" visible="false">
-               <font>
-                  <Font size="5.0" />
-               </font></Label>
-            <HBox prefHeight="71.0" prefWidth="500.0" spacing="25.0">
+            <VBox prefHeight="560.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
                <children>
-                  <VBox prefHeight="42.0" prefWidth="200.0">
-                     <children>
-                        <Label text="Antwoord A:">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="answerA" minWidth="250.0" prefHeight="26.0" prefWidth="486.0" />
-                        <Label text="* antwoord a is altijd het juiste antwoord" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label text="Antwoord B:">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="answerB" minWidth="250.0" prefHeight="26.0" prefWidth="298.0" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <HBox prefHeight="70.0" prefWidth="500.0" spacing="25.0">
-               <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label text="Antwoord C:">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="answerC" minWidth="250.0" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label text="Antwoord D:">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="answerD" minWidth="250.0" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <Label text="Onderdeel van quiz:">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <ComboBox fx:id="quizList" prefWidth="250.0" />
-            <Label text="spacing" visible="false" />
-            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#doCreateUpdateQuestion" text="Opslaan">
+                  <Label fx:id="headerLabel" text="Vraag aanmaken/wijzigen">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="questionIdLabel" visible="false">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label text="Vraag omschrijving:">
                      <font>
                         <Font size="16.0" />
                      </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#doQuestionList" text="Vragenlijst">
+                  </Label>
+                  <TextArea fx:id="questionDescription" minHeight="100.0" prefHeight="150.0" prefWidth="500.0" wrapText="true" />
+                  <Label text="SPACING" visible="false">
+                     <font>
+                        <Font size="5.0" />
+                     </font>
+                  </Label>
+                  <HBox prefHeight="71.0" prefWidth="500.0" spacing="25.0">
+                     <children>
+                        <VBox prefHeight="42.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Antwoord A:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="answerA" minWidth="250.0" prefHeight="26.0" prefWidth="486.0" />
+                              <Label text="* antwoord a is altijd het juiste antwoord" />
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="Antwoord B:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="answerB" minWidth="250.0" prefHeight="26.0" prefWidth="298.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="70.0" prefWidth="500.0" spacing="25.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="Antwoord C:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="answerC" minWidth="250.0" />
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="Antwoord D:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="answerD" minWidth="250.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Label text="Onderdeel van quiz:">
                      <font>
                         <Font size="16.0" />
                      </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#doMenu" text="Menu">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
+                  </Label>
+                  <ComboBox fx:id="quizList" prefWidth="600.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID;" />
+                  <Label text="spacing" visible="false" />
+                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#doCreateUpdateQuestion" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #009933;" text="Opslaan">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#doQuestionList" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #ffff00;" text="Vragenlijst">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#doMenu" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #154360;" text="Menu">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+               <padding>
+                  <Insets bottom="15.0" left="50.0" right="50.0" top="50.0" />
+               </padding>
+            </VBox>
          </children>
+         <padding>
+            <Insets bottom="30.0" left="130.0" right="130.0" top="30.0" />
+         </padding>
       </VBox>
    </children>
 </AnchorPane>
