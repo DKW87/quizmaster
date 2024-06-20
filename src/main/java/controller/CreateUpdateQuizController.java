@@ -15,6 +15,8 @@ import view.SceneManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import static utils.Util.showAlert;
+
 public class CreateUpdateQuizController {
     private final SceneManager sceneManager = Main.getSceneManager();
     private final DBAccess dbAccess = Main.getdBaccess();
@@ -22,7 +24,7 @@ public class CreateUpdateQuizController {
     private final DifficultyDAO difficultyDAO = new DifficultyDAO(dbAccess);
     private final CourseDAO courseDao = new CourseDAO(dbAccess);
     private final QuestionDAO questionDAO = new QuestionDAO(dbAccess);
-    private List<Difficulty> difficulties = difficultyDAO.getAll();
+    private final List<Difficulty> difficulties = difficultyDAO.getAll();
 
     @FXML
     public TextField quizIdField;
@@ -45,8 +47,6 @@ public class CreateUpdateQuizController {
     @FXML
     public TextField questionsInQuizCountField;
 
-    @FXML
-    public Label errorMsg;
     public Button saveQuiz;
     public Button QuizzesList;
     public Button menu;
@@ -77,9 +77,8 @@ public class CreateUpdateQuizController {
         Quiz quiz = getQuiz();
         if (quiz != null) {
             selectAction(quiz);
-            Alert savedUser = new Alert(Alert.AlertType.INFORMATION);
-            savedUser.setContentText("Quiz (wijzigingen) opgeslagen");
-            savedUser.show();
+            // Display success message
+            showAlert(Alert.AlertType.INFORMATION, "Succes", "Quiz (wijzigingen) opgeslagen");
             sceneManager.showManageQuizScene();
         }
     }
@@ -106,7 +105,7 @@ public class CreateUpdateQuizController {
         String quizname = quizNameField.getText();
         // Check if name is not blank or empty
         if (quizname.isBlank() || quizname.isEmpty()) {
-            errorMsg.setText("Quiz naam mag niet leeg zijn!");
+            showAlert(Alert.AlertType.ERROR, "Fout", "Quiz naam mag niet leeg zijn!");
             return null;
         }
         int quizId = 0;
@@ -114,8 +113,8 @@ public class CreateUpdateQuizController {
             quizId = Integer.parseInt(quizIdField.getText());
         }
         Difficulty difficulty = (Difficulty) difficultyComboBox.getValue();
-        int passMark = Integer.parseInt(quizPassmarkField.getText());
-        int points = Integer.parseInt(quizPointsField.getText());
+        int passMark = quizPassmarkField.getText().isEmpty() ? 0 : Integer.parseInt(quizPassmarkField.getText());
+        int points = quizPointsField.getText().isEmpty() ? 0 : Integer.parseInt(quizPointsField.getText());
         Course course = (Course) courseComboBox.getValue();
 
         return new Quiz(quizId,quizname,passMark,points,course,difficulty);
@@ -127,7 +126,8 @@ public class CreateUpdateQuizController {
     private void selectAction(Quiz quiz){
         if (quiz.getQuizId() ==0 ) {
             if (isExistingQuiz(quiz)) {
-                errorMsg.setText("Quiz bestaat al!");
+                showAlert(Alert.AlertType.ERROR, "Fout", "Quiznaam bestaat al!");
+                return;
             }
             quizDAO.storeOne(quiz);
         } else quizDAO.updateOne(quiz);

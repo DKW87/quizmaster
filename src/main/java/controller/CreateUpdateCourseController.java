@@ -68,6 +68,8 @@ public class CreateUpdateCourseController {
         if (course != null) {
              // select create or update action
             selectAction(course);
+            // Display success message
+            showAlert(Alert.AlertType.INFORMATION, "Succes", "Cursus succesvol aangepast");
         }
     }
 
@@ -176,14 +178,9 @@ public class CreateUpdateCourseController {
             courseDao.storeOne(course);
             // reset form
             resetForm();
-            // Display success message
-            showAlert(Alert.AlertType.INFORMATION, "Succes", "Cursus succesvol aangepast");
         } else {
             // Update the existing course in the database
             courseDao.updateOne(course);
-            // Display success message
-            showAlert(Alert.AlertType.INFORMATION, "Succes", "Cursus succesvol aangepast");
-
         }
 
     }
