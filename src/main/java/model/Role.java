@@ -6,6 +6,8 @@
 
 package model;
 
+import java.util.Objects;
+
 public class Role {
 
     private int roleId;
@@ -35,4 +37,6 @@ public class Role {
     public void setName(String name) {
         this.name = name;
     }
+
 }
+

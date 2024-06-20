@@ -10,6 +10,8 @@ import model.Role;
 import model.User;
 import view.Main;
 
+import java.util.List;
+
 
 public class CreateUpdateUserController {
 
@@ -49,7 +51,8 @@ public class CreateUpdateUserController {
     }
 
     public void setup(User user) {
-        rolComboBox.getItems().addAll(FXCollections.observableArrayList(roleDAO.getAll()));
+        List<Role> allRoles = roleDAO.getAll();
+        rolComboBox.getItems().addAll(FXCollections.observableArrayList(allRoles));
         if (user != null) {
             titelLabel.setText("Wijzig gebruiker");
             GebruikersIdTextField.setText(String.valueOf(user.getUserId()));
@@ -58,7 +61,10 @@ public class CreateUpdateUserController {
             VoornaamTextField.setText(String.valueOf(user.getFirstName()));
             TussenvoegselTextField.setText(String.valueOf(user.getInfix()));
             AchternaamTextfield.setText(String.valueOf(user.getLastName()));
-            rolComboBox.getSelectionModel().select(user.getRole());
+
+            allRoles.stream() // Added a Stream to search allRoles and match this with the users given role in getRole
+                    .filter(role -> role.getRoleId() == user.getRole())
+                    .findFirst().ifPresent(userRole -> rolComboBox.getSelectionModel().select(userRole));
         }
     }
 
