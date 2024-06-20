@@ -25,6 +25,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
             preparedStatement.setInt(3, quiz.getPassMark());
             preparedStatement.setInt(4, quiz.getQuizPoints());
             preparedStatement.setInt(5, quiz.getCourse().getCourseId());
+//            preparedStatement.setInt(6,quiz.getQuestionsInQuizCount());
             int primaryKey = executeInsertStatementWithKey();
             quiz.setQuizId(primaryKey);
         } catch (SQLException sqlError) {
@@ -126,6 +127,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
             this.preparedStatement.setInt(4, quiz.getQuizPoints());
             this.preparedStatement.setInt(5, quiz.getCourse().getCourseId());
             this.preparedStatement.setInt(6, quiz.getQuizId());
+//            this.preparedStatement.setInt(7,quiz.getQuestionsInQuizCount());
             this.executeManipulateStatement();
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());

@@ -107,11 +107,9 @@ public class CreateUpdateQuizController {
         Difficulty difficulty = (Difficulty) difficultyComboBox.getValue();
         int passMark = Integer.parseInt(quizPassmarkField.getText());
         int points = Integer.parseInt(quizPointsField.getText());
-        int questionsInQuizCount = Integer.parseInt(questionsInQuizCountField.getText());
         Course course = (Course) courseComboBox.getValue();
 
-
-        return new Quiz(quizId,quizname,passMark,points,course,difficulty,questionsInQuizCount);
+        return new Quiz(quizId,quizname,passMark,points,course,difficulty);
     }
 
     private boolean isExistingQuiz(Quiz quiz) {return quizDAO.getByName(quiz.getQuizName()) != null;}
