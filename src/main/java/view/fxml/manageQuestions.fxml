@@ -31,22 +31,22 @@
                   <children>
                       <Button mnemonicParsing="false" onAction="#doCreateQuestion" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #009933;" text="Nieuw">
                           <font>
-                              <Font size="14.0" />
+                              <Font size="16.0" />
                           </font>
                       </Button>
                       <Button mnemonicParsing="false" onAction="#doUpdateQuestion" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #ffff00;" text="Wijzig">
                           <font>
-                              <Font size="14.0" />
+                              <Font size="16.0" />
                           </font>
                       </Button>
                       <Button mnemonicParsing="false" onAction="#doDeleteQuestion" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #cc3300;" text="Verwijder">
                           <font>
-                              <Font size="14.0" />
+                              <Font size="16.0" />
                           </font>
                       </Button>
-                      <Button mnemonicParsing="false" onAction="#doMenu" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID;" text="Menu">
+                      <Button mnemonicParsing="false" onAction="#doMenu" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #154360;" text="Menu">
                           <font>
-                              <Font size="14.0" />
+                              <Font size="16.0" />
                           </font>
                       </Button>
                   </children>

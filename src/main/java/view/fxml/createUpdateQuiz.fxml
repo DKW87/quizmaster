@@ -1,58 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.ComboBox?>
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateUpdateQuizController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #154360;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateUpdateQuizController">
    <children>
-      <Text layoutX="137.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Beheer Quiz:" wrappingWidth="395.21630859375">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </Text>
-      <Text layoutX="143.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz ID:" wrappingWidth="111.21630859375">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Text>
-      <Text layoutX="143.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz moeilijkheidsgraad:" wrappingWidth="159.5">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Text>
-      <Text layoutX="143.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz cesuur:" wrappingWidth="111.21630859375">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Text>
-      <Text layoutX="143.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz punten:" wrappingWidth="111.21630859375">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Text>
-      <Text layoutX="143.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Onderdeel van cursus:" wrappingWidth="135.21630859375">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Text>
-      <TextField fx:id="quizIdField" editable="false" layoutX="343.0" layoutY="184.0" prefHeight="26.0" prefWidth="207.0" promptText="Quiz ID" />
-      <TextField fx:id="quizPassmarkField" layoutX="343.0" layoutY="301.0" prefHeight="26.0" prefWidth="207.0" />
-      <TextField fx:id="quizPointsField" layoutX="343.0" layoutY="344.0" prefHeight="26.0" prefWidth="207.0" />
-      <Button fx:id="saveQuiz" layoutX="143.0" layoutY="456.0" mnemonicParsing="false" onAction="#doCreateUpdateQuiz" prefHeight="26.0" prefWidth="111.0" text="Opslaan" />
-      <Button fx:id="QuizzesList" layoutX="294.0" layoutY="456.0" mnemonicParsing="false" onAction="#doGoToQuizzesList" prefHeight="26.0" prefWidth="111.0" text="Quiz Lijst" />
-      <Button fx:id="menu" layoutX="439.0" layoutY="456.0" mnemonicParsing="false" onAction="#doMenu" prefHeight="26.0" prefWidth="111.0" text="Menu" />
-      <Text layoutX="143.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz naam:" wrappingWidth="111.21630859375">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Text>
-      <TextField fx:id="quizNameField" layoutX="343.0" layoutY="221.0" prefHeight="26.0" prefWidth="207.0" />
-      <ComboBox fx:id="difficultyComboBox" layoutX="343.0" layoutY="260.0" prefHeight="26.0" prefWidth="207.0" />
-      <ComboBox fx:id="courseComboBox" layoutX="343.0" layoutY="386.0" prefHeight="26.0" prefWidth="207.0" />
+      <VBox prefHeight="600.0" prefWidth="900.0">
+         <children>
+            <VBox prefHeight="560.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Beheer Quiz:" wrappingWidth="395.21630859375">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Text>
+                  <Label text="spacing" visible="false">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="251.0" prefWidth="309.0" spacing="23.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz ID:" wrappingWidth="111.21630859375">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz naam:" wrappingWidth="111.21630859375">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz moeilijkheidsgraad:" wrappingWidth="220.29998779296875">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz cesuur:" wrappingWidth="124.81635284423828">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz punten:" wrappingWidth="111.21630859375">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Onderdeel van cursus:" wrappingWidth="208.01629638671875">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="18.0">
+                           <children>
+                              <TextField fx:id="quizIdField" editable="false" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" promptText="Quiz ID" />
+                              <TextField fx:id="quizNameField" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" />
+                              <ComboBox fx:id="difficultyComboBox" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID;" />
+                              <TextField fx:id="quizPassmarkField" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" />
+                              <TextField fx:id="quizPointsField" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" />
+                              <ComboBox fx:id="courseComboBox" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID;" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Label text="spacing" visible="false">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0">
+                     <children>
+                        <Button fx:id="saveQuiz" mnemonicParsing="false" onAction="#doCreateUpdateQuiz" prefHeight="26.0" prefWidth="111.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #009933;" text="Opslaan">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="QuizzesList" mnemonicParsing="false" onAction="#doGoToQuizzesList" prefHeight="26.0" prefWidth="111.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #ffff00;" text="Quiz Lijst">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="menu" mnemonicParsing="false" onAction="#doMenu" prefHeight="26.0" prefWidth="111.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #154360;" text="Menu">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="50.0" right="50.0" top="50.0" />
+               </padding>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="30.0" left="130.0" right="130.0" top="30.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>
