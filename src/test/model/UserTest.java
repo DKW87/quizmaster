@@ -17,7 +17,7 @@ public class UserTest {
         assertEquals("Mack_Bakkum", user.getUserName());
         assertEquals("password123", user.getPassword());
         assertEquals("MackTest", user.getFirstName());
-        assertEquals("", user.getInfix()); // Empty infix in this constructor
+        assertEquals("", user.getInfix()); // Empty infix in this user.
         assertEquals("BakkumTest", user.getLastName());
         assertEquals(role.getRoleId(), user.getRole());
     }
