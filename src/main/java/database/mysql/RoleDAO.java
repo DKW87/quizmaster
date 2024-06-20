@@ -8,7 +8,6 @@ package database.mysql;
 
 import model.Role;
 
-import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -29,13 +28,10 @@ public class RoleDAO extends AbstractDAO implements GenericDAO<Role> {
             preparedStatement.setInt(1, roleId);
             ResultSet resultSet = executeSelectStatement();
             if (resultSet.next()) {
-                String roleName = resultSet.getString("name");
-                Role role = new Role(roleName);
-                role.setRoleId(roleId);
-                return role;
+                return createRoleFromResultSet(resultSet);
             }
-        } catch (SQLException e) {
-            System.out.println("Error in RoleDAO/getUserRole: " + e.getMessage());
+        } catch (SQLException SqlError) {
+            handleSQLException("roleId", SqlError);
         }
         return null;
     }
@@ -49,14 +45,10 @@ public class RoleDAO extends AbstractDAO implements GenericDAO<Role> {
             preparedStatement.setString(1, roleName);
             ResultSet resultSet = executeSelectStatement();
             if (resultSet.next()) {
-                String roleName2 = resultSet.getString("name");
-                int roleIdDb = resultSet.getInt("roleId");
-                Role role = new Role(roleName2);
-                role.setRoleId(roleIdDb); // Sets the roleId from the DB to the created role.
-                return role;
+                return createRoleFromResultSet(resultSet);
             }
-        } catch (SQLException SQLException) {
-            System.out.println("Error in RoleDAO/getUserRoleByName: " + SQLException.getMessage());
+        } catch (SQLException SqlError) {
+            handleSQLException("roleName", SqlError);
         }
         return null;
     }
@@ -66,20 +58,14 @@ public class RoleDAO extends AbstractDAO implements GenericDAO<Role> {
     public List<Role> getAll() {
         List<Role> roles = new ArrayList<>();
         String sqlRoleList = "SELECT * FROM Role;";
-
         try {
             setupPreparedStatement(sqlRoleList);
             ResultSet resultSet = executeSelectStatement();
             while (resultSet.next()) {
-                int roleId = resultSet.getInt("roleId");
-                String name = resultSet.getString("name");
-                Role role = new Role(name);
-                role.setRoleId(roleId);
-                System.out.println("role-----"+role);
-                roles.add(role);
+                roles.add(createRoleFromResultSet(resultSet));
             }
-        } catch (SQLException SqlException) {
-            System.out.println("Error in RoleDAO/getAll: " + SqlException.getMessage());
+        } catch (SQLException SqlError) {
+            handleSQLException("getAll", SqlError);
         }
         return roles;
     }
@@ -88,24 +74,52 @@ public class RoleDAO extends AbstractDAO implements GenericDAO<Role> {
     @Override
     public void storeOne(Role type) {
         String sqlRoleImport = "INSERT INTO role (roleId, name) VALUES (?, ?)";
-        int primaryKey;
         try {
             setupPreparedStatementWithKey(sqlRoleImport);
             preparedStatement.setInt(1, type.getRoleId());
             preparedStatement.setString(2, type.getName());
-
-        } catch (SQLException SqlException) {
-            System.out.println("Error in RoleDAO/storeOne: " + SqlException.getMessage());
+        } catch (SQLException SqlError) {
+            handleSQLException("storeOne", SqlError);
         }
     }
 
+    // Method to update an existing role implemented. For now unused.
     @Override
-    public void updateOne(Role type) {
-
+    public void updateOne(Role role) {
+        String sqlUpdateUser = "UPDATE Role SET name = ? WHERE roleId = ?";
+        try {
+            setupPreparedStatement(sqlUpdateUser);
+            preparedStatement.setInt(1, role.getRoleId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException SqlError) {
+            handleSQLException("updateOne", SqlError);
+        }
     }
 
+    // Method to delete a role implemented, for now unused.
     @Override
     public void deleteOneById(int id) {
+        String sqlDeleteId = "DELETE FROM Role WHERE roleId = ?";
+        try {
+            setupPreparedStatement(sqlDeleteId);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException SqlError) {
+            handleSQLException("deleteOneById", SqlError);
+        }
+    }
 
+    // Helper method to handle all SQL errors.
+    private void handleSQLException(String methodName, SQLException e) {
+        System.err.println("Error in RoleDAO/" + methodName + ": " + e.getMessage());
+    }
+
+    // Helper method to create Role(s) from ResultSets.
+    private Role createRoleFromResultSet(ResultSet resultSet) throws SQLException {
+        String roleName = resultSet.getString("name");
+        int roleId = resultSet.getInt("roleId");
+        Role role = new Role(roleName);
+        role.setRoleId(roleId);
+        return role;
     }
 }
