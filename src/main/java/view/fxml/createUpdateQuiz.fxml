@@ -41,7 +41,17 @@
                                     <Font size="16.0" />
                                  </font>
                               </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Onderdeel van cursus:" wrappingWidth="208.01629638671875">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Text>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz moeilijkheidsgraad:" wrappingWidth="220.29998779296875">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="10.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bestaande aantal vragen in quiz:" wrappingWidth="231.21631622314453">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -56,21 +66,17 @@
                                     <Font size="16.0" />
                                  </font>
                               </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Onderdeel van cursus:" wrappingWidth="208.01629638671875">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Text>
                            </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0" spacing="18.0">
                            <children>
-                              <TextField fx:id="quizIdField" editable="false" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" promptText="Quiz ID" />
+                              <TextField fx:id="quizIdField" editable="false" minWidth="300.0" opacity="0.4" prefHeight="26.0" prefWidth="207.0" promptText="Quiz ID" />
                               <TextField fx:id="quizNameField" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" />
+                              <ComboBox fx:id="courseComboBox" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID;" />
                               <ComboBox fx:id="difficultyComboBox" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID;" />
+                              <TextField fx:id="questionsInQuizCountField" editable="false" opacity="0.4" />
                               <TextField fx:id="quizPassmarkField" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" />
                               <TextField fx:id="quizPointsField" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" />
-                              <ComboBox fx:id="courseComboBox" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID;" />
                            </children>
                         </VBox>
                      </children>
