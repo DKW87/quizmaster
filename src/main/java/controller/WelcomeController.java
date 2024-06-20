@@ -8,10 +8,10 @@ import model.UserSession;
 import view.Main;
 import view.SceneManager;
 
-import java.util.Optional;
-
 import static constants.Constant.COORDINATOR_TASKS;
 import static constants.Constant.STUDENT_TASKS;
+import static utils.Util.confirmMessage;
+import static utils.Util.showAlert;
 
 public class WelcomeController {
 
@@ -47,12 +47,7 @@ public class WelcomeController {
     }
 
     public void doLogout() {
-        Alert confirmLogOut = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmLogOut.setTitle("Uitloggen");
-        confirmLogOut.setHeaderText(null);
-        confirmLogOut.setContentText("Weet je zeker dat je wil uitloggen?");
-        Optional<ButtonType> result = confirmLogOut.showAndWait();
-        if (result.get() == ButtonType.OK) {
+        if (confirmMessage("Uitloggen", "Weet je zeker dat je wil uitloggen?")) {
             sceneManager.showLoginScene();
             userSession.setUser(null);
         }
@@ -97,11 +92,7 @@ public class WelcomeController {
                 setAllManageViews();
                 break;
             default:
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Role not found");
-                alert.setContentText("Role not found");
-                alert.showAndWait();
+                showAlert(Alert.AlertType.ERROR,"Fout", "Deze rol bestaat niet");
                 sceneManager.showLoginScene();
                 break;
         }

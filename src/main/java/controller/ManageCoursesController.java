@@ -13,8 +13,8 @@ import view.Main;
 import view.SceneManager;
 
 import java.util.List;
-import java.util.Optional;
 
+import static utils.Util.confirmMessage;
 import static utils.Util.showAlert;
 
 public class ManageCoursesController {
@@ -107,12 +107,7 @@ public class ManageCoursesController {
     }
 
     private void showConfirmAlert() {
-        Alert confirmLogOut = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmLogOut.setTitle("Course Verwijderen");
-        confirmLogOut.setHeaderText(null);
-        confirmLogOut.setContentText("Weet je zeker dat je course wil verwijderen?");
-        Optional<ButtonType> result = confirmLogOut.showAndWait();
-        if (result.get() == ButtonType.OK) {
+        if (confirmMessage("Course Verwijderen", "Weet je zeker dat je course wil verwijderen?")) {
             courseDao.deleteOneById(selectedCourse.getCourseId());
             courseTable.getItems().remove(selectedCourse);
         }

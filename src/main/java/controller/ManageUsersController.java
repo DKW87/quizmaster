@@ -32,14 +32,17 @@ public class ManageUsersController {
         userList.getSelectionModel().selectFirst();
     }
 
+    // Method to go bac to the main menu.
     public void doMenu() {
         Main.getSceneManager().showWelcomeScene();
     }
 
+    // Method to go to the Create User screen.
     public void doCreateUser() {
         Main.getSceneManager().showCreateUpdateUserScene(null); // Hoe moet ik hier een user doorgeven? Ik moet op een nieuwe scene komen om daar een user aan te maken.
     }
 
+    // Method to go to the Update User screen.
     @FXML
     public void doUpdateUser() {
         User user = userList.getSelectionModel().getSelectedItem();

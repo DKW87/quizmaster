@@ -9,9 +9,6 @@ package database.mysql;
 import model.User;
 import model.Role;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,8 +31,8 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
             storeUserString(user);
             primaryKey = this.executeInsertStatementWithKey();
             user.setUserId(primaryKey);
-        } catch (SQLException sqlRuntimeError) {
-            System.out.println("Error in UserDAO/saveUser: " + sqlRuntimeError.getMessage());
+        } catch (SQLException SqlError) {
+            handleSQLException("storeOne", SqlError);
         }
     }
 
@@ -43,16 +40,14 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
     @Override
     public User getByName(String name) {
         String sqlGetUserName = "SELECT * FROM User WHERE Username = ?";
-        User user = null;
         try {
             setupPreparedStatementWithKey(sqlGetUserName);
             preparedStatement.setString(1, name);
-            ResultSet resultSet = executeSelectStatement();
-            if (resultSet.next()) {  user = getUser(resultSet);}
+            return getUserFromResultSet(executeSelectStatement());
         } catch (SQLException SqlException) {
             System.out.println("Error in UserDAO/saveUser: " + SqlException.getMessage());
+            return null;
         }
-        return user;
     }
 
     // Method to retrieve a user from the DB with only their ID.
@@ -63,15 +58,14 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         try {
             setupPreparedStatementWithKey(sqlGetUserID);
             preparedStatement.setInt(1, id);
-            ResultSet resultSet = executeSelectStatement();
-            if (resultSet.next()) {  user = getUser(resultSet);}
-
-        } catch (SQLException sqlRuntimeError) {
-            System.out.println("Error in UserDAO/getUserPerID: " + sqlRuntimeError.getMessage());
+            return getUserFromResultSet(executeSelectStatement());
+        } catch (SQLException SqlError) {
+            handleSQLException("getById", SqlError);
+            return null;
         }
-        return user;
     }
 
+    // Method to return all users from the DB and put them in a List.
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
@@ -80,26 +74,12 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
             setupPreparedStatementWithKey(sqlUserList);
             ResultSet resultSet = executeSelectStatement();
             while (resultSet.next()) {
-                User user = getUser(resultSet);
-                users.add(user);
+                users.add(createUserFromResultSet(resultSet));
             }
-        } catch (SQLException SqlException) {
-            System.out.println("Error in UserDAO/getAll: " + SqlException.getMessage());
+        } catch (SQLException SqlError) {
+            handleSQLException("getAll", SqlError);
         }
         return users;
-    }
-
-    // Helper method to avoid duplicate code. Used in getByName, getByid & getAll.
-    private User getUser(ResultSet resultSet) throws SQLException {
-            String userName = resultSet.getString("username");
-            String password = resultSet.getString("password");
-            String firstName = resultSet.getString("firstname");
-            String infix = resultSet.getString("infix");
-            String lastName = resultSet.getString("lastName");
-            int roleId = resultSet.getInt("roleId");
-            int userId = resultSet.getInt("userId");
-            Role role = this.roleDAO.getById(roleId);  // Creates role with getUserRoleById method so a new user can be created.
-            return new User(userId,userName, password, firstName, infix, lastName, role);
     }
 
     // Method to return all users from the DB by the given roleId.
@@ -111,15 +91,15 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
             preparedStatement.setInt(1, roleId);
             ResultSet resultSet = executeSelectStatement();
             while (resultSet.next()) {
-                User user = getUser(resultSet);
-                users.add(user);
+                users.add(createUserFromResultSet(resultSet));
             }
-        } catch (SQLException sqlRuntimeError) {
-            System.out.println("Error in UserDAO/getUserPerID: " + sqlRuntimeError.getMessage());
+        } catch (SQLException SqlError) {
+            handleSQLException("getByRoleID", SqlError);
         }
         return users;
     }
 
+    // Method to update an already exsting user.
     @Override
     public void updateOne(User user) {
         String sqlUpdateUser = "UPDATE User SET username = ?, password = ?, firstName = ?, infix = ?, lastName = ?, roleId = ? WHERE userId = ?";
@@ -128,11 +108,12 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
             storeUserString(user);
             preparedStatement.setInt(7, user.getUserId());
             preparedStatement.executeUpdate();
-        } catch (SQLException sqlRuntimeError) {
-            System.out.println("Error in UserDAO/updateOne: " + sqlRuntimeError.getMessage());
+        } catch (SQLException SqlError) {
+            handleSQLException("updateOne", SqlError);
         }
     }
 
+    // Method to delete a user by given userId.
     @Override
     public void deleteOneById(int id) {
         String sqlDeleteUserId = "DELETE FROM User WHERE userId = ?";
@@ -140,8 +121,8 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
             setupPreparedStatement(sqlDeleteUserId);
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
-        } catch (SQLException sqlRuntimeError) {
-            System.out.println("Error in UserDAO/deleteOneById: " + sqlRuntimeError.getMessage());
+        } catch (SQLException SqlError) {
+            handleSQLException("deleteOneById", SqlError);
         }
     }
 
@@ -154,4 +135,32 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         preparedStatement.setString(5, user.getLastName());
         preparedStatement.setInt(6, user.getRole());
     }
+
+    // Helper method to create User from ResultSet
+    private User createUserFromResultSet(ResultSet resultSet) throws SQLException {
+        int userId = resultSet.getInt("userId");
+        String userName = resultSet.getString("username");
+        String password = resultSet.getString("password");
+        String firstName = resultSet.getString("firstname");
+        String infix = resultSet.getString("infix");
+        String lastName = resultSet.getString("lastName");
+        int roleId = resultSet.getInt("roleId");
+        Role role = this.roleDAO.getById(roleId);
+        return new User(userId, userName, password, firstName, infix, lastName, role);
+    }
+
+    // Helper method to get a user from ResultSet.
+    private User getUserFromResultSet(ResultSet resultSet) throws SQLException {
+        if (resultSet.next()) {
+            return createUserFromResultSet(resultSet);
+        } else {
+            return null;
+        }
+    }
+
+    // Helper method to handle all SQL errors.
+    private void handleSQLException(String methodName, SQLException e) {
+        System.err.println("Error in UserDAO/" + methodName + ": " + e.getMessage());
+    }
 }
+
