@@ -35,7 +35,7 @@ public class WelcomeController {
 
         // Set welcome message
         welcomeLabel.setText(String.format("Ingelogd als %s, welkom %s!", roleDAO.getById(userSession.getRoleId()).getName(),
-                userSession.getUser().getUserName()));
+                userSession.getUser().getFirstName()));
 
         //TODO:  Set tasks for different roles (e.g. student and coordinator)
         // -> Docent(3),Administrator(4),Functioneel Beheerder(5)
