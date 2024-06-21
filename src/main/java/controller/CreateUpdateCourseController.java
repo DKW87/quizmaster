@@ -68,8 +68,7 @@ public class CreateUpdateCourseController {
         if (course != null) {
              // select create or update action
             selectAction(course);
-            // Display success message
-            showAlert(Alert.AlertType.INFORMATION, "Succes", "Cursus succesvol aangepast");
+
         }
     }
 
@@ -84,8 +83,9 @@ public class CreateUpdateCourseController {
     private Course getCourse() {
         String name = courseNameField.getText();
         // Check if name is not blank or empty
-        if (name.isBlank() || name.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Fout", "Cursusnaam mag niet leeg zijn!");
+        if (name.isBlank() || name.isEmpty() || difficultyComboBox.getSelectionModel().getSelectedItem() == null
+                || coordinatorComboBox.getSelectionModel().getSelectedItem() == null) {
+            showAlert(Alert.AlertType.ERROR, "Fout", "Alle velden zijn verplicht!");
             return null;
         }
         int courseId = 0;
@@ -145,11 +145,9 @@ public class CreateUpdateCourseController {
             difficultyComboBox.setValue(course.getDifficulty());
             coordinatorComboBox.setValue(course.getCoordinator());
 
-        } else {
-            coordinatorComboBox.getSelectionModel().selectFirst();
-            difficultyComboBox.getSelectionModel().selectFirst();
         }
     }
+
     /**
      * A method that checks if a course already exists based on the course name.
      *
@@ -172,6 +170,7 @@ public class CreateUpdateCourseController {
             // Check if name is unique
             if(isExistingCourse(course)) {
                 showAlert(Alert.AlertType.ERROR, "Fout", "Cursusnaam bestaat al!");
+                courseNameField.requestFocus();
                 return;
             }
             // Store the new course in the database
@@ -182,6 +181,8 @@ public class CreateUpdateCourseController {
             // Update the existing course in the database
             courseDao.updateOne(course);
         }
+        // Display success message
+        showAlert(Alert.AlertType.INFORMATION, "Succes", "Cursus succesvol aangepast");
 
     }
     /**

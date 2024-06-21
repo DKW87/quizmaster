@@ -2,8 +2,10 @@ package controller;
 
 import database.mysql.DBAccess;
 import database.mysql.UserDAO;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import model.Role;
 import model.User;
 import view.Main;
 
@@ -20,16 +22,28 @@ public class ManageUsersController {
     @FXML
     public Button createUserId;
     @FXML
-    TextField errorField;
+    public TableView<User> userTable;
     @FXML
-    ListView<User> userList;
+    public TableColumn<User, String> usernameColumn;
+    @FXML
+    public TableColumn<User, String> firstNameColumn;
+    @FXML
+    public TableColumn<User, String> infixColumn;
+    @FXML
+    public TableColumn<User, String> lastNameColumn;
+    @FXML
+    public TableColumn<User, String> roleColumn;
+    @FXML
+    public TableColumn<User, Integer> amountInRoleColumn;
+    @FXML
+    TextField errorField;
 
     public void setup() {
         List<User> users = userDAO.getAll();
         for (User user : users) {
-            userList.getItems().add(user);
+            userTable.getItems().add(user);
         }
-        userList.getSelectionModel().selectFirst();
+        generateUserTable();
     }
 
     // Method to go bac to the main menu.
@@ -45,7 +59,7 @@ public class ManageUsersController {
     // Method to go to the Update User screen.
     @FXML
     public void doUpdateUser() {
-        User user = userList.getSelectionModel().getSelectedItem();
+        User user = (User) userTable.getSelectionModel().getSelectedItem();
         if (user == null) {
             errorField.setVisible(true);
             errorField.setText("Je moet een gebruiker selecteren om te wijzigen!");
@@ -57,16 +71,30 @@ public class ManageUsersController {
     @FXML
     // Method will delete a user from the DB
     public void doDeleteUser() {
-        User user = userList.getSelectionModel().getSelectedItem();
+        User user = (User) userTable.getSelectionModel().getSelectedItem();
         if (user == null) {
             showError("Je moet een gebruiker selecteren om te verwijderen!");
             return;
         }
         if (showConfirmDialog("Gebruiker verwijderen", "Weet u zeker dat u de gebruiker '" + user.getUserName() + "' wilt verwijderen?")) {
             userDAO.deleteOneById(user.getUserId());
-            userList.getItems().remove(user);
+            userTable.getItems().remove(user);
             errorField.setVisible(false);
         }
+    }
+
+    private void generateUserTable() {
+        usernameColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.valueOf(cellData.getValue().getUserName())));
+        firstNameColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getFirstName()));
+        infixColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getInfix()));
+        lastNameColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.valueOf(cellData.getValue().getLastName())));
+        roleColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.valueOf(cellData.getValue().getRoleName())));
+        userTable.getSelectionModel().selectFirst();
     }
 
     // Helper method to display an error

@@ -73,4 +73,8 @@ public class User {
     public int getRole() {
         return role.getRoleId();
     }
+
+    public String getRoleName() {
+        return role.getName();
+    }
 }

@@ -68,8 +68,15 @@ public class CreateUpdateUserController {
     public void doCreateUpdateUser() {
         User user = createUser();
         if (user != null) {
-            userDAO.storeOne(user);
-            Util.showAlert(Alert.AlertType.INFORMATION, "UserSaved", "Gebruiker is opgeslagen");
+            if (GebruikersIdTextField.getText().isEmpty()) {
+                userDAO.storeOne(user);
+                Util.showAlert(Alert.AlertType.INFORMATION, "UserSaved", "Gebruiker is aangemaakt");
+                resetForm();
+            } else {
+                userDAO.updateOne(user);
+                Util.showAlert(Alert.AlertType.INFORMATION, "UserSaved", "Gebruiker is gewijzigd");
+                Main.getSceneManager().showManageUserScene();
+            }
         }
     }
 
@@ -85,7 +92,20 @@ public class CreateUpdateUserController {
         String infix = TussenvoegselTextField.getText();
         String lastName = AchternaamTextfield.getText();
         Role role = rolComboBox.getSelectionModel().getSelectedItem();
-        return new User(userName, password, firstName, infix, lastName, role);
+        User user = new User(userName, password, firstName, infix, lastName, role);
+        if (!GebruikersIdTextField.getText().isEmpty()) {
+            user.setUserId(Integer.parseInt(GebruikersIdTextField.getText()));
+        }
+        return user;
+    }
+
+    private void resetForm() {
+        GebruikersNaamTextField.clear();
+        WachtwoordTextField.clear();
+        VoornaamTextField.clear();
+        TussenvoegselTextField.clear();
+        AchternaamTextfield.clear();
+        rolComboBox.getSelectionModel().clearSelection();
     }
 
     // Helper method to populate the fields in the scene.

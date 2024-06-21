@@ -4,6 +4,7 @@ import database.mysql.QuestionDAO;
 import database.mysql.QuizDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import model.Course;
 import model.Question;
 import model.Quiz;
 import view.Main;
@@ -142,27 +143,57 @@ public class CreateUpdateQuestionController {
     }
 
     private void storeQuestion(Question question) {
-        questionDAO.storeOne(question);
-        Alert storeQuestion = new Alert(Alert.AlertType.INFORMATION);
-        storeQuestion.setTitle("Vraag Toegevoegd");
-        storeQuestion.setHeaderText(null);
-        storeQuestion.setContentText("Je nieuwe vraag is opgeslagen! Klik op OK om terug naar de lijst te gaan.");
-        Optional<ButtonType> result = storeQuestion.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            Main.getSceneManager().showManageQuestionsScene();
+        if (isExistingQuestion(question)) {
+          Alert duplicateQuestion = new Alert(Alert.AlertType.ERROR);
+          duplicateQuestion.setTitle("Foutmelding");
+          duplicateQuestion.setHeaderText(null);
+            duplicateQuestion.setContentText("Deze vraag bestaat al! Omschrijving, vraag a en quiz moeten gezamenlijk uniek zijn!");
+            duplicateQuestion.showAndWait();
+        } else {
+            questionDAO.storeOne(question);
+            Alert storeQuestion = new Alert(Alert.AlertType.INFORMATION);
+            storeQuestion.setTitle("Vraag Toegevoegd");
+            storeQuestion.setHeaderText(null);
+            storeQuestion.setContentText("Je nieuwe vraag is opgeslagen! Klik op OK om verder te gaan.");
+            Optional<ButtonType> result = storeQuestion.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                resetForm();
+            }
         }
     }
 
     private void updateQuestion(Question question) {
-        questionDAO.updateOne(question);
-        Alert updateQuestion = new Alert(Alert.AlertType.INFORMATION);
-        updateQuestion.setTitle("Vraag Gewijzigd");
-        updateQuestion.setHeaderText(null);
-        updateQuestion.setContentText("Je wijzigingen zijn opgeslagen! Klik op OK om terug naar de lijst te gaan.");
-        Optional<ButtonType> result = updateQuestion.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            Main.getSceneManager().showManageQuestionsScene();
+        if (isExistingQuestion(question)) {
+            Alert duplicateQuestion = new Alert(Alert.AlertType.ERROR);
+            duplicateQuestion.setTitle("Foutmelding");
+            duplicateQuestion.setHeaderText(null);
+            duplicateQuestion.setContentText("Deze vraag bestaat al! Omschrijving, vraag a en quiz moeten gezamenlijk uniek zijn!");
+            duplicateQuestion.showAndWait();
         }
+        else {
+            questionDAO.updateOne(question);
+            Alert updateQuestion = new Alert(Alert.AlertType.INFORMATION);
+            updateQuestion.setTitle("Vraag Gewijzigd");
+            updateQuestion.setHeaderText(null);
+            updateQuestion.setContentText("Je wijzigingen zijn opgeslagen! Klik op OK om terug naar de lijst te gaan.");
+            Optional<ButtonType> result = updateQuestion.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                Main.getSceneManager().showManageQuestionsScene();
+            }
+        }
+    }
+
+    private boolean isExistingQuestion(Question question) {
+        return questionDAO.checkUnique(question) != null;
+    }
+
+    private void resetForm() {
+        questionDescription.clear();
+        answerA.clear();
+        answerB.clear();
+        answerC.clear();
+        answerD.clear();
+        quizList.getSelectionModel().clearSelection();
     }
 
 }

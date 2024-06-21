@@ -3,7 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -26,7 +27,16 @@
                         <Font size="16.0" />
                     </font>
                 </Label>
-                <ListView fx:id="userList" prefHeight="200.0" prefWidth="538.0" />
+               <TableView fx:id="userTable" prefHeight="200.0" prefWidth="200.0">
+                 <columns>
+                   <TableColumn fx:id="usernameColumn" prefWidth="96.00001525878906" text="Gebruikersnaam" />
+                   <TableColumn fx:id="firstNameColumn" text="Voornaam" />
+                     <TableColumn fx:id="infixColumn" prefWidth="91.33334350585938" text="Tussenvoegsel" />
+                     <TableColumn fx:id="lastNameColumn" prefWidth="86.66665649414062" text="Achternaam" />
+                     <TableColumn fx:id="roleColumn" prefWidth="68.66668701171875" text="Rol" />
+                     <TableColumn fx:id="amountInRoleColumn" prefWidth="118.6666259765625" text="Aantal zelfde rol" />
+                 </columns>
+               </TableView>
                <TextField fx:id="errorField" text="errorLabel" visible="false" />
                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0">
                   <children>

@@ -85,7 +85,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
     // Method to return all users from the DB by the given roleId.
     public List<User> getByRoleID(int roleId) {
         List <User> users = new ArrayList<>();
-        String sqlGetUserID = "SELECT * FROM User WHERE roleId = ?";
+        String sqlGetUserID = "SELECT * FROM User WHERE roleId = ? order by lastName ASC;";
         try {
             setupPreparedStatementWithKey(sqlGetUserID);
             preparedStatement.setInt(1, roleId);

@@ -35,8 +35,6 @@ public class CreateUpdateQuizController {
     @FXML
     public ComboBox<Difficulty> difficultyComboBox;
 
-    @FXML
-    public TextField quizPassmarkField;
 
     @FXML
     public TextField quizPointsField;
@@ -76,10 +74,9 @@ public class CreateUpdateQuizController {
     public void doCreateUpdateQuiz(ActionEvent event) {
         Quiz quiz = getQuiz();
         if (quiz != null) {
-            selectAction(quiz);
-            // Display success message
-            showAlert(Alert.AlertType.INFORMATION, "Succes", "Quiz (wijzigingen) opgeslagen");
-            sceneManager.showManageQuizScene();
+
+                selectAction(quiz);
+
         }
     }
 
@@ -89,7 +86,6 @@ public class CreateUpdateQuizController {
             quizIdField.setText(String.valueOf(quiz.getQuizId()));
             quizNameField.setText(quiz.getQuizName());
             difficultyComboBox.setValue(quiz.getQuizDifficulty());
-            quizPassmarkField.setText(String.valueOf(quiz.getPassMark()));
             quizPointsField.setText(String.valueOf(quiz.getQuizPoints()));
             courseComboBox.setValue(quiz.getCourse());
             questionsInQuizCountField.setText(String.valueOf(quiz.getQuestionsInQuizCount()));
@@ -113,11 +109,10 @@ public class CreateUpdateQuizController {
             quizId = Integer.parseInt(quizIdField.getText());
         }
         Difficulty difficulty = (Difficulty) difficultyComboBox.getValue();
-        int passMark = quizPassmarkField.getText().isEmpty() ? 0 : Integer.parseInt(quizPassmarkField.getText());
         int points = quizPointsField.getText().isEmpty() ? 0 : Integer.parseInt(quizPointsField.getText());
         Course course = (Course) courseComboBox.getValue();
 
-        return new Quiz(quizId,quizname,passMark,points,course,difficulty);
+        return new Quiz(quizId,quizname,0,points,course,difficulty);
     }
 
     private boolean isExistingQuiz(Quiz quiz) {return quizDAO.getByName(quiz.getQuizName()) != null;}
@@ -130,7 +125,13 @@ public class CreateUpdateQuizController {
                 return;
             }
             quizDAO.storeOne(quiz);
-        } else quizDAO.updateOne(quiz);
+            resetForm();
+        } else {
+            quizDAO.updateOne(quiz);
+            sceneManager.showManageQuizScene();
+        }
+        // Display success message
+        showAlert(Alert.AlertType.INFORMATION, "Succes", "Quiz (wijzigingen) opgeslagen");
     }
 
     private void onChangeCourse(ObservableValue<? extends Course> observable, Course oldValue, Course newValue) {
@@ -152,7 +153,15 @@ public class CreateUpdateQuizController {
         }
         difficultyComboBox.getItems().clear();
         difficultyComboBox.getItems().addAll(FXCollections.observableArrayList(filteredDifficulty));
-        difficultyComboBox.getSelectionModel().selectLast();
+
+    }
+
+    private void resetForm() {
+        quizNameField.clear();
+//        courseComboBox.getSelectionModel().clearSelection();
+        difficultyComboBox.getSelectionModel().clearSelection();
+        questionsInQuizCountField.clear();
+        quizPointsField.clear();
     }
 
 }
