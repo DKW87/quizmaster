@@ -22,7 +22,7 @@
                   <children>
                      <ImageView fitHeight="114.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../../../resources/college_logo.png" />
+                           <Image url="@college_logo.png" />
                         </image>
                         <effect>
                            <Blend mode="OVERLAY" />
