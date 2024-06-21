@@ -32,7 +32,7 @@
                      <children>
                         <VBox prefHeight="251.0" prefWidth="309.0" spacing="23.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz ID:" wrappingWidth="111.21630859375">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz ID:" visible="false" wrappingWidth="111.21630859375">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -61,7 +61,7 @@
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0" spacing="18.0">
                            <children>
-                              <TextField fx:id="quizIdField" editable="false" minWidth="300.0" opacity="0.4" prefHeight="26.0" prefWidth="207.0" promptText="Quiz ID" />
+                              <TextField fx:id="quizIdField" editable="false" minWidth="300.0" opacity="0.4" prefHeight="26.0" prefWidth="207.0" promptText="Quiz ID" visible="false" />
                               <TextField fx:id="quizNameField" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" />
                               <ComboBox fx:id="courseComboBox" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID;" />
                               <ComboBox fx:id="difficultyComboBox" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID;" />
@@ -79,21 +79,15 @@
                      <children>
                         <VBox prefHeight="90.0" prefWidth="240.0" spacing="25.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Benodigd aantal goede vragen om quiz te halen" wrappingWidth="216.8163604736328">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz punten:" wrappingWidth="111.21630859375">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz cesuur:" wrappingWidth="111.21630859375">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Text>
                            </children>
                         </VBox>
-                        <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="25.0">
                            <children>
-                              <TextField fx:id="quizPassmarkField" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" />
                               <TextField fx:id="quizPointsField" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" />
                            </children>
                         </VBox>

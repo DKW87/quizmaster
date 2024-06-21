@@ -31,8 +31,7 @@ public class ManageCoursesController {
     @FXML
     public Button deleteButton;
 
-    @FXML
-    public TableColumn<Course, String> courseId;
+
     @FXML
     public TableColumn<Course, String> name;
     @FXML
@@ -93,8 +92,6 @@ public class ManageCoursesController {
     private void generateCourseTable() {
         name.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getName()));
-        courseId.setCellValueFactory(cellData ->
-                new SimpleStringProperty(String.valueOf(cellData.getValue().getCourseId())));
         difficulty.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getDifficulty().getName()));
         coordinator.setCellValueFactory(cellData ->
@@ -109,7 +106,8 @@ public class ManageCoursesController {
     }
 
     private void showConfirmAlert() {
-        if (confirmMessage("Course Verwijderen", "Weet je zeker dat je course wil verwijderen?")) {
+        String message = String.format("Weet je zeker dat je %s wil verwijderen?", selectedCourse.getName());
+        if (confirmMessage("Course Verwijderen",message )) {
             courseDao.deleteOneById(selectedCourse.getCourseId());
             courseTable.getItems().remove(selectedCourse);
         }

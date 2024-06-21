@@ -103,6 +103,33 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
         return question;
     }
 
+    public Question checkUnique(Question question) {
+        String sql = "SELECT * FROM Question WHERE questionDescription = ? AND answerA = ? AND quizId = ?";
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setString(1, question.getQuestionDescription());
+            this.preparedStatement.setString(2, question.getAnswerA());
+            this.preparedStatement.setInt(3, question.getQuiz().getQuizId());
+            ResultSet resultSet = this.executeSelectStatement();
+            while (resultSet.next()) {
+                int questionId = resultSet.getInt("questionId");
+                String questionDescription = resultSet.getString("questionDescription");
+                String answerA = resultSet.getString("answerA");
+                String answerB = resultSet.getString("answerB");
+                String answerC = resultSet.getString("answerC");
+                String answerD = resultSet.getString("answerD");
+                int quizId = resultSet.getInt("quizId");
+                Quiz quiz = quizdao.getById(quizId);
+                Question newQuestion = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
+                newQuestion.setQuestionId(questionId);
+                return newQuestion;
+            }
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        }
+        return null;
+    }
+
     @Override
     public void storeOne(Question question) {
         String sql = "INSERT INTO Question(questionDescription, answerA, answerB, answerC, answerD, quizId) VALUES (?, ?, ?, ?, ?, ?);";

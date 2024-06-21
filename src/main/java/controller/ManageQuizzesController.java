@@ -2,13 +2,12 @@ package controller;
 
 import database.mysql.DBAccess;
 import database.mysql.QuizDAO;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import model.Quiz;
+import utils.Util;
 import view.Main;
 import view.SceneManager;
 
@@ -22,7 +21,19 @@ public class ManageQuizzesController {
     QuizDAO quizDAO = new QuizDAO(dDacces);
 
     @FXML
-    ListView<Quiz> quizList;
+    public TableView<Quiz> quizTable;
+    @FXML
+    public TableColumn<Quiz, String> nameColumn;
+    @FXML
+    public TableColumn<Quiz, String> courseColumn;
+    @FXML
+    public TableColumn<Quiz,String> difficultyColumn;
+    @FXML
+    public TableColumn<Quiz, String> passMarkColumn;
+    @FXML
+    public TableColumn<Quiz, String> numberQuestionsColumn;
+
+
 
 //    @FXML
 //    TextField errorfield; // nog toe te voegen
@@ -34,8 +45,9 @@ public class ManageQuizzesController {
 
         List<Quiz> quizzen = quizDAO.getAll();
         for (Quiz quiz : quizzen) {
-            quizList.getItems().add(quiz);
+            quizTable.getItems().add(quiz);
         }
+        generateQuizTable();
     }
     @FXML
     public void doMenu(ActionEvent actionEvent){sceneManager.showWelcomeScene();}
@@ -48,30 +60,40 @@ public class ManageQuizzesController {
     @FXML
     public void doUpdateQuiz(){
         // voor als je iets wilt gebruiken van de SELECTIE uit een lijst
-        Quiz selectedQuiz = quizList.getSelectionModel().getSelectedItem();
-        sceneManager.showCreateUpdateQuizScene(selectedQuiz);
-    }
+        Quiz selectedQuiz = quizTable.getSelectionModel().getSelectedItem();
+        if (selectedQuiz == null) {
+            Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "Selecteer eerst een quiz!");
+        } else {
+                sceneManager.showCreateUpdateQuizScene(selectedQuiz);
+            }
+        }
 
     @FXML
     public void doDeleteQuiz(ActionEvent event){
         // voor als je iets wilt gebruiken van de SELECTIE uit een lijst
-        Quiz quiz = quizList.getSelectionModel().getSelectedItem();
-        if (quizList != null){
-            Alert confirmLogOut = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmLogOut.setTitle("Delete Quiz");
-            confirmLogOut.setHeaderText(null);
-            confirmLogOut.setContentText("Weet je zeker dat je de Quiz wilt verwijderen?");
-            Optional<ButtonType> result = confirmLogOut.showAndWait();
-            if (result.get() == ButtonType.OK){
-                quizList.getItems().remove(quiz);
+        Quiz quiz = quizTable.getSelectionModel().getSelectedItem();
+        if (quiz != null){
+            String message = String.format("Weet je zeker dat je de %s wilt verwijderen?",quiz.getQuizName());
+            if (Util.confirmMessage("Delete Quiz",message)) {
+                quizTable.getItems().remove(quiz);
                 quizDAO.deleteOneById(quiz.getQuizId());
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Selecteer eerst een quiz");
-            alert.showAndWait();
+            Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "Selecteer eerst een quiz!");
         }
+    }
+
+    private void generateQuizTable() {
+        nameColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.valueOf(cellData.getValue().getQuizName())));
+        courseColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getCourse().getName()));
+        difficultyColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getQuizDifficulty().getName()));
+        numberQuestionsColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.valueOf(cellData.getValue().getQuestionsInQuizCount())));
+        passMarkColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.valueOf(cellData.getValue().getPassMark())));
+        quizTable.getSelectionModel().selectFirst();
     }
 }

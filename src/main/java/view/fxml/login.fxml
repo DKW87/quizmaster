@@ -67,7 +67,7 @@
                      <Font size="5.0" />
                   </font>
                </Label>
-               <Label fx:id="loginError" text="Deze gebruiker is niet gevonden. Probeer het opnieuw of neem contact op met je administrator." textFill="RED" visible="false" />
+               <Label fx:id="loginError" text="Gebruikersnaam en/of wachtwoord (combinatie) onbekend. Probeer het opnieuw." textFill="RED" visible="false" />
                <HBox prefHeight="100.0" prefWidth="538.0" />
                <HBox prefHeight="102.0" prefWidth="562.0" spacing="15.0">
                   <children>

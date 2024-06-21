@@ -1,10 +1,9 @@
 package controller;
 
 import database.mysql.QuestionDAO;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import model.Question;
 import view.Main;
 
@@ -15,15 +14,36 @@ import java.util.Optional;
 public class ManageQuestionsController {
 
     @FXML
-    ListView<Question> questionList;
+    public TableView<Question> questionsTable;
+
+    @FXML
+    public TableColumn<Question, String> questionDescriptionColumn;
+
+    @FXML
+    public TableColumn<Question, String> answerAColumn;
+
+    @FXML
+    public TableColumn<Question, String> answerBColumn;
+
+    @FXML
+    public TableColumn<Question, String> answerCColumn;
+
+    @FXML
+    public TableColumn<Question, String> answerDColumn;
+
+    @FXML
+    public TableColumn<Question, String> partOfQuizColumn;
+
+    @FXML
+    public TableColumn<Question, Integer> questionsCounterColumn;
 
     private final QuestionDAO questionDAO = new QuestionDAO(Main.getdBaccess());
 
 
     public void setup() {
         List<Question> questions = questionDAO.getAll();
-        questionList.getItems().addAll(questions);
-        questionList.getSelectionModel().selectFirst();
+        questionsTable.getItems().addAll(questions);
+        generateQuestionsTable();
     }
 
     @FXML
@@ -38,20 +58,20 @@ public class ManageQuestionsController {
 
     @FXML
     private void doUpdateQuestion() {
-        if (questionList.getSelectionModel().getSelectedItem() == null) {
+        if (questionsTable.getSelectionModel().getSelectedItem() == null) {
             noSelectionError();
         } else {
-            Question question = questionList.getSelectionModel().getSelectedItem();
+            Question question = (Question) questionsTable.getSelectionModel().getSelectedItem();
             Main.getSceneManager().showCreateUpdateQuestionScene(question);
         }
     }
 
     @FXML
     private void doDeleteQuestion() {
-        if (questionList.getSelectionModel().getSelectedItem() == null) {
+        if (questionsTable.getSelectionModel().getSelectedItem() == null) {
             noSelectionError();
         } else {
-            Question question = questionList.getSelectionModel().getSelectedItem();
+            Question question = (Question) questionsTable.getSelectionModel().getSelectedItem();
             Alert confirmDelete = new Alert(Alert.AlertType.CONFIRMATION);
             confirmDelete.setTitle("Verwijder Vraag");
             confirmDelete.setHeaderText(null);
@@ -59,7 +79,7 @@ public class ManageQuestionsController {
             Optional<ButtonType> result = confirmDelete.showAndWait();
             if (result.get() == ButtonType.OK) {
                 questionDAO.deleteOneById(question.getQuestionId());
-                questionList.getItems().remove(question);
+                questionsTable.getItems().remove(question);
             }
         }
     }
@@ -70,6 +90,22 @@ public class ManageQuestionsController {
         alert.setHeaderText(null);
         alert.setContentText("Je moet eerst een vraag selecteren.");
         alert.showAndWait();
+    }
+
+    private void generateQuestionsTable() {
+        questionDescriptionColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.valueOf(cellData.getValue().getQuestionDescription())));
+        answerAColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getAnswerA()));
+        answerBColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getAnswerB()));
+        answerCColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getAnswerC()));
+        answerDColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getAnswerD()));
+        partOfQuizColumn.setCellValueFactory(celldata ->
+                new SimpleStringProperty(celldata.getValue().getQuiz().getQuizName()));
+        questionsTable.getSelectionModel().selectFirst();
     }
 
 }

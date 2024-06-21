@@ -80,7 +80,7 @@
                         </VBox>
                      </children>
                   </HBox>
-                      <TextField fx:id="GebruikersIdTextField" editable="false" maxWidth="300.0" prefWidth="250.0" text="****" visible="false">
+                      <TextField fx:id="GebruikersIdTextField" editable="false" maxWidth="300.0" prefWidth="250.0" visible="false">
                           <font>
                               <Font name="System Italic" size="10.0" />
                           </font>
