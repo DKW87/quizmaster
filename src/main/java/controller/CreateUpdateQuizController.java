@@ -152,7 +152,7 @@ public class CreateUpdateQuizController {
         }
         difficultyComboBox.getItems().clear();
         difficultyComboBox.getItems().addAll(FXCollections.observableArrayList(filteredDifficulty));
-        difficultyComboBox.getSelectionModel().selectFirst();
+        difficultyComboBox.getSelectionModel().selectLast();
     }
 
 }
