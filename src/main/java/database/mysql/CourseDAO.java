@@ -162,6 +162,20 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     }
 
     /**
+     * Deletes all records from the Course table in the database.
+     *
+     */
+    public void deleteAll() {
+        String sql = "DELETE FROM Course;";
+        try {
+            this.setupPreparedStatement(sql);
+            this.executeManipulateStatement();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
      * Bulk creates courses in the database by reading a CSV file and storing each course object.
      *
      * @throws SQLException if there is an error executing the SQL statement
