@@ -75,6 +75,8 @@ public class ManageCoursesController {
     public void doUpdateCourse() {
         if (selectedCourse != null) {
             sceneManager.showCreateUpdateCourseScene(selectedCourse);
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Fout", "Selecteer eerst een cursus");
         }
     }
 
