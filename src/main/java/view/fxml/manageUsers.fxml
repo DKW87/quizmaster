@@ -27,17 +27,23 @@
                         <Font size="16.0" />
                     </font>
                 </Label>
-               <TableView fx:id="userTable" prefHeight="200.0" prefWidth="200.0">
+               <TableView fx:id="userTable" prefHeight="412.0" prefWidth="538.0">
                  <columns>
-                   <TableColumn fx:id="usernameColumn" prefWidth="96.00001525878906" text="Gebruikersnaam" />
-                   <TableColumn fx:id="firstNameColumn" text="Voornaam" />
+                   <TableColumn fx:id="usernameColumn" prefWidth="106.39996945858002" text="Gebruikersnaam" />
+                   <TableColumn fx:id="firstNameColumn" prefWidth="70.40003204345703" text="Voornaam" />
                      <TableColumn fx:id="infixColumn" prefWidth="91.33334350585938" text="Tussenvoegsel" />
                      <TableColumn fx:id="lastNameColumn" prefWidth="86.66665649414062" text="Achternaam" />
                      <TableColumn fx:id="roleColumn" prefWidth="68.66668701171875" text="Rol" />
                      <TableColumn fx:id="amountInRoleColumn" prefWidth="118.6666259765625" text="Aantal zelfde rol" />
                  </columns>
+                  <columnResizePolicy>
+                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                  </columnResizePolicy>
                </TableView>
-               <TextField fx:id="errorField" text="errorLabel" visible="false" />
+               <TextField fx:id="errorField" text="errorLabel" visible="false">
+                  <font>
+                     <Font size="10.0" />
+                  </font></TextField>
                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0">
                   <children>
                       <Button fx:id="createUserId" mnemonicParsing="false" onAction="#doCreateUser" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #009933;" text="Nieuw">

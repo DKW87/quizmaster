@@ -23,15 +23,6 @@ public class ManageQuestionsController {
     public TableColumn<Question, String> answerAColumn;
 
     @FXML
-    public TableColumn<Question, String> answerBColumn;
-
-    @FXML
-    public TableColumn<Question, String> answerCColumn;
-
-    @FXML
-    public TableColumn<Question, String> answerDColumn;
-
-    @FXML
     public TableColumn<Question, String> partOfQuizColumn;
 
     @FXML
@@ -97,12 +88,6 @@ public class ManageQuestionsController {
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getQuestionDescription())));
         answerAColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getAnswerA()));
-        answerBColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getAnswerB()));
-        answerCColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getAnswerC()));
-        answerDColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getAnswerD()));
         partOfQuizColumn.setCellValueFactory(celldata ->
                 new SimpleStringProperty(celldata.getValue().getQuiz().getQuizName()));
         questionsTable.getSelectionModel().selectFirst();
