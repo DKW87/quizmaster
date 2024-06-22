@@ -7,6 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Rob Jansen
+ * @project quizmaster
+ * @created 14 juni 2024 - 10:00
+ */
+
 public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
     public QuizDAO(DBAccess dbAccess) {
         super(dbAccess);

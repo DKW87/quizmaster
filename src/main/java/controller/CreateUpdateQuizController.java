@@ -17,6 +17,12 @@ import java.util.List;
 
 import static utils.Util.showAlert;
 
+/**
+ * @author Rob Jansen
+ * @project quizmaster
+ * @created 17 juni 2024 - 10:00
+ */
+
 public class CreateUpdateQuizController {
     private final SceneManager sceneManager = Main.getSceneManager();
     private final DBAccess dbAccess = Main.getdBaccess();

@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import model.Quiz;
+import model.UserSession;
 import utils.Util;
 import view.Main;
 import view.SceneManager;
@@ -14,11 +15,19 @@ import view.SceneManager;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author Rob Jansen
+ * @project quizmaster
+ * @created 18 juni 2024 - 10:00
+ */
+
 
 public class ManageQuizzesController {
     private final DBAccess dDacces = Main.getdBaccess();
     private final SceneManager sceneManager = Main.getSceneManager();
     QuizDAO quizDAO = new QuizDAO(dDacces);
+    private final UserSession userSession = Main.getUserSession();
+    private int logedinUser;
 
     @FXML
     public TableView<Quiz> quizTable;
@@ -48,6 +57,9 @@ public class ManageQuizzesController {
             quizTable.getItems().add(quiz);
         }
         generateQuizTable();
+        logedinUser = userSession.getUser().getUserId();
+        System.out.println(logedinUser);
+
     }
     @FXML
     public void doMenu(ActionEvent actionEvent){sceneManager.showWelcomeScene();}
