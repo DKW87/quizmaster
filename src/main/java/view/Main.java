@@ -1,5 +1,6 @@
 package view;
 
+import database.couchdb.CouchDBaccess;
 import database.mysql.DBAccess;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -14,6 +15,7 @@ public class Main extends Application {
     private static SceneManager sceneManager = null;
     private static Stage primaryStage = null;
     private static DBAccess dBaccess = null;
+    private static CouchDBaccess couchDBaccess = null;
     private static UserSession userSession = null;
 
     public static void main(String[] args) {
@@ -48,6 +50,20 @@ public class Main extends Application {
             dBaccess.openConnection();
         }
         return dBaccess;
+    }
+
+    /**
+     * Returns an instance of the CouchDBaccess class, creating it if it doesn't already exist.
+     *
+     * @return an instance of the CouchDBaccess class
+     */
+    public static CouchDBaccess getCouchDBaccess() {
+        if (couchDBaccess == null) {
+            // Create an instance of the DBAccess class
+            couchDBaccess = new CouchDBaccess(COUCH_DB_NAME, COUCH_DB_USER, COUCH_DB_PASS);
+            couchDBaccess.getClient();
+        }
+        return couchDBaccess;
     }
 
     /**
