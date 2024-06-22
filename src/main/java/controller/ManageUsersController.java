@@ -2,6 +2,7 @@ package controller;
 
 import database.mysql.DBAccess;
 import database.mysql.UserDAO;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -9,7 +10,9 @@ import model.Role;
 import model.User;
 import view.Main;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ManageUsersController {
     private final DBAccess dbAccess = Main.getdBaccess();
@@ -38,8 +41,11 @@ public class ManageUsersController {
     @FXML
     TextField errorField;
 
+    private final Map<Integer, Integer> roleCount = new HashMap<>(); // Store role counts
+
     public void setup() {
         List<User> users = userDAO.getAll();
+        calculateRoleCounts(users);
         for (User user : users) {
             userTable.getItems().add(user);
         }
@@ -94,7 +100,21 @@ public class ManageUsersController {
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getLastName())));
         roleColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getRoleName())));
+        amountInRoleColumn.setCellValueFactory(cellData -> {
+            User user = cellData.getValue();
+            int count = roleCount.getOrDefault(user.getRole(), 0) - 1; // Using - 1 to remove selected user from the size of the list.
+            return new SimpleIntegerProperty(count).asObject();
+        });
         userTable.getSelectionModel().selectFirst();
+    }
+
+    // Method to calculate the rolecount once and store them in a hashmap. Program kept crashing if constantly searching from DB every time.
+    private void calculateRoleCounts(List<User> users) {
+        roleCount.clear();
+        for (User user : users) {
+            int roleId = user.getRole();
+            roleCount.put(roleId, roleCount.getOrDefault(roleId, 0) + 1);
+        }
     }
 
     // Helper method to display an error

@@ -35,6 +35,7 @@
                      <TableColumn fx:id="lastNameColumn" prefWidth="86.66665649414062" text="Achternaam" />
                      <TableColumn fx:id="roleColumn" prefWidth="68.66668701171875" text="Rol" />
                      <TableColumn fx:id="amountInRoleColumn" prefWidth="118.6666259765625" text="Aantal zelfde rol" />
+
                  </columns>
                </TableView>
                <TextField fx:id="errorField" text="errorLabel" visible="false" />
