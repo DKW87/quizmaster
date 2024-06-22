@@ -1,9 +1,12 @@
 package database.mysql;
 
 import model.Course;
+import model.StudentCourse;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +17,9 @@ import java.util.List;
  */
 public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
 
-    // FIXME: implementeer DAO's
     private final DifficultyDAO difficultyDao = new DifficultyDAO(dbAccess);
     private final UserDAO userDao = new UserDAO(dbAccess);
-    private final StudentCourseDAO studentCourseDAO = new StudentCourseDAO(dbAccess);
+
 
     public CourseDAO(DBAccess dbAccess) {
         super(dbAccess);
@@ -32,13 +34,44 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
             ResultSet resultSet = this.executeSelectStatement();
             while (resultSet.next()) {
                 Course course  = createCourseFromResultSet(resultSet);
-                var studentCount = studentCourseDAO.getCourseByStudentCount(course.getCourseId());
+                var studentCount = this.getCourseByStudentCount(course.getCourseId());
                 course.setStudentCount(studentCount);
                 courses.add(course);
 
             }
         } catch (SQLException e) {
             System.out.println("Error in CourseDAO/getAll: " + e.getMessage());
+        }
+        return courses;
+    }
+
+    /**
+     * Retrieves a list of unassigned courses for a given student ID.
+     *
+     * @param studentId the ID of the student
+     * @return a list of Course objects representing the unassigned courses
+     */
+    public List<Course> getUnAssignedCoursesByStudent(int studentId) {
+        List<Course> courses = new ArrayList<>();
+        String sql = "select  *\n" +
+                "from Course as c\n" +
+                "where c.courseId\n" +
+                "not in (select StudentCourse.courseId\n" +
+                "        from StudentCourse\n" +
+                "        where dropoutDate is null and  studentId = ?);";
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, studentId);
+            ResultSet resultSet = this.executeSelectStatement();
+            while (resultSet.next()) {
+                Course course  = createCourseFromResultSet(resultSet);
+                var studentCount = this.getCourseByStudentCount(course.getCourseId());
+                course.setStudentCount(studentCount);
+                courses.add(course);
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in CourseDAO/getUnAssignedCoursesByStudent: " + e.getMessage());
         }
         return courses;
     }
@@ -59,7 +92,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
             ResultSet resultSet = this.executeSelectStatement();
             while (resultSet.next()) {
                 Course course = createCourseFromResultSet(resultSet);
-                var studentCount = studentCourseDAO.getCourseByStudentCount(course.getCourseId());
+                var studentCount = this.getCourseByStudentCount(course.getCourseId());
                 course.setStudentCount(studentCount);
                 courses.add(null);
             }
@@ -68,6 +101,39 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
         }
         return courses;
     }
+
+    /**
+     * Retrieves a list of student courses for a given student ID, including the course name, difficulty,
+     * coordinator, enrollment date, and dropout date.
+     *
+     * @param  studentId  the ID of the student
+     * @return            a list of StudentCourse objects representing the student's courses
+     */
+    public List<StudentCourse> getCoursesByStudent(int studentId) {
+        String sql = "select * from StudentCourse where studentId = ?";
+
+        List<StudentCourse> studentCourses = new ArrayList<>();
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, studentId);
+            ResultSet resultSet = this.executeSelectStatement();
+            while (resultSet.next()) {
+                LocalDate enrollDate = resultSet.getDate("enrollDate").toLocalDate();
+                int courseId = resultSet.getInt("courseId");
+                int studentCourseId = resultSet.getInt("studentCourseId");
+                var user = userDao.getById(studentId);
+                var course = this.getById(courseId);
+                StudentCourse studentCourse = new StudentCourse(user, course, enrollDate);
+                studentCourse.setStudentCourseId(studentCourseId);
+                studentCourses.add(studentCourse);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return studentCourses;
+    }
+
+
 
     @Override
     public Course getById(int id) {
@@ -162,6 +228,65 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     }
 
     /**
+     * Adds a student to a course.
+     *
+     * @param  userId    the ID of the student
+     * @param  courseId  the ID of the course
+     */
+    public void addStudentToCourse(int userId, int courseId) {
+        String sql = "INSERT INTO StudentCourse(studentId, courseId, enrollDate) VALUES (?, ?, ?);";
+        try {
+            this.setupPreparedStatementWithKey(sql);
+            this.preparedStatement.setInt(1, userId);
+            this.preparedStatement.setInt(2, courseId);
+            this.preparedStatement.setDate(3, Date.valueOf(LocalDate.now()));
+            this.executeInsertStatementWithKey();
+        } catch (SQLException e) {
+            System.out.println("Error in CourseDAO/addStudentToCourse: " + e.getMessage());
+        }
+
+    }
+
+    /**
+     * Retrieves the number of students enrolled in a course.
+     *
+     * @param  courseId  the ID of the course
+     * @return            the number of students enrolled in the course
+     */
+    public int getCourseByStudentCount(int courseId) {
+        String sql = "select count(*) as studentCount from StudentCourse where courseId = ?";
+
+        int studentCount = 0;
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, courseId);
+            ResultSet resultSet = this.executeSelectStatement();
+            while (resultSet.next()) {
+                studentCount = resultSet.getInt("studentCount");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return studentCount;
+    }
+
+    /**
+     * Removes a student from a course by deleting the corresponding record in the StudentCourse table.
+     *
+     * @param  studentCourseId  the ID of the student-course record to be removed
+     */
+    public void removeStudentFromCourse( int studentCourseId) {
+        String sql = "DELETE FROM StudentCourse WHERE  studentCourseId = ?;";
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, studentCourseId);
+            this.executeManipulateStatement();
+        } catch (SQLException e) {
+            System.out.println("Error in CourseDAO/removeStudentFromCourse: " + e.getMessage());
+        }
+    }
+
+    /**
      * Deletes all records from the Course table in the database.
      *
      */
@@ -203,6 +328,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
         return new Course(courseId, name, coordinator, difficulty);
     }
 
+
     /**
      * Sets the given Course object to the prepared statement for querying.
      *
@@ -213,6 +339,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
         this.preparedStatement.setInt(2, course.getDifficulty().getDifficultyId());
         this.preparedStatement.setInt(3, course.getCoordinator().getUserId());
     }
+
 
 
 }

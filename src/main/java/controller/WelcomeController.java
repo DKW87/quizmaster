@@ -75,7 +75,7 @@ public class WelcomeController {
     private void switchToRole(int roleId){
         switch(roleId) {
             case 1:
-                setAllManageViews();
+                setStudentSetup();
                 break;
             case 2:
                 setAllManageViews();
