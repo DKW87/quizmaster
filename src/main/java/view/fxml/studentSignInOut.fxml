@@ -32,7 +32,7 @@
          <TableView fx:id="signedOutCourseTable" prefHeight="200.0" prefWidth="820.0">
            <columns>
              <TableColumn fx:id="nameCourse" prefWidth="386.0" text="Naam" />
-             <TableColumn fx:id="difficultyCourse" prefWidth="150.0" style="-fx-alignment: CENTER;" text="Level" />
+             <TableColumn fx:id="difficultyCourse" prefWidth="150.0" style="-fx-alignment: CENTER;" text="Niveau" />
                <TableColumn fx:id="coordinatorCourse" prefWidth="303.0" text="Coordinator" />
            </columns>
          </TableView>
@@ -57,7 +57,7 @@
          <TableView fx:id="signedInCourseTable" prefHeight="200.0" prefWidth="820.0">
             <columns>
                <TableColumn fx:id="nameStudentCourse" prefWidth="346.0" text="Naam" />
-               <TableColumn fx:id="difficultyStudentCourse" prefWidth="123.0" style="-fx-alignment: CENTER;" text="Level" />
+               <TableColumn fx:id="difficultyStudentCourse" prefWidth="123.0" style="-fx-alignment: CENTER;" text="Niveau" />
                <TableColumn fx:id="coordinatorStudentCourse" prefWidth="235.0" text="Coordinator" />
                <TableColumn fx:id="dateStudentCourse" prefWidth="134.0" style="-fx-alignment: CENTER;" text="Datum" />
             </columns>
