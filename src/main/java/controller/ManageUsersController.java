@@ -102,7 +102,7 @@ public class ManageUsersController {
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getRoleName())));
         amountInRoleColumn.setCellValueFactory(cellData -> {
             User user = cellData.getValue();
-            int count = roleCount.getOrDefault(user.getRole(), 0) - 1; // Using - 1 to remove selected user from the size of the list.
+            int count = roleCount.getOrDefault(user.getRole(), 0) - 1; // Using - 1 to get correct overview of people in role.
             return new SimpleIntegerProperty(count).asObject();
         });
         userTable.getSelectionModel().selectFirst();

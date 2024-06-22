@@ -127,8 +127,7 @@ public class CreateUpdateUserController {
 
     // Helper method to check if input is valid
     private boolean inputIsValid() {
-        return !GebruikersNaamTextField.getText().isEmpty() &&
-                !WachtwoordTextField.getText().isEmpty() &&
+        return  !WachtwoordTextField.getText().isEmpty() &&
                 !VoornaamTextField.getText().isEmpty() &&
                 !AchternaamTextfield.getText().isEmpty() &&
                 rolComboBox.getValue() != null;

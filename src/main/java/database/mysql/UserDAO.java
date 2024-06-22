@@ -28,7 +28,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         int primaryKey;
         try {
             setupPreparedStatementWithKey(sqlUserImport);
-            user.setUserName(generateUserName(user));
+            //user.setUserName(generateUserName(user));
             storeUserString(user);
             primaryKey = this.executeInsertStatementWithKey();
             user.setUserId(primaryKey);
@@ -127,7 +127,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         }
     }
 
-    private String generateUserName(User user) {
+    String generateUserName(User user) {
         String lastNameShort = user.getLastName().substring(0, Math.min(5, user.getLastName().length()));
         String firstNameShort = user.getFirstName().substring(0, Math.min(2, user.getFirstName().length()));
 
