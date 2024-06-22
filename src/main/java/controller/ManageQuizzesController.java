@@ -93,7 +93,7 @@ public class ManageQuizzesController {
         numberQuestionsColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getQuestionsInQuizCount())));
         passMarkColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(String.valueOf(cellData.getValue().getPassMark())));
+                new SimpleStringProperty(String.valueOf(cellData.getValue().getQuizPoints())));
         quizTable.getSelectionModel().selectFirst();
     }
 }

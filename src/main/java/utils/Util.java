@@ -115,12 +115,11 @@ public class Util {
             String quizPointsString = splitLine[2];
             String courseString = splitLine[3];
             int quizId = 0;
-            int passMark = 0;
             int quizPoints = Integer.parseInt(quizPointsString);
             var difficulty = difficultyDao.getByName(difficultyString);
             var course = courseDAO.getByName(courseString);
             var questionInQuizCount = quizDAO.getQuestionsInQuizCount(quizId);
-            Quiz quiz = new Quiz(quizId,quizName,passMark,quizPoints,course,difficulty,questionInQuizCount);
+            Quiz quiz = new Quiz(quizId,quizName,quizPoints,course,difficulty,questionInQuizCount);
             quizList.add(quiz);
         }
         return quizList;

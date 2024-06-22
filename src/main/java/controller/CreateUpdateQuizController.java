@@ -112,7 +112,7 @@ public class CreateUpdateQuizController {
         int points = quizPointsField.getText().isEmpty() ? 0 : Integer.parseInt(quizPointsField.getText());
         Course course = (Course) courseComboBox.getValue();
 
-        return new Quiz(quizId,quizname,0,points,course,difficulty);
+        return new Quiz(quizId,quizname,points,course,difficulty);
     }
 
     private boolean isExistingQuiz(Quiz quiz) {return quizDAO.getByName(quiz.getQuizName()) != null;}
