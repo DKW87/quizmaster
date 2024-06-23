@@ -52,7 +52,11 @@ public class ManageQuizzesController {
     // setup bij openen van het QuizList scherm waarbij de bestaande Quizes uit de DB worden gehaald.
     public void setup() {
 
-        List<Quiz> quizzen = quizDAO.getAll();
+        // hier onder moet een if statement // comment achter wat hij doet id1 = coordinator etc.
+        List<Quiz> quizzen = quizDAO.getAllQuizzesByCoordinator(119);
+
+
+
         for (Quiz quiz : quizzen) {
             quizTable.getItems().add(quiz);
         }
@@ -66,12 +70,10 @@ public class ManageQuizzesController {
 
     @FXML
     public void doCreateQuiz(ActionEvent event){sceneManager.showCreateUpdateQuizScene(null);}
-    // TO DO: eerst een nieuwe quiz in de DB creeren, daarvan id ophalen? en daarmee een nieuwe Scene oproepen met input de nieuwe quiz?
 
 
     @FXML
     public void doUpdateQuiz(){
-        // voor als je iets wilt gebruiken van de SELECTIE uit een lijst
         Quiz selectedQuiz = quizTable.getSelectionModel().getSelectedItem();
         if (selectedQuiz == null) {
             Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "Selecteer eerst een quiz!");
