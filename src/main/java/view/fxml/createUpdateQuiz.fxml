@@ -83,7 +83,7 @@
                                                 <ComboBox fx:id="difficultyComboBox" minWidth="300.0" prefHeight="26.0" prefWidth="207.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID;" />
                                                 <TextField fx:id="questionsInQuizCountField" editable="false" opacity="0.4" />
                                                 <TextField fx:id="quizPointsField" layoutX="10.0" layoutY="190.0" />
-                                                <TextField fx:id="quizCesuurPercentageField" layoutX="10.0" layoutY="234.0" opacity="0.4" />
+                                                <TextField fx:id="quizCesuurPercentageField" editable="false" layoutX="10.0" layoutY="234.0" opacity="0.4" />
                                              </children>
                                           </VBox>
                                        </children>
