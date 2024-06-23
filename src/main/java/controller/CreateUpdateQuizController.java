@@ -65,6 +65,7 @@ public class CreateUpdateQuizController {
     public void setup(Quiz quiz) {
         courseComboBox.getItems().addAll(FXCollections.observableArrayList(courseDao.getAll()));
         courseComboBox.getSelectionModel().selectedItemProperty().addListener(this::onChangeCourse);
+
         setDefaultQuiz(quiz);
 
     }
