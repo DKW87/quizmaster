@@ -27,7 +27,7 @@ public class ManageQuizzesController {
     private final SceneManager sceneManager = Main.getSceneManager();
     QuizDAO quizDAO = new QuizDAO(dDacces);
     private final UserSession userSession = Main.getUserSession();
-    private int logedinUser;
+
 
     @FXML
     public TableView<Quiz> quizTable;
@@ -49,20 +49,14 @@ public class ManageQuizzesController {
 
 
 
-    // setup bij openen van het QuizList scherm waarbij de bestaande Quizes uit de DB worden gehaald.
+    // setup bij openen van het QuizList scherm waarbij de bestaande Quizes op basis van ingelogde userID uit de DB worden gehaald.
     public void setup() {
-
-        // hier onder moet een if statement // comment achter wat hij doet id1 = coordinator etc.
-        List<Quiz> quizzen = quizDAO.getAllQuizzesByCoordinator(119);
-
-
+        List<Quiz> quizzen = getSelectedQuizByRoleUserID();
 
         for (Quiz quiz : quizzen) {
             quizTable.getItems().add(quiz);
         }
         generateQuizTable();
-        logedinUser = userSession.getUser().getUserId();
-        System.out.println(logedinUser);
 
     }
     @FXML
@@ -109,5 +103,26 @@ public class ManageQuizzesController {
         passMarkColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getQuizPoints())));
         quizTable.getSelectionModel().selectFirst();
+    }
+
+    // methode om de juiste lijst met Quizzen te genereren op basis van de ingelogde UserRole en indien coordinator alleen Quizzen die bij die coordinator horen
+    private List<Quiz> getSelectedQuizByRoleUserID(){
+        final int roleIdStudent =1;
+        final int roleIdCoordinator =2;
+        final int roleIdDocent =3; // wordt nu niet gebruikt maar laten staan voor eventueel toekomstig gebruik
+        final int roleIdAdministrator =4; // wordt nu niet gebruikt maar laten staan voor eventueel toekomstig gebruik
+        final int roleIdFunctioneelBeheerder =5; // wordt nu niet gebruikt maar laten staan voor eventueel toekomstig gebruik
+        int logedinUser = userSession.getUser().getUserId();
+        int logedinRole = userSession.getUser().getRole();
+        List<Quiz> selectedQuizes;
+
+        if (logedinRole ==roleIdStudent){
+            selectedQuizes = null;}
+
+        else if (logedinRole==roleIdCoordinator){
+            selectedQuizes = quizDAO.getAllQuizzesByCoordinator(logedinUser);}
+
+        else selectedQuizes = quizDAO.getAll();
+        return selectedQuizes;
     }
 }
