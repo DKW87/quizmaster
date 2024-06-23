@@ -91,9 +91,19 @@ public class CreateUpdateQuizController {
 
 
         if (quiz != null) {
-            double QuizCesuurPercentage=0;
+            double quizCesuurPercentage=0.0;
+            final double MINIMUM_CESUUR_PERCENTAGE = 50.0;
             if (quiz.getQuestionsInQuizCount()!=0){
-                QuizCesuurPercentage = (double) Math.round((((double) quiz.getQuizPoints() / (double) quiz.getQuestionsInQuizCount()) * 100.0) * 10) /10; // om het percentage van aantal benodigde goede vragen (Cesuur) t.o.v. aantal beschikbare vragen in Quiz te laten zien
+                quizCesuurPercentage = (double) Math.round((((double) quiz.getQuizPoints() / (double) quiz.getQuestionsInQuizCount()) * 100.0) * 10) /10; // om het percentage van aantal benodigde goede vragen (Cesuur) t.o.v. aantal beschikbare vragen in Quiz te laten zien
+            }
+            if (quizCesuurPercentage ==0.0){
+                String messageGeenVragen = String.format("LET OP: Voor deze Quiz zijn nog geen vragen aangemaakt");
+                showAlert(Alert.AlertType.INFORMATION, "Geen vragen", messageGeenVragen);
+            }
+
+            if (quizCesuurPercentage >0.0 & quizCesuurPercentage <MINIMUM_CESUUR_PERCENTAGE){
+                String messageCesuur = String.format("LET OP: Het benodigde aantal goede vragen t.o.v. totaal aantal vragen in de Quiz is KLEINER dan %.0f procent",MINIMUM_CESUUR_PERCENTAGE);
+                showAlert(Alert.AlertType.INFORMATION, "Cesuur Klein", messageCesuur);
             }
 
             selectedQuiz = quiz;
@@ -103,13 +113,14 @@ public class CreateUpdateQuizController {
             quizPointsField.setText(String.valueOf(quiz.getQuizPoints()));
             courseComboBox.setValue(quiz.getCourse());
             questionsInQuizCountField.setText(String.valueOf(quiz.getQuestionsInQuizCount()));
-            quizCesuurPercentageField.setText(String.valueOf(QuizCesuurPercentage + " %"));
+            quizCesuurPercentageField.setText(String.valueOf(quizCesuurPercentage + " %"));
         } else {
             courseComboBox.getSelectionModel().selectFirst();
             var selectedCourseDifficultyId = courseComboBox.getSelectionModel().getSelectedItem().getDifficulty().getDifficultyId();
             setDifficultyComboBoxItems(selectedCourseDifficultyId);
             difficultyComboBox.getSelectionModel().selectFirst();
         }
+
     }
 
     private Quiz getQuiz() {
