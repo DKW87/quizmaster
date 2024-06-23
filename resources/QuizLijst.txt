@@ -1,0 +1,11 @@
+Java Basis,Java Programming,Beginner,7,11
+Python Basis,Python Basis,Beginner,5,7
+Geschiedenis Middeleeuwen 1,Geschiedenis Middeleeuwen,Beginner,6,10
+Geschiedenis Middeleeuwen 2,Geschiedenis Middeleeuwen,Beginner,1,10
+Geschiedenis Middeleeuwen 3,Geschiedenis Middeleeuwen,Beginner,6,10
+Engels A 1,Engels A,Beginner,8,12
+Engels A 2,Engels A,Beginner,8,12
+Engels A 3,Engels A,Gevorderd,8,12
+RobTest,Python Basis,Medium,4,0
+RobTest22,Java Spring Framework,Medium,12,0
+RobTest222,Python Basis,Beginner,10,0

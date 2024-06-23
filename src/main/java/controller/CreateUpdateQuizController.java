@@ -17,6 +17,12 @@ import java.util.List;
 
 import static utils.Util.showAlert;
 
+/**
+ * @author Rob Jansen
+ * @project quizmaster
+ * @created 17 juni 2024 - 10:00
+ */
+
 public class CreateUpdateQuizController {
     private final SceneManager sceneManager = Main.getSceneManager();
     private final DBAccess dbAccess = Main.getdBaccess();
@@ -48,6 +54,7 @@ public class CreateUpdateQuizController {
     public Button saveQuiz;
     public Button QuizzesList;
     public Button menu;
+    public TextField quizCesuurPercentageField;
 
 
     private Quiz selectedQuiz;
@@ -59,6 +66,7 @@ public class CreateUpdateQuizController {
         courseComboBox.getItems().addAll(FXCollections.observableArrayList(courseDao.getAll()));
         courseComboBox.getSelectionModel().selectedItemProperty().addListener(this::onChangeCourse);
         setDefaultQuiz(quiz);
+
     }
 
     @FXML
@@ -76,12 +84,28 @@ public class CreateUpdateQuizController {
         if (quiz != null) {
 
                 selectAction(quiz);
-
         }
     }
 
     private void setDefaultQuiz(Quiz quiz) {
+
+
         if (quiz != null) {
+            double quizCesuurPercentage=0.0;
+            final double MINIMUM_CESUUR_PERCENTAGE = 50.0;
+            if (quiz.getQuestionsInQuizCount()!=0){
+                quizCesuurPercentage = (double) Math.round((((double) quiz.getQuizPoints() / (double) quiz.getQuestionsInQuizCount()) * 100.0) * 10) /10; // om het percentage van aantal benodigde goede vragen (Cesuur) t.o.v. aantal beschikbare vragen in Quiz te laten zien
+            }
+            if (quizCesuurPercentage ==0.0){
+                String messageGeenVragen = String.format("LET OP: Voor deze Quiz zijn nog geen vragen aangemaakt");
+                showAlert(Alert.AlertType.INFORMATION, "Geen vragen", messageGeenVragen);
+            }
+
+            if (quizCesuurPercentage >0.0 & quizCesuurPercentage <MINIMUM_CESUUR_PERCENTAGE){
+                String messageCesuur = String.format("LET OP: Het benodigde aantal goede vragen t.o.v. totaal aantal vragen in de Quiz is KLEINER dan %.0f procent",MINIMUM_CESUUR_PERCENTAGE);
+                showAlert(Alert.AlertType.INFORMATION, "Cesuur Klein", messageCesuur);
+            }
+
             selectedQuiz = quiz;
             quizIdField.setText(String.valueOf(quiz.getQuizId()));
             quizNameField.setText(quiz.getQuizName());
@@ -89,12 +113,14 @@ public class CreateUpdateQuizController {
             quizPointsField.setText(String.valueOf(quiz.getQuizPoints()));
             courseComboBox.setValue(quiz.getCourse());
             questionsInQuizCountField.setText(String.valueOf(quiz.getQuestionsInQuizCount()));
+            quizCesuurPercentageField.setText(String.valueOf(quizCesuurPercentage + " %"));
         } else {
             courseComboBox.getSelectionModel().selectFirst();
             var selectedCourseDifficultyId = courseComboBox.getSelectionModel().getSelectedItem().getDifficulty().getDifficultyId();
             setDifficultyComboBoxItems(selectedCourseDifficultyId);
             difficultyComboBox.getSelectionModel().selectFirst();
         }
+
     }
 
     private Quiz getQuiz() {
@@ -112,9 +138,10 @@ public class CreateUpdateQuizController {
         int points = quizPointsField.getText().isEmpty() ? 0 : Integer.parseInt(quizPointsField.getText());
         Course course = (Course) courseComboBox.getValue();
 
-        return new Quiz(quizId,quizname,0,points,course,difficulty);
+        return new Quiz(quizId,quizname,points,course,difficulty);
     }
 
+    // check of Quiz al voorkomt in de DB (check op naam van de Quiz)
     private boolean isExistingQuiz(Quiz quiz) {return quizDAO.getByName(quiz.getQuizName()) != null;}
 
 
@@ -134,10 +161,18 @@ public class CreateUpdateQuizController {
         showAlert(Alert.AlertType.INFORMATION, "Succes", "Quiz (wijzigingen) opgeslagen");
     }
 
+    // methode (Observable) om bij te houden of de selectieBox van Course in het scherm wijzigt
+    // roept methode setDifficultyComboBoxItems aan met de nieuwe verkregen DifficultyId van Course
     private void onChangeCourse(ObservableValue<? extends Course> observable, Course oldValue, Course newValue) {
         int difficultyId = newValue.getDifficulty().getDifficultyId();
         setDifficultyComboBoxItems(difficultyId);
     }
+
+    // methode om de Quiz Difficulty ComboBox te vullen
+    // 3 levels van Difficulty (1: Beginner, 2: Medium, 3: Gevorderd)
+    // in Quiz Difficulty Combobox difficulty gelijk aan of 1 lager (indien van toepassing) t.o.v. (nieuw) verkregen Course Difficulty
+    // for loop loopt effectief van 1 (beginner) tm 3 (gevorderd). Indien Course Difficulty = 3, dan Quiz difficulty 3 en 2 // Course difficulty =2, dan Quiz difficulty 2 en 1 // Course difficulty =1 dan Quiz difficulty =1;
+
     private void setDifficultyComboBoxItems(int difficultyId){
         List<Difficulty> filteredDifficulty = new ArrayList<>();
         for (Difficulty difficulty : difficulties) {
@@ -163,5 +198,9 @@ public class CreateUpdateQuizController {
         questionsInQuizCountField.clear();
         quizPointsField.clear();
     }
+
+
+
+
 
 }
