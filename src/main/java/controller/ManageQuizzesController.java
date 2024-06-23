@@ -12,8 +12,15 @@ import utils.Util;
 import view.Main;
 import view.SceneManager;
 
+import javax.swing.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+
+import static utils.Util.showAlert;
 
 /**
  * @author Rob Jansen
@@ -27,6 +34,7 @@ public class ManageQuizzesController {
     private final SceneManager sceneManager = Main.getSceneManager();
     QuizDAO quizDAO = new QuizDAO(dDacces);
     private final UserSession userSession = Main.getUserSession();
+ //   private final static String NAAM_BESTAND_QUIZ_LIJST = "Resources/QuizLijst.txt";
 
 
     @FXML
@@ -43,9 +51,6 @@ public class ManageQuizzesController {
     public TableColumn<Quiz, String> numberQuestionsColumn;
 
 
-
-//    @FXML
-//    TextField errorfield; // nog toe te voegen
 
 
 
@@ -91,6 +96,13 @@ public class ManageQuizzesController {
         }
     }
 
+    @FXML
+    public void doGenerateQuizFile(ActionEvent event){
+        maakBestandvanQuizLijst(Objects.requireNonNull(getSelectedQuizByRoleUserID()));
+    }
+
+
+
     private void generateQuizTable() {
         nameColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getQuizName())));
@@ -124,5 +136,29 @@ public class ManageQuizzesController {
 
         else selectedQuizes = quizDAO.getAll();
         return selectedQuizes;
+    }
+
+    public static void maakBestandvanQuizLijst(List<Quiz> quizLijst) {
+        SwingUtilities.invokeLater(() -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Kies een locatie om het bestand op te slaan");
+
+            int userSelection = fileChooser.showSaveDialog(null);
+
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+                try (PrintWriter printWriter = new PrintWriter(fileToSave)) {
+                    for (Quiz quiz : quizLijst) {
+                        printWriter.println(quiz.getQuizName() + "," + quiz.getCourse() + "," + quiz.getQuizDifficulty() + "," + quiz.getQuizPoints() + "," + quiz.getQuestionsInQuizCount());
+                    }
+                    JOptionPane.showMessageDialog(null, "Bestand succesvol op je computer opgeslagen!", "Bestand opgeslagen", JOptionPane.INFORMATION_MESSAGE);
+
+                } catch (FileNotFoundException fout) {
+                    System.err.println("Bestand niet gevonden: " + fout.getMessage());
+                } catch (Exception e) {
+                    System.err.println("Er is een fout opgetreden: " + e.getMessage());
+                }
+            }
+        });
     }
 }

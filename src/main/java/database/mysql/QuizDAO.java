@@ -149,7 +149,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
         }
     }
 
-
+    // methode telt het aantal vragen dat bij een Quiz hoort
     public int getQuestionsInQuizCount(int quizId) {
         String sql = "select count(*) as questionCount from Question WHERE quizId = ?";
         int questionCount = 0;
