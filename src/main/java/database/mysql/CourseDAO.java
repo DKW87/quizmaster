@@ -76,31 +76,6 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
         return courses;
     }
 
-    /**
-     * Retrieves a list of courses associated with a given coordinator ID.
-     *
-     * @param coordinatorId the ID of the coordinator
-     * @return a list of Course objects representing the courses associated with the coordinator
-     */
-    public List<Course> getCoursesByCoordinator(int coordinatorId) {
-        List<Course> courses = new ArrayList<>();
-        String sql = "SELECT * FROM Course WHERE coordinatorId = ?";
-
-        try {
-            this.setupPreparedStatementWithKey(sql);
-            this.preparedStatement.setInt(1, coordinatorId);
-            ResultSet resultSet = this.executeSelectStatement();
-            while (resultSet.next()) {
-                Course course = createCourseFromResultSet(resultSet);
-                var studentCount = this.getCourseByStudentCount(course.getCourseId());
-                course.setStudentCount(studentCount);
-                courses.add(null);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error in CourseDAO/getCoursesByCoordinator: " + e.getMessage());
-        }
-        return courses;
-    }
 
     /**
      * Retrieves a list of student courses for a given student ID, including the course name, difficulty,
@@ -179,16 +154,16 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     }
 
     @Override
-    public void storeOne(Course cursus) {
+    public void storeOne(Course course)  {
         String sql = "INSERT INTO Course(name, difficultyId, coordinatorId) VALUES (?, ?, ?);";
         int primaryKey;
         try {
             this.setupPreparedStatementWithKey(sql);
-            setCourseToQuery(cursus);
+            setCourseToQuery(course);
             primaryKey = this.executeInsertStatementWithKey();
-            cursus.setCourseId(primaryKey);
+            course.setCourseId(primaryKey);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+           throw new RuntimeException("Duplicate entry  " + course.getName() + " for key 'course.name_UNIQUE'", e);
         }
     }
 
@@ -205,9 +180,11 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
             this.preparedStatement.setInt(1, courseId);
             this.preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            throw new RuntimeException("Cannot delete or update a parent row: a foreign key constraint fails", e);
         }
     }
+
 
     /**
      * Updates a course in the database with the provided course object.
