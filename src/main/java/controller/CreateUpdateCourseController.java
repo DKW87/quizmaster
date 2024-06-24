@@ -62,13 +62,12 @@ public class CreateUpdateCourseController {
     }
 
     @FXML
-    public void doCreateUpdateCourse(ActionEvent actionEvent) {
+    public void doCreateUpdateCourse() {
         Course course = getCourse();
         // Check if the course details are valid
         if (course != null) {
              // select create or update action
             selectAction(course);
-
         }
     }
 
@@ -182,7 +181,7 @@ public class CreateUpdateCourseController {
             courseDao.updateOne(course);
         }
         // Display success message
-        showAlert(Alert.AlertType.INFORMATION, "Succes", "Cursus succesvol aangepast");
+        if(!Main.getTestMode()) showAlert(Alert.AlertType.INFORMATION, "Succes", "Cursus succesvol aangepast");
 
     }
     /**
