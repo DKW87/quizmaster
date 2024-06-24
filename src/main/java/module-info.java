@@ -11,4 +11,6 @@ module QuizMaster {
     opens view to javafx.graphics, javafx.fxml;
     opens controller to javafx.fxml;
     opens model to com.google.gson;
+    opens database.couchdb to com.google.gson;
+    opens controller.launcher to javafx.fxml;
 }

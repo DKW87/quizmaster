@@ -16,6 +16,11 @@ public class Constant {
     public static  final String DB_USER = "bakkumm";
     public static  final String DB_PASS = "1J.cINqCPBBcHJ";
 
+    // ? couchDB constants
+    public static  final String COUCH_DB_NAME = "results";
+    public static  final String COUCH_DB_USER = "admin";
+    public static  final String COUCH_DB_PASS = "admin";
+
     // ? roles permission constants
     public static final List<MenuItem> STUDENT_TASKS = List.of(
             new MenuItem("Course Management"),
