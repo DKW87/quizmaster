@@ -42,9 +42,16 @@ public class ManageCoursesController {
     public TableColumn<Course, String> studentCount;
 
     @FXML
-    private TableView<Course> courseTable;
+    public TableView<Course> courseTable;
 
     private Course selectedCourse;
+
+    public Course getSelectedCourse() {
+        return selectedCourse;
+    }
+    public void setSelectedCourse(Course selectedCourse) {
+        this.selectedCourse = selectedCourse;
+    }
 
 
 
@@ -86,7 +93,6 @@ public class ManageCoursesController {
             showAlert(Alert.AlertType.ERROR, "Fout", "Selecteer eerst een cursus");
         }
 
-
     }
     // setup table data with columns
     private void generateCourseTable() {
@@ -102,11 +108,17 @@ public class ManageCoursesController {
     }
 
     private void onChangeCourse(ObservableValue<? extends Course> observable, Course oldValue, Course newValue) {
-        selectedCourse = newValue;
+        setSelectedCourse(newValue);
     }
 
     private void showConfirmAlert() {
         String message = String.format("Weet je zeker dat je %s wil verwijderen?", selectedCourse.getName());
+        if(Main.getTestMode()) {
+            courseDao.deleteOneById(selectedCourse.getCourseId());
+            courseTable.getItems().remove(selectedCourse);
+            return;
+        }
+
         if (confirmMessage("Course Verwijderen",message )) {
             courseDao.deleteOneById(selectedCourse.getCourseId());
             courseTable.getItems().remove(selectedCourse);
