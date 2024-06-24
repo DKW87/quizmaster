@@ -88,14 +88,19 @@ public class ManageQuizzesController {
     public void doDeleteQuiz(ActionEvent event) {
         // voor als je iets wilt gebruiken van de SELECTIE uit een lijst
         Quiz quiz = quizTable.getSelectionModel().getSelectedItem();
-        if (quiz != null) {
+        if (quiz == null) {
+            Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "Selecteer eerst een quiz!");
+        }
+
+        else if (quiz.getQuestionsInQuizCount()!=0){
+            Util.showAlert(Alert.AlertType.ERROR, "Kan deze Quiz niet verwijderen", "Bij deze Quiz horen nog vragen, verwijder eerst de bijbehorende vragen");
+        }
+        else {
             String message = String.format("Weet je zeker dat je de %s wilt verwijderen?", quiz.getQuizName());
             if (Util.confirmMessage("Delete Quiz", message)) {
                 quizTable.getItems().remove(quiz);
                 quizDAO.deleteOneById(quiz.getQuizId());
             }
-        } else {
-            Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "Selecteer eerst een quiz!");
         }
     }
 
