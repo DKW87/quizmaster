@@ -34,7 +34,7 @@ public class ManageQuizzesController {
     private final SceneManager sceneManager = Main.getSceneManager();
     QuizDAO quizDAO = new QuizDAO(dDacces);
     private final UserSession userSession = Main.getUserSession();
-    //   private final static String NAAM_BESTAND_QUIZ_LIJST = "Resources/QuizLijst.txt";
+
 
 
     @FXML
@@ -60,7 +60,7 @@ public class ManageQuizzesController {
             }
             generateQuizTable();
 
-        } else {generateQuizTable();};
+        } else {generateQuizTable();}
     }
 
     @FXML
@@ -169,5 +169,6 @@ public class ManageQuizzesController {
             }
         });
     }
+
 
 }
