@@ -1,8 +1,12 @@
+/**
+ * @author Mack Bakkum
+ * @project quizmaster
+ * @created 20 juni 2024 - 13:45
+ */
+
 package model;
 
 import org.junit.jupiter.api.Test;
-import model.Role;
-import model.User;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

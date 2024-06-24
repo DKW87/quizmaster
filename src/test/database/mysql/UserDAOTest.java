@@ -1,13 +1,17 @@
+/**
+ * @author Mack Bakkum
+ * @project quizmaster
+ * @created 22 juni 2024 - 10:00
+ */
+
 package database.mysql;
 
 import model.Role;
 import model.User;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import view.Main;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
 class UserDAOTest {
     private UserDAO userDAO;
