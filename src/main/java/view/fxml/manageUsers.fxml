@@ -47,24 +47,24 @@
                   </font></TextField>
                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0">
                   <children>
-                      <Button fx:id="createUserId" mnemonicParsing="false" onAction="#doCreateUser" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #009933;" text="Nieuw">
+                      <Button fx:id="createUserId" mnemonicParsing="false" onAction="#doCreateUser" style="-fx-border-color: #154360; -fx-background-color: #154360;" text="Nieuw" textFill="WHITE">
                           <font>
-                              <Font size="16.0" />
+                              <Font size="14.0" />
                           </font>
                       </Button>
-                      <Button fx:id="updateUserId" mnemonicParsing="false" onAction="#doUpdateUser" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #ffff00;" text="Wijzig">
+                      <Button fx:id="updateUserId" mnemonicParsing="false" onAction="#doUpdateUser" style="-fx-border-color: #154360; -fx-background-color: #154360;" text="Wijzig" textFill="WHITE">
                           <font>
-                              <Font size="16.0" />
+                              <Font size="14.0" />
                           </font>
                       </Button>
-                      <Button fx:id="deleteUserId" mnemonicParsing="false" onAction="#doDeleteUser" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #cc3300;" text="Verwijder">
+                      <Button fx:id="deleteUserId" mnemonicParsing="false" onAction="#doDeleteUser" style="-fx-border-color: #154360; -fx-background-color: #154360;" text="Verwijder" textFill="WHITE">
                           <font>
-                              <Font size="16.0" />
+                              <Font size="14.0" />
                           </font>
                       </Button>
-                      <Button mnemonicParsing="false" onAction="#doMenu" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #154360;" text="Menu">
+                      <Button mnemonicParsing="false" onAction="#doMenu" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #154360;" text="Menu" textFill="#154360">
                           <font>
-                              <Font size="16.0" />
+                              <Font size="14.0" />
                           </font>
                       </Button>
                   </children>
