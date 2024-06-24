@@ -22,26 +22,23 @@ public class Quiz {
     private int quizId;
     private String name;
     private Difficulty difficulty;
-    private int passMark;
     private int quizPoints;
     private Course course;
     private int questionsInQuizCount;
 
     // all args constructor:
-    public Quiz(int quizId, String name, int passMark, int quizPoints, Course course, Difficulty difficulty, int questionsInQuizCount) {
+    public Quiz(int quizId, String name, int quizPoints, Course course, Difficulty difficulty, int questionsInQuizCount) {
         this.quizId = quizId;
         this.name = name;
-        this.passMark = passMark;
         this.quizPoints = quizPoints;
         this.course = course;
         this.difficulty = difficulty;
         this.questionsInQuizCount = questionsInQuizCount;
     }
 
-    public Quiz(int quizId, String name, int passMark, int quizPoints, Course course, Difficulty difficulty) {
+    public Quiz(int quizId, String name, int quizPoints, Course course, Difficulty difficulty) {
         this.quizId = quizId;
         this.name = name;
-        this.passMark = passMark;
         this.quizPoints = quizPoints;
         this.course = course;
         this.difficulty = difficulty;
@@ -62,9 +59,6 @@ public class Quiz {
         return name;
     }
 
-    public int getPassMark() {
-        return passMark;
-    }
 
     public int getQuizPoints() {
         return quizPoints;
@@ -87,16 +81,7 @@ public class Quiz {
 
     // toString
     @Override
-    public String toString() {
-        StringBuilder toStringQuiz = new StringBuilder();
-        toStringQuiz.append("Quiz ID: " + this.quizId + " ");
-        toStringQuiz.append("Name: " + this.name + " ");
-        toStringQuiz.append("Course: " + this.course.getName() + " ");
-        toStringQuiz.append("Quizpoints: " + this.quizPoints + " ");
-        toStringQuiz.append("Difficulty: " + this.difficulty.getName() + " ");
-        toStringQuiz.append("Passmark: " + this.passMark + " ");
-        toStringQuiz.append("#Questions in Quiz: " + this.questionsInQuizCount + " ");
-        return toStringQuiz.toString();
-    }
+    public String toString() {return this.name;}
+
 
 }

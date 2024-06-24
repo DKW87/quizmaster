@@ -7,18 +7,35 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import model.Quiz;
+import model.UserSession;
 import utils.Util;
 import view.Main;
 import view.SceneManager;
 
+import javax.swing.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+
+import static utils.Util.showAlert;
+
+/**
+ * @author Rob Jansen
+ * @project quizmaster
+ * @created 18 juni 2024 - 10:00
+ */
 
 
 public class ManageQuizzesController {
     private final DBAccess dDacces = Main.getdBaccess();
     private final SceneManager sceneManager = Main.getSceneManager();
     QuizDAO quizDAO = new QuizDAO(dDacces);
+    private final UserSession userSession = Main.getUserSession();
+    //   private final static String NAAM_BESTAND_QUIZ_LIJST = "Resources/QuizLijst.txt";
+
 
     @FXML
     public TableView<Quiz> quizTable;
@@ -27,61 +44,76 @@ public class ManageQuizzesController {
     @FXML
     public TableColumn<Quiz, String> courseColumn;
     @FXML
-    public TableColumn<Quiz,String> difficultyColumn;
+    public TableColumn<Quiz, String> difficultyColumn;
     @FXML
     public TableColumn<Quiz, String> passMarkColumn;
     @FXML
     public TableColumn<Quiz, String> numberQuestionsColumn;
 
 
-
-//    @FXML
-//    TextField errorfield; // nog toe te voegen
-
-
-
-    // setup bij openen van het QuizList scherm waarbij de bestaande Quizes uit de DB worden gehaald.
+    // setup bij openen van het QuizList scherm waarbij de bestaande Quizes op basis van ingelogde userID uit de DB worden gehaald.
     public void setup() {
+        List<Quiz> quizzen = getSelectedQuizByRoleUserID();
+        if (quizzen !=null) {
+            for (Quiz quiz : quizzen) {
+                quizTable.getItems().add(quiz);
+            }
+            generateQuizTable();
 
-        List<Quiz> quizzen = quizDAO.getAll();
-        for (Quiz quiz : quizzen) {
-            quizTable.getItems().add(quiz);
-        }
-        generateQuizTable();
+        } else {generateQuizTable();};
     }
-    @FXML
-    public void doMenu(ActionEvent actionEvent){sceneManager.showWelcomeScene();}
 
     @FXML
-    public void doCreateQuiz(ActionEvent event){sceneManager.showCreateUpdateQuizScene(null);}
-    // TO DO: eerst een nieuwe quiz in de DB creeren, daarvan id ophalen? en daarmee een nieuwe Scene oproepen met input de nieuwe quiz?
+    public void doMenu(ActionEvent actionEvent) {
+        sceneManager.showWelcomeScene();
+    }
+
+    @FXML
+    public void doCreateQuiz(ActionEvent event) {
+        sceneManager.showCreateUpdateQuizScene(null);
+    }
 
 
     @FXML
-    public void doUpdateQuiz(){
-        // voor als je iets wilt gebruiken van de SELECTIE uit een lijst
+    public void doUpdateQuiz() {
         Quiz selectedQuiz = quizTable.getSelectionModel().getSelectedItem();
         if (selectedQuiz == null) {
             Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "Selecteer eerst een quiz!");
         } else {
-                sceneManager.showCreateUpdateQuizScene(selectedQuiz);
-            }
+            sceneManager.showCreateUpdateQuizScene(selectedQuiz);
         }
+    }
 
     @FXML
-    public void doDeleteQuiz(ActionEvent event){
+    public void doDeleteQuiz(ActionEvent event) {
         // voor als je iets wilt gebruiken van de SELECTIE uit een lijst
         Quiz quiz = quizTable.getSelectionModel().getSelectedItem();
-        if (quiz != null){
-            String message = String.format("Weet je zeker dat je de %s wilt verwijderen?",quiz.getQuizName());
-            if (Util.confirmMessage("Delete Quiz",message)) {
+        if (quiz == null) {
+            Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "Selecteer eerst een quiz!");
+        }
+
+        else if (quiz.getQuestionsInQuizCount()!=0){
+            Util.showAlert(Alert.AlertType.ERROR, "Kan deze Quiz niet verwijderen", "Bij deze Quiz horen nog vragen, verwijder eerst de bijbehorende vragen");
+        }
+        else {
+            String message = String.format("Weet je zeker dat je de %s wilt verwijderen?", quiz.getQuizName());
+            if (Util.confirmMessage("Delete Quiz", message)) {
                 quizTable.getItems().remove(quiz);
                 quizDAO.deleteOneById(quiz.getQuizId());
             }
-        } else {
-            Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "Selecteer eerst een quiz!");
         }
     }
+
+    @FXML
+    public void doGenerateQuizFile(ActionEvent event) {
+        List<Quiz> quizzen = getSelectedQuizByRoleUserID();
+        if (quizzen != null) {
+            maakBestandvanQuizLijst(quizzen);
+    } else {
+            showAlert(Alert.AlertType.INFORMATION, "Quiz bestand", "Quiz kan niet worden opgeslagen, lijst is leeg!");
+        }
+    }
+
 
     private void generateQuizTable() {
         nameColumn.setCellValueFactory(cellData ->
@@ -93,7 +125,49 @@ public class ManageQuizzesController {
         numberQuestionsColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getQuestionsInQuizCount())));
         passMarkColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(String.valueOf(cellData.getValue().getPassMark())));
+                new SimpleStringProperty(String.valueOf(cellData.getValue().getQuizPoints())));
         quizTable.getSelectionModel().selectFirst();
     }
+
+    // methode om de juiste lijst met Quizzen te genereren op basis van de ingelogde UserRole en indien coordinator alleen Quizzen die bij die coordinator horen
+    private List<Quiz> getSelectedQuizByRoleUserID() {
+        final int ROLE_ID_STUDENT = 1;
+        final int ROLE_ID_COORDINATOR = 2;
+        int logedinUser = userSession.getUser().getUserId();
+        int logedinRole = userSession.getUser().getRole();
+        List<Quiz> selectedQuizes;
+
+        if (logedinRole == ROLE_ID_STUDENT) {
+            selectedQuizes = null;
+        } else if (logedinRole == ROLE_ID_COORDINATOR) {
+            selectedQuizes = quizDAO.getAllQuizzesByCoordinator(logedinUser);
+        } else selectedQuizes = quizDAO.getAll();
+        return selectedQuizes;
+    }
+
+    public static void maakBestandvanQuizLijst(List<Quiz> quizLijst) {
+
+        SwingUtilities.invokeLater(() -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Kies een locatie om het bestand op te slaan");
+            int userSelection = fileChooser.showSaveDialog(null);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+                try (PrintWriter printWriter = new PrintWriter(fileToSave)) {
+                    StringBuilder printHeaders = new StringBuilder();
+                    printHeaders.append(String.format("%-30s, %-30s, %-20s, %-20s, %-20s", "Quiznaam:" ,"Cursusnaam:", "Moeilijkheidsgraad:", "Cesuur:","Aantal vragen in Quiz"));
+                    printWriter.println(printHeaders);
+                    for (Quiz quiz : quizLijst) {
+                        printWriter.println(String.format("%-30s, %-30s, %-20s, %-20s, %-20s", quiz.getQuizName(), quiz.getCourse(), quiz.getQuizDifficulty(), quiz.getQuizPoints(), quiz.getQuestionsInQuizCount()));
+                    }
+                    JOptionPane.showMessageDialog(null, "Bestand succesvol op je computer opgeslagen!", "Bestand opgeslagen", JOptionPane.INFORMATION_MESSAGE);
+                } catch (FileNotFoundException fout) {
+                    System.err.println("Bestand niet gevonden: " + fout.getMessage());
+                } catch (Exception e) {
+                    System.err.println("Er is een fout opgetreden: " + e.getMessage());
+                } 
+            }
+        });
+    }
+
 }

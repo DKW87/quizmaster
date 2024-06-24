@@ -20,7 +20,7 @@ public class LauncherTestRob {
 
         String locationQuestionCSV = "Resources/Quizzen.csv";
         QuizDAO quizDAO = new QuizDAO(dbAccess);
-        Quiz quizMethodHandler = new Quiz(0, null, 0, 0, null, null,2);
+        Quiz quizMethodHandler = new Quiz(0, null, 0, null, null,2);
 
 
         List<String> quizInCsv = convertCsvToArray(locationQuestionCSV);
