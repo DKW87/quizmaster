@@ -13,109 +13,109 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #154360;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateUpdateUserController">
     <children>
-      <VBox prefHeight="600.0" prefWidth="900.0">
-         <children>
-            <VBox prefHeight="560.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
-               <children>
-                    <Label fx:id="titelLabel" alignment="TOP_CENTER" prefHeight="35.0" prefWidth="190.0" text="Nieuwe Gebruiker">
-                        <font>
-                            <Font size="24.0" />
-                        </font>
-                    </Label>
-                  <Label text="spacing" visible="false">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <HBox maxHeight="235.0" minHeight="235.0" prefHeight="235.0" prefWidth="538.0" spacing="35.0">
-                     <children>
-                        <VBox maxHeight="235.0" minHeight="235.0" prefHeight="235.0" prefWidth="158.0" spacing="13.0">
-                           <children>
-                                  <Label prefHeight="26.0" prefWidth="124.0" text="Gebruikersnaam">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                  </Label>
-                                  <Label text="Wachtwoord">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                  </Label>
-                                  <Label text="Voornaam">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                  </Label>
-                                  <Label text="Tussenvoegsel">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                  </Label>
-                                  <Label text="Achternaam">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                  </Label>
-                                  <Label text="Rol">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                  </Label>
-                                  <Label text="GebruikersID" visible="false">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                  </Label>
-                           </children>
-                        </VBox>
-                        <VBox maxHeight="235.0" minHeight="235.0" prefHeight="235.0" prefWidth="315.0" spacing="13.0">
-                           <children>
-                                  <TextField fx:id="GebruikersNaamTextField" maxWidth="300.0" minWidth="250.0" prefHeight="26.0" prefWidth="250.0" />
-                                  <PasswordField fx:id="WachtwoordTextField" maxWidth="300.0" prefWidth="100.0" />
-                                  <TextField fx:id="VoornaamTextField" maxWidth="300.0" prefWidth="100.0" />
-                                  <TextField fx:id="TussenvoegselTextField" maxWidth="300.0" prefWidth="100.0" />
-                                  <TextField fx:id="AchternaamTextfield" maxWidth="300.0" prefWidth="100.0" />
-                              <ComboBox fx:id="rolComboBox" maxWidth="300.0" prefWidth="250.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID;" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                      <TextField fx:id="GebruikersIdTextField" editable="false" maxWidth="300.0" prefWidth="250.0" visible="false">
-                          <font>
-                              <Font name="System Italic" size="10.0" />
-                          </font>
-                      </TextField>
-                  <HBox alignment="TOP_CENTER" prefHeight="52.0" prefWidth="538.0" spacing="25.0">
-                     <children>
-                          <Button fx:id="OpslaanButton" mnemonicParsing="false" onAction="#doCreateUpdateUser" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #009933;" text="Opslaan">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="GebruikerslijstButton" mnemonicParsing="false" onAction="#doGebruikerslijst" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #ffff00;" text="Gebruikerslijst">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                          <Button fx:id="MenuButton" mnemonicParsing="false" onAction="#doMenu" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #154360;" text="Menu">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <padding>
-                  <Insets bottom="15.0" left="50.0" right="50.0" top="50.0" />
-               </padding>
-            </VBox>
-         </children>
-         <padding>
-            <Insets bottom="30.0" left="130.0" right="130.0" top="30.0" />
-         </padding>
-      </VBox>
+        <VBox prefHeight="600.0" prefWidth="900.0">
+            <children>
+                <VBox prefHeight="560.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
+                    <children>
+                        <Label fx:id="titelLabel" alignment="TOP_CENTER" prefHeight="35.0" prefWidth="190.0" text="Nieuwe Gebruiker">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                        </Label>
+                        <Label text="spacing" visible="false">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <HBox maxHeight="235.0" minHeight="235.0" prefHeight="235.0" prefWidth="538.0" spacing="35.0">
+                            <children>
+                                <VBox maxHeight="235.0" minHeight="235.0" prefHeight="235.0" prefWidth="158.0" spacing="13.0">
+                                    <children>
+                                        <Label text="Voornaam">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                        </Label>
+                                        <Label text="Tussenvoegsel">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                        </Label>
+                                        <Label text="Achternaam">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                        </Label>
+                                        <Label text="Wachtwoord">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                        </Label>
+                                        <Label text="Rol">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                        </Label>
+                                        <Label prefHeight="26.0" prefWidth="124.0" text="Gebruikersnaam" visible="false">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                        </Label>
+                                        <Label text="GebruikersID" visible="false">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                                <VBox maxHeight="235.0" minHeight="235.0" prefHeight="235.0" prefWidth="315.0" spacing="13.0">
+                                    <children>
+                                        <TextField fx:id="VoornaamTextField" maxWidth="300.0" prefWidth="100.0" />
+                                        <TextField fx:id="TussenvoegselTextField" maxWidth="300.0" prefWidth="100.0" />
+                                        <TextField fx:id="AchternaamTextfield" maxWidth="300.0" prefWidth="100.0" />
+                                        <PasswordField fx:id="WachtwoordTextField" maxWidth="300.0" prefWidth="100.0" />
+                                        <ComboBox fx:id="rolComboBox" maxWidth="300.0" prefWidth="250.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID;" />
+                                        <TextField fx:id="GebruikersNaamTextField" editable="false" visible="false" maxWidth="300.0" minWidth="250.0" prefHeight="26.0" prefWidth="250.0" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+                        <TextField fx:id="GebruikersIdTextField" editable="false" maxWidth="300.0" prefWidth="250.0" visible="false">
+                            <font>
+                                <Font name="System Italic" size="10.0" />
+                            </font>
+                        </TextField>
+                        <HBox alignment="TOP_CENTER" prefHeight="52.0" prefWidth="538.0" spacing="25.0">
+                            <children>
+                                <Button fx:id="OpslaanButton" mnemonicParsing="false" onAction="#doCreateUpdateUser" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #009933;" text="Opslaan">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Button>
+                                <Button fx:id="GebruikerslijstButton" mnemonicParsing="false" onAction="#doGebruikerslijst" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #ffff00;" text="Gebruikerslijst">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Button>
+                                <Button fx:id="MenuButton" mnemonicParsing="false" onAction="#doMenu" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #154360;" text="Menu">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="15.0" left="50.0" right="50.0" top="50.0" />
+                    </padding>
+                </VBox>
+            </children>
+            <padding>
+                <Insets bottom="30.0" left="130.0" right="130.0" top="30.0" />
+            </padding>
+        </VBox>
     </children>
 </AnchorPane>

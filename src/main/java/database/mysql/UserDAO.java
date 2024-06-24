@@ -26,6 +26,7 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
     public void storeOne(User user) {
         String sqlUserImport = "INSERT INTO User(username, password, firstName, infix, lastName, roleId) VALUES (?,?,?,?,?,?);";
         int primaryKey;
+        user.setUserName(generateUserName(user).toLowerCase());
         try {
             setupPreparedStatementWithKey(sqlUserImport);
             storeUserString(user);
@@ -126,12 +127,26 @@ public class UserDAO extends AbstractDAO implements GenericDAO<User> {
         }
     }
 
+    // Method to generate a userName automatically based on given first & lastName.
+    String generateUserName(User user) {
+        String lastNameShort = user.getLastName().substring(0, Math.min(5, user.getLastName().length()));
+        String firstNameShort = user.getFirstName().substring(0, Math.min(2, user.getFirstName().length()));
+
+        String fullUserName = lastNameShort + firstNameShort;
+        int duplicateCount = 2;
+        while (getByName(fullUserName) != null) {
+            fullUserName = lastNameShort + firstNameShort + duplicateCount;
+            duplicateCount++;
+        }
+        return fullUserName;
+    }
+
     // Helper method to avoid duplicate code Used in storeOne & updateOne.
     private void storeUserString(User user) throws SQLException {
         preparedStatement.setString(1, user.getUserName());
         preparedStatement.setString(2, user.getPassword());
         preparedStatement.setString(3, user.getFirstName());
-        preparedStatement.setString(4, user.getInfix());
+        preparedStatement.setString(4, !user.getInfix().isEmpty()?user.getInfix():"");
         preparedStatement.setString(5, user.getLastName());
         preparedStatement.setInt(6, user.getRole());
     }

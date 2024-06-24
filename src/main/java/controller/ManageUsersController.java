@@ -2,6 +2,7 @@ package controller;
 
 import database.mysql.DBAccess;
 import database.mysql.UserDAO;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -9,7 +10,9 @@ import model.Role;
 import model.User;
 import view.Main;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ManageUsersController {
     private final DBAccess dbAccess = Main.getdBaccess();
@@ -38,8 +41,11 @@ public class ManageUsersController {
     @FXML
     TextField errorField;
 
+    private final Map<Integer, Integer> roleCount = new HashMap<>(); // Store role counts
+
     public void setup() {
         List<User> users = userDAO.getAll();
+        calculateRoleCounts(users);
         for (User user : users) {
             userTable.getItems().add(user);
         }
@@ -53,7 +59,7 @@ public class ManageUsersController {
 
     // Method to go to the Create User screen.
     public void doCreateUser() {
-        Main.getSceneManager().showCreateUpdateUserScene(null); // Hoe moet ik hier een user doorgeven? Ik moet op een nieuwe scene komen om daar een user aan te maken.
+        Main.getSceneManager().showCreateUpdateUserScene(null);
     }
 
     // Method to go to the Update User screen.
@@ -83,6 +89,7 @@ public class ManageUsersController {
         }
     }
 
+    // Method that fill the userTable
     private void generateUserTable() {
         usernameColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getUserName())));
@@ -94,7 +101,21 @@ public class ManageUsersController {
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getLastName())));
         roleColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getRoleName())));
+        amountInRoleColumn.setCellValueFactory(cellData -> {
+            User user = cellData.getValue();
+            int count = roleCount.getOrDefault(user.getRole(), 0) - 1; // Using - 1 to get correct overview of people in role.
+            return new SimpleIntegerProperty(count).asObject();
+        });
         userTable.getSelectionModel().selectFirst();
+    }
+
+    // Method to calculate the rolecount once and store them in a hashmap. Program kept crashing if constantly searching from DB every time.
+    private void calculateRoleCounts(List<User> users) {
+        roleCount.clear();
+        for (User user : users) {
+            int roleId = user.getRole();
+            roleCount.put(roleId, roleCount.getOrDefault(roleId, 0) + 1);
+        }
     }
 
     // Helper method to display an error
