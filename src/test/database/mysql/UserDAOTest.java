@@ -4,6 +4,8 @@ import model.Role;
 import model.User;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import view.Main;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -11,7 +13,7 @@ class UserDAOTest {
     private UserDAO userDAO;
 
     public void setup() {
-        userDAO = Mockito.mock(UserDAO.class);
+        userDAO = new UserDAO(Main.getdBaccess());
     }
 
     // Tests if a new user has a correctly generated userName (5 letters of lastName, 2 letters of firstName)
@@ -19,9 +21,7 @@ class UserDAOTest {
     public void generateUserNameTest() {
         setup();
         Role Student = new Role("Student");
-        User user = new User("", "password123", "Lebron", "James", Student);
-
-        when(userDAO.getByName("jamesle")).thenReturn(null);
+        User user = new User("", "password123", "lebron", "james", Student);
 
         String usernameTest = userDAO.generateUserName(user);
         assertEquals("jamesle", usernameTest);

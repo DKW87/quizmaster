@@ -59,7 +59,7 @@ public class ManageUsersController {
 
     // Method to go to the Create User screen.
     public void doCreateUser() {
-        Main.getSceneManager().showCreateUpdateUserScene(null); // Hoe moet ik hier een user doorgeven? Ik moet op een nieuwe scene komen om daar een user aan te maken.
+        Main.getSceneManager().showCreateUpdateUserScene(null);
     }
 
     // Method to go to the Update User screen.
@@ -89,6 +89,7 @@ public class ManageUsersController {
         }
     }
 
+    // Method that fill the userTable
     private void generateUserTable() {
         usernameColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getUserName())));

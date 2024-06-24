@@ -70,7 +70,7 @@ public class CreateUpdateUserController {
         if (user != null) {
             if (GebruikersIdTextField.getText().isEmpty()) {
                 userDAO.storeOne(user);
-                Util.showAlert(Alert.AlertType.INFORMATION, "UserSaved", "Gebruiker is aangemaakt");
+                Util.showAlert(Alert.AlertType.INFORMATION, "UserSaved", "Gebruiker is aangemaakt met username\n" + user.getUserName());
                 resetForm();
             } else {
                 userDAO.updateOne(user);
