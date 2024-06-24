@@ -81,7 +81,6 @@ class CourseDAOTest {
     void deleteOneByIdUnSuccess() {
         Course testCourse = courseDAO.getById(1);
         // Act
-        // Act
         // assertThrows
         Exception exception = assertThrows(RuntimeException.class, () -> {
             courseDAO.deleteOneById(testCourse.getCourseId());;
@@ -125,6 +124,7 @@ class CourseDAOTest {
 
 
     @Test
+    @DisplayName("Test CourseDAO updateOne")
     public void testUpdateOne()  {
 
         Course testCourse = new Course(
