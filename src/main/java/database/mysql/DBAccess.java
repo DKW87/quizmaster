@@ -1,5 +1,7 @@
 package database.mysql;
 
+import view.Main;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,9 +21,6 @@ public class DBAccess {
             "&useLegacyDatetimeCode=false" +
             "&serverTimezone=UTC";
     private static final String TEST_CONNECTION_URL = "jdbc:mysql://127.0.0.1:3306/";
-    private static final String H2_CONNECTION_URL = "\"jdbc:h2:mem:;init=runscript from 'classpath:createInsert.sql'\"";
-
-    private static final boolean test = false;
 
     public DBAccess(String databaseName, String mainUser, String mainUserPassword) {
         super();
@@ -35,7 +34,7 @@ public class DBAccess {
      */
     public void openConnection() {
         String connectionURL;
-        if (test) {
+        if (Main.getTestMode()) {
             connectionURL = TEST_CONNECTION_URL + databaseName + CONNECTION_SETTINGS ;
         } else {
             connectionURL = PREFIX_CONNECTION_URL + databaseName ;
