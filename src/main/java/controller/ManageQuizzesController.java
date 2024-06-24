@@ -131,18 +131,15 @@ public class ManageQuizzesController {
 
     // methode om de juiste lijst met Quizzen te genereren op basis van de ingelogde UserRole en indien coordinator alleen Quizzen die bij die coordinator horen
     private List<Quiz> getSelectedQuizByRoleUserID() {
-        final int roleIdStudent = 1;
-        final int roleIdCoordinator = 2;
-        final int roleIdDocent = 3; // wordt nu niet gebruikt maar laten staan voor eventueel toekomstig gebruik
-        final int roleIdAdministrator = 4; // wordt nu niet gebruikt maar laten staan voor eventueel toekomstig gebruik
-        final int roleIdFunctioneelBeheerder = 5; // wordt nu niet gebruikt maar laten staan voor eventueel toekomstig gebruik
+        final int ROLE_ID_STUDENT = 1;
+        final int ROLE_ID_COORDINATOR = 2;
         int logedinUser = userSession.getUser().getUserId();
         int logedinRole = userSession.getUser().getRole();
         List<Quiz> selectedQuizes;
 
-        if (logedinRole == roleIdStudent) {
+        if (logedinRole == ROLE_ID_STUDENT) {
             selectedQuizes = null;
-        } else if (logedinRole == roleIdCoordinator) {
+        } else if (logedinRole == ROLE_ID_COORDINATOR) {
             selectedQuizes = quizDAO.getAllQuizzesByCoordinator(logedinUser);
         } else selectedQuizes = quizDAO.getAll();
         return selectedQuizes;
