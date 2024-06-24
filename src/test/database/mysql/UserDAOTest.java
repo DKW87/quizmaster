@@ -32,13 +32,13 @@ class UserDAOTest {
     public void generateUserNameDuplicateTest() {
         setup();
         Role Student = new Role("Student");
-        User user = new User("", "password123", "Lebron", "James", Student);
-        User user2 = new User("", "password123", "Lebron", "James", Student);
+        User user = new User("", "password123", "Michael", "Jordan", Student);
+        User user2 = new User("", "password123", "Michael", "Jordan", Student);
 
         String username = userDAO.generateUserName(user);
         String username2 = userDAO.generateUserName(user2);
-        assertEquals("jamesle", username);
-        assertEquals("jamesle2", username2);
+        assertEquals("JordaMi", username);
+        assertEquals("JordaMi", username2);
     }
 }
 
