@@ -19,6 +19,10 @@ public class LauncherTestRob {
     private final static DBAccess dbAccess = Main.getdBaccess();
     public static void main(String[] args) {
 
+
+        // test of SQL Query werkt om op basis van StudentId Quizzen op te halen waarvoor er bij de cursus is ingeschreven
+        System.out.println();
+        System.out.println("------ Test lijst met Quizzen die student (met UserId=6 kan maken) -------");
         QuizDAO quizDAO = new QuizDAO(dbAccess);
 
         List<Quiz> ingeladenQuizStudentidTest = new ArrayList<>();
@@ -27,6 +31,16 @@ public class LauncherTestRob {
             System.out.println(quiz);
         }
 
+        System.out.println(" ");
+        System.out.println("------ Test aanmaak object van Quiz-------");
+
+        Role testRole = new Role("Student");
+        User testUser = new User("testUserName","1234","TestRob","TestJansen",testRole);
+        Difficulty testDifficulty = new Difficulty("Beginner");
+        Course testCourse = new Course("testCourseName",testUser,testDifficulty);
+        Quiz testQuiz = new Quiz(1,"testQuiz",10,testCourse,testDifficulty);
+
+        System.out.println(testQuiz);
 
 
 
