@@ -17,6 +17,8 @@ import java.util.List;
 public class FillOutQuizController {
 
     @FXML
+    public Label testingNumberOfPoints;
+    @FXML
     private Label titleLabel;
     @FXML
     private TextArea questionArea;
@@ -40,6 +42,7 @@ public class FillOutQuizController {
         questionList = new ArrayList<>(questionDAO.getAllByQuizId(quiz.getQuizId()));
         pointsEarned = new int[questionList.size()];
         displayQuestionAndAnswers(questionList);
+        testingNumberOfPoints.setVisible(true); // testing purposes
     }
 
     public void checkCorrectAnswer(String answer) {
@@ -87,10 +90,12 @@ public class FillOutQuizController {
     public void doNextQuestion() {
         if (currentQuestionIndex == questionList.size()) {
             Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "","Geen volgende vraag beschikbaar.");
+            testingNumberOfPoints();
         }
         else {
             currentQuestionIndex++;
             displayQuestionAndAnswers(questionList);
+            testingNumberOfPoints();
         }
     }
 
@@ -98,10 +103,12 @@ public class FillOutQuizController {
     public void doPreviousQuestion() {
         if (currentQuestionIndex < EEN) {
             Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "","Geen vorige vraag beschikbaar.");
+            testingNumberOfPoints();
         }
         else {
             currentQuestionIndex--;
             displayQuestionAndAnswers(questionList);
+            testingNumberOfPoints();
         }
     }
 
@@ -134,6 +141,21 @@ public class FillOutQuizController {
         answers.add(question.getAnswerD());
         Collections.shuffle(answers);
         return answers;
+    }
+
+    // test method
+    private void testingNumberOfPoints() {
+        int correctPoints = 0;
+        int incorrectPoints = 0;
+        for (int i = 0; i < pointsEarned.length; i++) {
+
+            if (pointsEarned[i] == EEN) {
+                correctPoints++;
+            } else if (pointsEarned[i] == NUL) {
+                incorrectPoints++;
+            }
+        }
+        testingNumberOfPoints.setText(String.format("Aantal goed: %d - Aantal fout: %d", correctPoints, incorrectPoints));
     }
 
 } // class

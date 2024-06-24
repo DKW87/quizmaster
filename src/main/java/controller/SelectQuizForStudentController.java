@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import model.Quiz;
 import model.UserSession;
+import utils.Util;
 import view.Main;
 import view.SceneManager;
 
@@ -67,6 +68,12 @@ public class SelectQuizForStudentController {
 
     @FXML
     public void doQuiz() {
+        if (quizTableStudent.getSelectionModel().getSelectedItem() != null) {
+           Main.getSceneManager().showFillOutQuiz(quizTableStudent.getSelectionModel().getSelectedItem());
+        }
+        else {
+            Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "Selecteer een quiz.");
+        }
     }
 
 

@@ -21,7 +21,7 @@ public class DBAccess {
     private static final String TEST_CONNECTION_URL = "jdbc:mysql://127.0.0.1:3306/";
     private static final String H2_CONNECTION_URL = "\"jdbc:h2:mem:;init=runscript from 'classpath:createInsert.sql'\"";
 
-    private static final boolean test = true;
+    private static final boolean test = false;
 
     public DBAccess(String databaseName, String mainUser, String mainUserPassword) {
         super();
