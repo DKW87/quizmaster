@@ -105,19 +105,19 @@
                   </Label>
                   <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0">
                      <children>
-                        <Button fx:id="saveQuiz" mnemonicParsing="false" onAction="#doCreateUpdateQuiz" prefHeight="26.0" prefWidth="111.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #009933;" text="Opslaan">
+                        <Button fx:id="saveQuiz" mnemonicParsing="false" onAction="#doCreateUpdateQuiz" prefHeight="26.0" prefWidth="111.0" style="-fx-border-color: #154360; -fx-background-color: #154360;" text="Opslaan" textFill="WHITE">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="QuizzesList" mnemonicParsing="false" onAction="#doGoToQuizzesList" prefHeight="26.0" prefWidth="111.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #ffff00;" text="Quiz Lijst">
+                        <Button fx:id="QuizzesList" mnemonicParsing="false" onAction="#doGoToQuizzesList" prefHeight="26.0" prefWidth="111.0" style="-fx-border-color: #154360; -fx-background-color: #154360;" text="Quiz Lijst" textFill="WHITE">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="menu" mnemonicParsing="false" onAction="#doMenu" prefHeight="26.0" prefWidth="111.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #154360;" text="Menu">
+                        <Button fx:id="menu" mnemonicParsing="false" onAction="#doMenu" prefHeight="26.0" prefWidth="111.0" style="-fx-border-color: #154360; -fx-background-color: #FFFFFF;" text="Menu" textFill="#154360">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="14.0" />
                            </font>
                         </Button>
                      </children>

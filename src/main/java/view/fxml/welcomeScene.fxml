@@ -31,7 +31,7 @@
                     </font>
                 </MenuButton>
                <HBox prefHeight="334.0" prefWidth="538.0" spacing="25.0" />
-                <Button mnemonicParsing="false" onAction="#doLogout" style="-fx-border-color: #cc3300; -fx-border-style: SOLID; -fx-background-color: #FFFFFF;" text="Uitloggen">
+                <Button mnemonicParsing="false" onAction="#doLogout" style="-fx-border-color: #154360; -fx-border-style: SOLID; -fx-background-color: #FFFFFF;" text="Uitloggen" textFill="#154360">
                     <font>
                         <Font size="14.0" />
                     </font>
