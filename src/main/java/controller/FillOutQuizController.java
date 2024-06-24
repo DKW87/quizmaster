@@ -88,7 +88,7 @@ public class FillOutQuizController {
 
     @FXML
     public void doNextQuestion() {
-        if (currentQuestionIndex == questionList.size()) {
+        if (currentQuestionIndex == questionList.size() - EEN) {
             Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "","Geen volgende vraag beschikbaar.");
             testingNumberOfPoints();
         }
