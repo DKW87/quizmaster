@@ -23,14 +23,24 @@ public class Constant {
 
     // ? roles permission constants
     public static final List<MenuItem> STUDENT_TASKS = List.of(
-            new MenuItem("Course Management"),
-            new MenuItem("Quiz Management")
+            new MenuItem("Cursusbeheer"),
+            new MenuItem("Quiz maken")
     );
     public static final List<MenuItem> COORDINATOR_TASKS = List.of(
-            new MenuItem("Course Management"),
-            new MenuItem("Quiz Management"),
-            new MenuItem("Dashboard")
+            new MenuItem("Coördinator Dashboard"),
+            new MenuItem("Vraagbeheer"),
+            new MenuItem("Quizbeheer")
     );
+    public static final List<MenuItem> ADMINISTRATOR_TASKS = List.of(
+            new MenuItem("Cursusbeheer"),
+            new MenuItem("Exporteer studentenresultaten")
+    );
+    public static final List<MenuItem> FB_TASKS = List.of(
+            new MenuItem("Gebruikersbeheer")
+    );
+
+    // Administrator > cursussenbeheer > voor alle studenten die 1 quiz hebben gedaan een overzicht maken
+    // FB > Gebruikersbeheer
 
     // ? style constants
     public static final String PRIMARY_COLOR = "#156082";

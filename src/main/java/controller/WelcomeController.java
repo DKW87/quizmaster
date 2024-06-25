@@ -6,8 +6,7 @@ import model.UserSession;
 import view.Main;
 import view.SceneManager;
 
-import static constants.Constant.COORDINATOR_TASKS;
-import static constants.Constant.STUDENT_TASKS;
+import static constants.Constant.*;
 import static utils.Util.confirmMessage;
 import static utils.Util.showAlert;
 
@@ -23,7 +22,7 @@ public class WelcomeController {
     private MenuButton taskMenuButton;
 
     public void setup() {
-         // Check if user is logged in
+        // Check if user is logged in
         if (userSession.getUser() == null) {
             sceneManager.showLoginScene();
             return;
@@ -55,7 +54,6 @@ public class WelcomeController {
     /**
      * Set up the student tasks menu by clearing items, adding course and quiz management items,
      * and setting actions for course and quiz management.
-     *
      */
     private void setStudentSetup() {
         taskMenuButton.getItems().clear();
@@ -68,51 +66,59 @@ public class WelcomeController {
 
     private void setCoordinatorSetup() {
         taskMenuButton.getItems().clear();
+        var dashboard = COORDINATOR_TASKS.get(0);
+        var questionManagement = COORDINATOR_TASKS.get(1);
+        var quizManagement = COORDINATOR_TASKS.get(2);
         taskMenuButton.getItems().addAll(COORDINATOR_TASKS);
+        dashboard.setOnAction(event -> sceneManager.showCoordinatorDashboard());
+        questionManagement.setOnAction(event -> sceneManager.showManageQuestionsScene());
+        quizManagement.setOnAction(event -> sceneManager.showManageQuizScene());
+    }
+
+    private void setDocentSetup() {
+        taskMenuButton.getItems().clear();
+        taskMenuButton.setText("Geen beschikbare taken.");
+    }
+
+    private void setFBSetup() {
+        taskMenuButton.getItems().clear();
+        var userManagement = FB_TASKS.get(0);
+        taskMenuButton.getItems().addAll(FB_TASKS);
+        userManagement.setOnAction(event -> sceneManager.showManageUserScene());
+    }
+
+    private void setAdminSetup() {
+        taskMenuButton.getItems().clear();
+        var courseManagement = ADMINISTRATOR_TASKS.get(0);
+        var exportResults = ADMINISTRATOR_TASKS.get(1);
+        taskMenuButton.getItems().addAll(ADMINISTRATOR_TASKS);
+        courseManagement.setOnAction(event -> sceneManager.showManageCoursesScene());
+        exportResults.setOnAction(event -> sceneManager.showWelcomeScene());
     }
 
     // temporarily added all manage views to all roles for testing purposes
-    private void switchToRole(int roleId){
-        switch(roleId) {
+    private void switchToRole(int roleId) {
+        switch (roleId) {
             case 1:
                 setStudentSetup();
                 break;
             case 2:
-                setAllManageViews();
+                setCoordinatorSetup();
                 break;
             case 3:
-                setAllManageViews();
+                setDocentSetup();
                 break;
             case 4:
-                setAllManageViews();
+                setAdminSetup();
                 break;
             case 5:
-                setAllManageViews();
+                setFBSetup();
                 break;
             default:
-                showAlert(Alert.AlertType.ERROR,"Fout", "Deze rol bestaat niet");
+                showAlert(Alert.AlertType.ERROR, "Fout", "Deze rol bestaat niet");
                 sceneManager.showLoginScene();
                 break;
         }
     }
-
-    // temporary set all manage views for all roles for testing purposes
-    private void setAllManageViews() {
-        MenuItem manageUser = new MenuItem("Beheer gebruikers");
-        manageUser.setOnAction(event -> sceneManager.showManageUserScene());
-        taskMenuButton.getItems().add(manageUser);
-        MenuItem manageCourse = new MenuItem("Beheer cursussen");
-        manageCourse.setOnAction(event -> sceneManager.showManageCoursesScene());
-        taskMenuButton.getItems().add(manageCourse);
-        MenuItem manageQuiz = new MenuItem("Beheer quizzen");
-        manageQuiz.setOnAction(event -> sceneManager.showManageQuizScene());
-        taskMenuButton.getItems().add(manageQuiz);
-        MenuItem manageQuestion = new MenuItem("Beheer vragen");
-        manageQuestion.setOnAction(event -> sceneManager.showManageQuestionsScene());
-        taskMenuButton.getItems().add(manageQuestion);
-        MenuItem coordinatorDashboard = new MenuItem("coordinatordashboard");
-        coordinatorDashboard.setOnAction(event -> sceneManager.showCoordinatorDashboard());
-        taskMenuButton.getItems().add(coordinatorDashboard);
-    }
-
 }
+
