@@ -29,10 +29,10 @@
                 </Label>
                <TableView fx:id="questionsTable" prefHeight="398.0" prefWidth="538.0">
                  <columns>
-                   <TableColumn fx:id="questionDescriptionColumn" prefWidth="259.99995267391205" text="Vraag omschrijving" />
-                   <TableColumn fx:id="answerAColumn" minWidth="0.0" prefWidth="150.40005493164062" text="Juiste antwoord" />
-                     <TableColumn fx:id="partOfQuizColumn" prefWidth="83.99996948242188" text="Quiz" />
-                     <TableColumn fx:id="questionsCounterColumn" minWidth="7.2000732421875" prefWidth="40.799896240234375" text="Aantal" />
+                   <TableColumn fx:id="questionDescriptionColumn" prefWidth="193.5999892950058" text="Vraag omschrijving" />
+                   <TableColumn fx:id="answerAColumn" minWidth="0.0" prefWidth="159.19992065429688" text="Juiste antwoord" />
+                     <TableColumn fx:id="partOfQuizColumn" prefWidth="116.80001831054688" text="Quiz" />
+                     <TableColumn fx:id="questionsCounterColumn" minWidth="7.2000732421875" prefWidth="66.39999389648438" text="Aantal in &#10;quiz" />
                  </columns>
                   <columnResizePolicy>
                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

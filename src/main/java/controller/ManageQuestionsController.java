@@ -1,10 +1,14 @@
 package controller;
 
 import database.mysql.QuestionDAO;
+import database.mysql.QuizDAO;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import model.Question;
+import model.Quiz;
 import view.Main;
 
 import java.util.ArrayList;
@@ -28,14 +32,25 @@ public class ManageQuestionsController {
     @FXML
     public TableColumn<Question, Integer> questionsCounterColumn;
 
-    private final QuestionDAO questionDAO = new QuestionDAO(Main.getdBaccess());
+    private final QuestionDAO questionDAO;
+    private final QuizDAO quizDAO;
 
+    public ManageQuestionsController() {
+        questionDAO = new QuestionDAO(Main.getdBaccess());
+        quizDAO = new QuizDAO(Main.getdBaccess());
+    }
 
     public void setup() {
-        List<Question> questions = questionDAO.getAll();
+        List<Quiz> quizzesByCoordinator = new ArrayList<>(quizDAO.getAllQuizzesByCoordinator(Main.getUserSession().getUser().getUserId()));
+        List<Question> questions = new ArrayList<>();
+        for (Quiz quiz : quizzesByCoordinator) {
+            List<Question> quizQuestions = questionDAO.getAllByQuizId(quiz.getQuizId());
+            questions.addAll(quizQuestions);
+        }
         questionsTable.getItems().addAll(questions);
         generateQuestionsTable();
     }
+
 
     @FXML
     public void doMenu() {
@@ -90,6 +105,10 @@ public class ManageQuestionsController {
                 new SimpleStringProperty(cellData.getValue().getAnswerA()));
         partOfQuizColumn.setCellValueFactory(celldata ->
                 new SimpleStringProperty(celldata.getValue().getQuiz().getQuizName()));
+        questionsCounterColumn.setCellValueFactory(celldata -> {
+                    int count = questionDAO.countQuestionsInQuiz(celldata.getValue().getQuiz().getQuizId());
+                    return new SimpleObjectProperty<>(count);
+                });
         questionsTable.getSelectionModel().selectFirst();
     }
 
