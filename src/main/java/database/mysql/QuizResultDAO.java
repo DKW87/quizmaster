@@ -2,11 +2,11 @@ package database.mysql;
 
 import model.Quiz;
 import model.QuizResult;
+import model.QuizResultDTO;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,35 +15,33 @@ import java.util.List;
  * @project quizmaster
  * @created 12 Haziran Çarşamba 2024 - 16:42
  */
-public class QuizResultDAO extends AbstractDAO implements GenericDAO<QuizResult> {
+public class QuizResultDAO extends AbstractDAO {
 
-    // FIXME: implementeer DAO's
+
     private final QuizDAO quizDao = new QuizDAO(dbAccess);
-    private final UserDAO  userDao = new UserDAO(dbAccess);
+    private final UserDAO userDao = new UserDAO(dbAccess);
 
 
     public QuizResultDAO(DBAccess dbAccess) {
         super(dbAccess);
     }
 
-    @Override
-    public List<QuizResult> getAll() {
+
+    /**
+     * Retrieves a list of QuizResults for a specific student based on the provided studentId.
+     *
+     * @param studentId the unique identifier of the student
+     * @return a list of QuizResult objects associated with the student
+     */
+    public List<QuizResult> getResultsByStudent(int studentId) {
         List<QuizResult> quizResultList = new ArrayList<>();
-        String sql = "SELECT * FROM Result;";
+        String sql = "SELECT * FROM Result WHERE userId = ? order by date;";
         try {
             this.setupPreparedStatement(sql);
             ResultSet resultSet = executeSelectStatement();
             while (resultSet.next()) {
-                LocalDate date = resultSet.getDate("date").toLocalDate();
-                int quizId = resultSet.getInt("quizId");
-                int studentId = resultSet.getInt("userId");
-                int score = resultSet.getInt("score");
-
-                // FIXME: implementeer DAO's @Rob(QuizDAO) and @Mack(UserDAO) (see above)
-//                var quiz = quizDao.getById(quizId);
-//                var user = userDao.getById(studentId);
-//                var quizResult = new QuizResult(date, quiz, user, score);
-                quizResultList.add(null);
+                var quizResult = createQuizResultFromResultSet(resultSet);
+                quizResultList.add(quizResult);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -54,25 +52,22 @@ public class QuizResultDAO extends AbstractDAO implements GenericDAO<QuizResult>
     }
 
     /**
-     * Retrieves a list of QuizResults for a specific student based on the provided studentId.
+     * Retrieves a list of QuizResult objects based on the given quiz ID and student ID.
      *
-     * @param  studentId   the unique identifier of the student
-     * @return             a list of QuizResult objects associated with the student
+     * @param  quizId   the ID of the quiz
+     * @param  studentId the ID of the student
+     * @return           a list of QuizResult objects
      */
-    public List<QuizResult> getResultsByStudent(int studentId) {
+    public List<QuizResult> getStudentResultsByQuizId(int quizId, int studentId) {
         List<QuizResult> quizResultList = new ArrayList<>();
-        String sql = "SELECT * FROM Result WHERE userId = ? order by date;";
+        String sql = "SELECT * FROM Result WHERE quizId = ? AND userId = ? order by date;";
         try {
             this.setupPreparedStatement(sql);
+            preparedStatement.setInt(1, quizId);
+            preparedStatement.setInt(2, studentId);
             ResultSet resultSet = executeSelectStatement();
             while (resultSet.next()) {
-                LocalDate date = resultSet.getDate("date").toLocalDate();
-                int quizId = resultSet.getInt("quizId");
-                int score = resultSet.getInt("score");
-                // FIXME: implementeer DAO's @Rob(QuizDAO) and @Mack(UserDAO) (see above)
-                var quiz = quizDao.getById(quizId);
-                var user = userDao.getById(studentId);
-                var quizResult = new QuizResult(quizId, user, quiz, score);
+                var quizResult = createQuizResultFromResultSet(resultSet);
                 quizResultList.add(quizResult);
             }
         } catch (SQLException e) {
@@ -81,66 +76,53 @@ public class QuizResultDAO extends AbstractDAO implements GenericDAO<QuizResult>
         return quizResultList;
     }
 
-    @Override
-    public QuizResult getById(int resultId) {
-        String sql = "SELECT * FROM Result WHERE resultId = ?";
 
-        QuizResult quizResult = null;
+    /**
+     * Stores a single QuizResult object in the Result table of the database.
+     *
+     * @param  quizResult  the QuizResult object to be stored
+     * @return                 the primary key of the inserted row, or 0 if an error occurred
+     */
+    public int storeOne(QuizResult quizResult) {
+        String sql = "INSERT INTO  Result (date ,userId, quizId, score) VALUES (?, ?, ?, ?)";
+        int primaryKey = 0;
         try {
             setupPreparedStatement(sql);
-            preparedStatement.setInt(1, resultId);
-            ResultSet resultSet = executeSelectStatement();
-            while (resultSet.next()) {
-                LocalDate date = resultSet.getDate("date").toLocalDate();
-                int quizId = resultSet.getInt("quizId");
-                int studentId = resultSet.getInt("userId");
-                int score = resultSet.getInt("score");
-                // FIXME: implementeer DAO's @Rob(QuizDAO) and @Mack(UserDAO) (see above)
-//                var quiz = quizDao.getById(quizId);
-//                var user = userDao.getById(studentId);
-//                quizResult = new QuizResult(date, quiz, user , score);
-
-            }
+            setQuizResultToQuery(quizResult); //setQuizResultToQuery
+            primaryKey = this.executeInsertStatementWithKey();
+            quizResult.setResultId(primaryKey);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return quizResult;
+        return primaryKey;
 
     }
 
+    public QuizResult convertQuizResultDTOToQuizResult(QuizResultDTO quizResultDTO) {
+        return new QuizResult(quizResultDTO.getResultId(),
+                userDao.getById(quizResultDTO.getStudentId()),
+                quizDao.getById(quizResultDTO.getQuizId()),
+                quizResultDTO.getScore(),
+                quizResultDTO.getDate()
+        );
+    }
 
-
-    @Override
-    public void storeOne(QuizResult quizResultaat) {
-        String sql = "INSERT INTO  Result (date ,userId, quizId, score) VALUES (?, ?, ?, ?)";
-        int primaryKey;
-        try  {
-            setupPreparedStatement(sql);
-//            preparedStatement.setTimestamp(1, Date.valueOf(quizResultaat.getDate()));
-            preparedStatement.setInt(2, quizResultaat.getQuiz().getQuizId());
-            preparedStatement.setInt(3, quizResultaat.getStudent().getUserId());
-            preparedStatement.setInt(4, quizResultaat.getScore());
-            primaryKey = this.executeInsertStatementWithKey();
-            quizResultaat.setResultId(primaryKey);
-        }
-        catch (SQLException e){
-            System.out.println(e.getMessage());
-        }
+    private QuizResult createQuizResultFromResultSet(ResultSet resultSet) throws SQLException {
+        LocalDateTime date = resultSet.getTimestamp("date").toLocalDateTime();
+        int userId = resultSet.getInt("userId");
+        int resultId = resultSet.getInt("resultId");
+        int quizId = resultSet.getInt("quizId");
+        int score = resultSet.getInt("score");
+        var user = userDao.getById(userId);
+        var quiz = quizDao.getById(quizId);
+        return new QuizResult(resultId, user, quiz, score, date);
+    }
+    private void setQuizResultToQuery(QuizResult quizResult) throws SQLException {
+        preparedStatement.setTimestamp(1, java.sql.Timestamp.valueOf(quizResult.getDate()));
+        preparedStatement.setInt(2, quizResult.getQuiz().getQuizId());
+        preparedStatement.setInt(3, quizResult.getStudent().getUserId());
+        preparedStatement.setInt(4, quizResult.getScore());
 
     }
 
-    @Override
-    public void updateOne(QuizResult type) {
-
-    }
-
-    @Override
-    public void deleteOneById(int id) {
-
-    }
-
-    @Override
-    public QuizResult getByName(String name) {
-        return null;
-    }
 }
