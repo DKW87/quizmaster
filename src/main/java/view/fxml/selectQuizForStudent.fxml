@@ -23,12 +23,12 @@
                 </Label>
                <TableView fx:id="quizTableStudent" prefHeight="239.0" prefWidth="837.0">
                  <columns>
-                   <TableColumn fx:id="quizNameColumn" prefWidth="115.21748542785645" text="Naam" />
-                   <TableColumn fx:id="quizLevelColumn" prefWidth="61.333335876464844" text="Niveau" />
-                     <TableColumn fx:id="courseColumn" prefWidth="54.6666259765625" text="Cursus" />
-                     <TableColumn fx:id="numberQuestionsColumn" prefWidth="94.66667175292969" text="Aantal vragen" />
-                     <TableColumn fx:id="numberMadeColumn" prefWidth="108.66671752929688" text="Aantal gemaakt" />
-                     <TableColumn fx:id="numberSuccesColumn" prefWidth="98.00003051757812" text="Aantal gehaald" />
+                   <TableColumn fx:id="quizNameColumn" prefWidth="172.79999047517776" text="Naam" />
+                   <TableColumn fx:id="quizLevelColumn" prefWidth="84.0" text="Niveau" />
+                     <TableColumn fx:id="courseColumn" prefWidth="107.99992370605469" text="Cursus" />
+                     <TableColumn fx:id="numberQuestionsColumn" prefWidth="46.4000244140625" text="Aantal&#10;vragen" />
+                     <TableColumn fx:id="numberMadeColumn" prefWidth="55.9998779296875" text="Aantal&#10;gemaakt" />
+                     <TableColumn fx:id="numberSuccesColumn" prefWidth="51.200042724609375" text="Aantal&#10;gehaald" />
                      <TableColumn fx:id="highscoreColumn" prefWidth="70.0" text="Highscore" />
                  </columns>
                   <columnResizePolicy>

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #154360;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageCoursesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #154360;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageCoursesController">
    <VBox prefHeight="600.0" prefWidth="900.0">
       <children>
          <VBox prefHeight="560.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
@@ -28,10 +28,10 @@
                </Label>
                <TableView fx:id="courseTable" prefHeight="338.0" prefWidth="840.0">
                  <columns>
-                   <TableColumn id="name" fx:id="name" prefWidth="186.39997708797455" text="Naam" />
-                     <TableColumn id="difficulty" fx:id="difficulty" prefWidth="115.199951171875" text="Level" />
-                     <TableColumn id="coordinator" fx:id="coordinator" maxWidth="1.7976931348623157E308" prefWidth="130.39999389648438" text="Coordinator" />
-                     <TableColumn id="studentCount" fx:id="studentCount" minWidth="0.0" prefWidth="104.00006103515625" style="-fx-alignment: CENTER;" text="Aantal Studenten" />
+                   <TableColumn id="name" fx:id="name" prefWidth="168.80000150203705" text="Naam" />
+                     <TableColumn id="difficulty" fx:id="difficulty" prefWidth="153.60003662109375" text="Niveau" />
+                     <TableColumn id="coordinator" fx:id="coordinator" maxWidth="1.7976931348623157E308" prefWidth="149.59991455078125" text="Coördinator" />
+                     <TableColumn id="studentCount" fx:id="studentCount" minWidth="0.0" prefWidth="64.80001831054688" style="-fx-alignment: CENTER;" text="Aantal&#10;Studenten" />
                  </columns>
                   <columnResizePolicy>
                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
