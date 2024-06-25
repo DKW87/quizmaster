@@ -33,9 +33,9 @@ public class Constant {
 
     );
     public static final List<MenuItem> COORDINATOR_TASKS = List.of(
-            createMenuItem("Quizbeheer",event -> Main.getSceneManager().showManageQuizScene()),
+            createMenuItem("Coördinator Dashboard",event -> Main.getSceneManager().showCoordinatorDashboard()),
             createMenuItem("Vraagbeheer",event -> Main.getSceneManager().showManageQuestionsScene()),
-            createMenuItem("Coördinator Dashboard",event -> Main.getSceneManager().showCoordinatorDashboard())
+            createMenuItem("Quizbeheer",event -> Main.getSceneManager().showManageQuizScene())
 
     );
     public static final List<MenuItem> ADMINISTRATOR_TASKS = List.of(
