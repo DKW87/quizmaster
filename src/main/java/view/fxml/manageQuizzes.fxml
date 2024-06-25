@@ -56,7 +56,7 @@
                               <Font size="14.0" />
                           </font>
                       </Button>
-                     <Button layoutX="284.0" layoutY="10.0" mnemonicParsing="false" onAction="#doGenerateQuizFile" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Sla op" textFill="WHITE">
+                     <Button layoutX="284.0" layoutY="10.0" mnemonicParsing="false" onAction="#doGenerateQuizFile" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Export" textFill="WHITE">
                         <font>
                            <Font size="14.0" />
                         </font>

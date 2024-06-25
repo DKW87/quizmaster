@@ -87,7 +87,7 @@ public class QuizResultDAO extends AbstractDAO {
         String sql = "INSERT INTO  Result (date ,userId, quizId, score) VALUES (?, ?, ?, ?)";
         int primaryKey = 0;
         try {
-            setupPreparedStatement(sql);
+            setupPreparedStatementWithKey(sql);
             setQuizResultToQuery(quizResult); //setQuizResultToQuery
             primaryKey = this.executeInsertStatementWithKey();
             quizResult.setResultId(primaryKey);
@@ -119,8 +119,8 @@ public class QuizResultDAO extends AbstractDAO {
     }
     private void setQuizResultToQuery(QuizResult quizResult) throws SQLException {
         preparedStatement.setTimestamp(1, java.sql.Timestamp.valueOf(quizResult.getDate()));
-        preparedStatement.setInt(2, quizResult.getQuiz().getQuizId());
-        preparedStatement.setInt(3, quizResult.getStudent().getUserId());
+        preparedStatement.setInt(2, quizResult.getStudent().getUserId());
+        preparedStatement.setInt(3, quizResult.getQuiz().getQuizId());
         preparedStatement.setInt(4, quizResult.getScore());
 
     }

@@ -1,12 +1,15 @@
 package controller;
 
 import database.mysql.QuestionDAO;
+import database.mysql.QuizResultDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import model.Question;
 import model.Quiz;
+import model.QuizResult;
 import view.Main;
 import utils.Util;
 
@@ -31,14 +34,18 @@ public class FillOutQuizController {
     private final String ANTWOORD_D = "Antwoord D: ";
     private int currentQuestionIndex = 0;
     private final QuestionDAO questionDAO;
+    private final QuizResultDAO quizResultDAO;
+    private Quiz currentQuiz;
     private List<Question> questionList;
     private int[] pointsEarned;
 
     public FillOutQuizController() {
         questionDAO = new QuestionDAO(Main.getdBaccess());
+        quizResultDAO = new QuizResultDAO(Main.getdBaccess());
     }
 
     public void setup(Quiz quiz) {
+        currentQuiz = quiz;
         questionList = new ArrayList<>(questionDAO.getAllByQuizId(quiz.getQuizId()));
         pointsEarned = new int[questionList.size()];
         displayQuestionAndAnswers(questionList);
@@ -54,8 +61,7 @@ public class FillOutQuizController {
                 String checkAnswer = line.substring(BEGIN_INDEX).trim();
                 if (checkAnswer.equals(questionList.get(currentQuestionIndex).getAnswerA())) {
                     pointsEarned[currentQuestionIndex] = EEN; // one point equals correct
-                }
-                else {
+                } else {
                     pointsEarned[currentQuestionIndex] = NUL; // zero points equals wrong
                 }
             }
@@ -65,50 +71,64 @@ public class FillOutQuizController {
     @FXML
     public void doRegisterA() {
         checkCorrectAnswer(ANTWOORD_A);
-        doNextQuestion();
+        if (currentQuestionIndex == questionList.size() - EEN) {
+            endOfQuizAlertAndSubmit();
+        }
+        else {
+            doNextQuestion();
+        }
     }
 
     @FXML
     public void doRegisterB() {
         checkCorrectAnswer(ANTWOORD_B);
-        doNextQuestion();
+        if (currentQuestionIndex == questionList.size() - EEN) {
+            endOfQuizAlertAndSubmit();
+        }
+        else {
+            doNextQuestion();
+        }
     }
 
     @FXML
     public void doRegisterC() {
         checkCorrectAnswer(ANTWOORD_C);
-        doNextQuestion();
+        if (currentQuestionIndex == questionList.size() - EEN) {
+            endOfQuizAlertAndSubmit();
+        }
+        else {
+            doNextQuestion();
+        }
     }
 
     @FXML
     public void doRegisterD() {
         checkCorrectAnswer(ANTWOORD_D);
-        doNextQuestion();
+        if (currentQuestionIndex == questionList.size() - EEN) {
+            endOfQuizAlertAndSubmit();
+        }
+        else {
+            doNextQuestion();
+        }
     }
 
     @FXML
     public void doNextQuestion() {
         if (currentQuestionIndex == questionList.size() - EEN) {
-            Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "","Geen volgende vraag beschikbaar.");
-            testingNumberOfPoints();
-        }
-        else {
+            endOfQuizAlertAndSubmit();
+        } else {
             currentQuestionIndex++;
             displayQuestionAndAnswers(questionList);
-            testingNumberOfPoints();
         }
     }
 
     @FXML
     public void doPreviousQuestion() {
         if (currentQuestionIndex < EEN) {
-            Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "","Geen vorige vraag beschikbaar.");
-            testingNumberOfPoints();
-        }
-        else {
+            Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "", "Geen vorige vraag beschikbaar.");
+        } else {
             currentQuestionIndex--;
             displayQuestionAndAnswers(questionList);
-            testingNumberOfPoints();
         }
     }
 
@@ -117,7 +137,7 @@ public class FillOutQuizController {
         Main.getSceneManager().showWelcomeScene();
     }
 
-    public void displayQuestionAndAnswers(List<Question> questionList){
+    public void displayQuestionAndAnswers(List<Question> questionList) {
         titleLabel.setText(String.format("Vraag %d:", currentQuestionIndex + EEN));
         questionArea.setText(String.valueOf(questionBuilder(questionList.get(currentQuestionIndex))));
     }
@@ -125,11 +145,12 @@ public class FillOutQuizController {
     public StringBuilder questionBuilder(Question question) {
         List<String> answers = shuffleAnswers(question);
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(question.getQuestionDescription()+"\n\n");
-        stringBuilder.append(ANTWOORD_A + answers.get(0) + "\n\n");
-        stringBuilder.append(ANTWOORD_B + answers.get(1) + "\n\n");
-        stringBuilder.append(ANTWOORD_C + answers.get(2) + "\n\n");
-        stringBuilder.append(ANTWOORD_D + answers.get(3));
+        String[] labels = {ANTWOORD_A, ANTWOORD_B, ANTWOORD_C, ANTWOORD_D};
+
+        stringBuilder.append(question.getQuestionDescription() + "\n\n");
+        for (int i = 0; i < answers.size(); i++) {
+            stringBuilder.append(labels[i] + answers.get(i) + "\n\n");
+        }
         return stringBuilder;
     }
 
@@ -143,19 +164,29 @@ public class FillOutQuizController {
         return answers;
     }
 
-    // test method
-    private void testingNumberOfPoints() {
-        int correctPoints = 0;
-        int incorrectPoints = 0;
-        for (int i = 0; i < pointsEarned.length; i++) {
+    public void endOfQuizAlertAndSubmit() {
+        Alert submitQuiz = new Alert(Alert.AlertType.CONFIRMATION);
+        submitQuiz.setTitle("Quiz beëindigen?");
+        submitQuiz.setHeaderText(null);
+        submitQuiz.setContentText("Druk op OK om de quiz te beëindigen en de resultaten te versturen," +
+                " of kies Cancel om verder met de quiz te gaan.");
+        submitQuiz.showAndWait();
+        if (submitQuiz.getResult() == ButtonType.OK) {
+            QuizResult quizResult = new QuizResult(0, Main.getUserSession().getUser(), currentQuiz, calculateScore());
+            quizResultDAO.storeOne(quizResult);
+            Main.getSceneManager().showStudentFeedback(quizResult);
+        }
+    }
 
+    private int calculateScore() {
+        int correctPoints = 0;
+
+        for (int i = 0; i < pointsEarned.length; i++) {
             if (pointsEarned[i] == EEN) {
                 correctPoints++;
-            } else if (pointsEarned[i] == NUL) {
-                incorrectPoints++;
             }
         }
-        testingNumberOfPoints.setText(String.format("Aantal goed: %d - Aantal fout: %d", correctPoints, incorrectPoints));
+        return correctPoints;
     }
 
 } // class
