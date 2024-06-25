@@ -32,7 +32,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="questionDescription" minHeight="100.0" prefHeight="150.0" prefWidth="500.0" wrapText="true" />
+                  <TextArea fx:id="questionDescription" minHeight="100.0" prefHeight="210.0" prefWidth="538.0" wrapText="true" />
                   <Label text="SPACING" visible="false">
                      <font>
                         <Font size="5.0" />
@@ -96,19 +96,19 @@
                   <Label text="spacing" visible="false" />
                   <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#doCreateUpdateQuestion" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #009933;" text="Opslaan">
+                        <Button mnemonicParsing="false" onAction="#doCreateUpdateQuestion" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Opslaan" textFill="WHITE">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#doQuestionList" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #ffff00;" text="Vragenlijst">
+                        <Button mnemonicParsing="false" onAction="#doQuestionList" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Vragenlijst" textFill="WHITE">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#doMenu" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #154360;" text="Menu">
+                        <Button mnemonicParsing="false" onAction="#doMenu" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #154360;" text="Menu" textFill="#154360">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="14.0" />
                            </font>
                         </Button>
                      </children>

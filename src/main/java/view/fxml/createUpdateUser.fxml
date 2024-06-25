@@ -75,7 +75,7 @@
                                         <TextField fx:id="AchternaamTextfield" maxWidth="300.0" prefWidth="100.0" />
                                         <PasswordField fx:id="WachtwoordTextField" maxWidth="300.0" prefWidth="100.0" />
                                         <ComboBox fx:id="rolComboBox" maxWidth="300.0" prefWidth="250.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID;" />
-                                        <TextField fx:id="GebruikersNaamTextField" editable="false" visible="false" maxWidth="300.0" minWidth="250.0" prefHeight="26.0" prefWidth="250.0" />
+                                        <TextField fx:id="GebruikersNaamTextField" editable="false" maxWidth="300.0" minWidth="250.0" prefHeight="26.0" prefWidth="250.0" visible="false" />
                                     </children>
                                 </VBox>
                             </children>
@@ -87,19 +87,19 @@
                         </TextField>
                         <HBox alignment="TOP_CENTER" prefHeight="52.0" prefWidth="538.0" spacing="25.0">
                             <children>
-                                <Button fx:id="OpslaanButton" mnemonicParsing="false" onAction="#doCreateUpdateUser" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #009933;" text="Opslaan">
+                                <Button fx:id="OpslaanButton" mnemonicParsing="false" onAction="#doCreateUpdateUser" prefHeight="27.0" prefWidth="82.0" style="-fx-border-color: #154360; -fx-background-color: #154360;" text="Opslaan" textFill="WHITE">
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font size="14.0" />
                                     </font>
                                 </Button>
-                                <Button fx:id="GebruikerslijstButton" mnemonicParsing="false" onAction="#doGebruikerslijst" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #ffff00;" text="Gebruikerslijst">
+                                <Button fx:id="GebruikerslijstButton" mnemonicParsing="false" onAction="#doGebruikerslijst" style="-fx-border-color: #154360; -fx-background-color: #154360;" text="Gebruikerslijst" textFill="WHITE">
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font size="14.0" />
                                     </font>
                                 </Button>
-                                <Button fx:id="MenuButton" mnemonicParsing="false" onAction="#doMenu" style="-fx-background-color: #FFFFFF; -fx-border-style: SOLID; -fx-border-color: #154360;" text="Menu">
+                                <Button fx:id="MenuButton" mnemonicParsing="false" onAction="#doMenu" style="-fx-border-color: #154360; -fx-background-color: white;" text="Menu" textFill="#154360">
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font size="14.0" />
                                     </font>
                                 </Button>
                             </children>

@@ -1,5 +1,7 @@
 package database.mysql;
 
+import view.Main;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,11 +15,12 @@ public class DBAccess {
     private static final String SQL_EXCEPTION = "SQL Exception: ";
     private static final String MYSQL_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String PREFIX_CONNECTION_URL = "jdbc:mysql://oege.ie.hva.nl:3306/";
-//    private static final String CONNECTION_SETTINGS = "?useSSL=false" +
-//            "&allowPublicKeyRetrieval=true" +
-//            "&useJDBCCompliantTimezoneShift=true" +
-//            "&useLegacyDatetimeCode=false" +
-//            "&serverTimezone=UTC";
+    private static final String CONNECTION_SETTINGS = "?useSSL=false" +
+            "&allowPublicKeyRetrieval=true" +
+            "&useJDBCCompliantTimezoneShift=true" +
+            "&useLegacyDatetimeCode=false" +
+            "&serverTimezone=UTC";
+    private static final String TEST_CONNECTION_URL = "jdbc:mysql://127.0.0.1:3306/";
 
     public DBAccess(String databaseName, String mainUser, String mainUserPassword) {
         super();
@@ -30,13 +33,22 @@ public class DBAccess {
      * Open database connection
      */
     public void openConnection() {
-        String connectionURL = PREFIX_CONNECTION_URL + databaseName; //+ CONNECTION_SETTINGS;
+        String connectionURL;
+        if (Main.getTestMode()) {
+            connectionURL = TEST_CONNECTION_URL + databaseName + CONNECTION_SETTINGS ;
+        } else {
+            connectionURL = PREFIX_CONNECTION_URL + databaseName ;
+        }
+
         try {
             System.out.print("Laad de driver... ");
             Class.forName(MYSQL_DRIVER); // laad de JDBC-driver.
             System.out.println("Driver geladen");
 
             connection = DriverManager.getConnection(connectionURL, mainUser, mainUserPassword);
+
+
+
             System.out.println("OK, Connectie open");
         } catch (ClassNotFoundException driverFout) {
             System.out.println("Driver niet gevonden");

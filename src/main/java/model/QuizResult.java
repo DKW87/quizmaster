@@ -24,6 +24,13 @@ public class QuizResult implements Comparable<QuizResult> {
         this.score = score;
         this.date = LocalDateTime.now();
     }
+    public QuizResult(int resultId, User student, Quiz quiz, int score, LocalDateTime date) {
+        this.date = date;
+        this.resultId = resultId;
+        this.student = student;
+        this.quiz = quiz;
+        this.score = score;
+    }
 
     public int getResultId() {
         return resultId;
@@ -56,6 +63,8 @@ public class QuizResult implements Comparable<QuizResult> {
     public int getScore() {
         return score;
     }
+
+
 
     /**
      * Compares this QuizResult object with the specified QuizResult object for order.

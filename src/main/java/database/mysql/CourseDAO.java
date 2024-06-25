@@ -33,7 +33,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
             this.setupPreparedStatement(sql);
             ResultSet resultSet = this.executeSelectStatement();
             while (resultSet.next()) {
-                Course course  = createCourseFromResultSet(resultSet);
+                Course course = createCourseFromResultSet(resultSet);
                 var studentCount = this.getCourseByStudentCount(course.getCourseId());
                 course.setStudentCount(studentCount);
                 courses.add(course);
@@ -64,7 +64,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
             this.preparedStatement.setInt(1, studentId);
             ResultSet resultSet = this.executeSelectStatement();
             while (resultSet.next()) {
-                Course course  = createCourseFromResultSet(resultSet);
+                Course course = createCourseFromResultSet(resultSet);
                 var studentCount = this.getCourseByStudentCount(course.getCourseId());
                 course.setStudentCount(studentCount);
                 courses.add(course);
@@ -76,38 +76,13 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
         return courses;
     }
 
-    /**
-     * Retrieves a list of courses associated with a given coordinator ID.
-     *
-     * @param coordinatorId the ID of the coordinator
-     * @return a list of Course objects representing the courses associated with the coordinator
-     */
-    public List<Course> getCoursesByCoordinator(int coordinatorId) {
-        List<Course> courses = new ArrayList<>();
-        String sql = "SELECT * FROM Course WHERE coordinatorId = ?";
-
-        try {
-            this.setupPreparedStatementWithKey(sql);
-            this.preparedStatement.setInt(1, coordinatorId);
-            ResultSet resultSet = this.executeSelectStatement();
-            while (resultSet.next()) {
-                Course course = createCourseFromResultSet(resultSet);
-                var studentCount = this.getCourseByStudentCount(course.getCourseId());
-                course.setStudentCount(studentCount);
-                courses.add(null);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error in CourseDAO/getCoursesByCoordinator: " + e.getMessage());
-        }
-        return courses;
-    }
 
     /**
      * Retrieves a list of student courses for a given student ID, including the course name, difficulty,
      * coordinator, enrollment date, and dropout date.
      *
-     * @param  studentId  the ID of the student
-     * @return            a list of StudentCourse objects representing the student's courses
+     * @param studentId the ID of the student
+     * @return a list of StudentCourse objects representing the student's courses
      */
     public List<StudentCourse> getCoursesByStudent(int studentId) {
         String sql = "select * from StudentCourse where studentId = ?";
@@ -133,6 +108,29 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
         return studentCourses;
     }
 
+    /**
+     * Retrieves a list of courses associated with a given coordinator ID.
+     *
+     * @param coordinatorId the ID of the coordinator
+     * @return a list of Course objects representing the courses associated with the coordinator
+     */
+    public List<Course> getCoursesByCoordinator(int coordinatorId) {
+        List<Course> courses = new ArrayList<>();
+        String sql = "SELECT * FROM Course WHERE coordinatorId = ?";
+
+        try {
+            this.setupPreparedStatementWithKey(sql);
+            this.preparedStatement.setInt(1, coordinatorId);
+            ResultSet resultSet = this.executeSelectStatement();
+            while (resultSet.next()) {
+                Course course = createCourseFromResultSet(resultSet);
+                courses.add(course);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return courses;
+    }
 
 
     @Override
@@ -144,7 +142,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
             this.preparedStatement.setInt(1, id);
             ResultSet resultSet = this.executeSelectStatement();
             if (resultSet.next()) {
-               course = createCourseFromResultSet(resultSet);
+                course = createCourseFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             System.out.println("Error in CourseDAO/getCourseById: " + e.getMessage());
@@ -179,16 +177,16 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     }
 
     @Override
-    public void storeOne(Course cursus) {
+    public void storeOne(Course course) {
         String sql = "INSERT INTO Course(name, difficultyId, coordinatorId) VALUES (?, ?, ?);";
         int primaryKey;
         try {
             this.setupPreparedStatementWithKey(sql);
-            setCourseToQuery(cursus);
+            setCourseToQuery(course);
             primaryKey = this.executeInsertStatementWithKey();
-            cursus.setCourseId(primaryKey);
+            course.setCourseId(primaryKey);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException("Duplicate entry  " + course.getName() + " for key 'course.name_UNIQUE'", e);
         }
     }
 
@@ -205,9 +203,11 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
             this.preparedStatement.setInt(1, courseId);
             this.preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            throw new RuntimeException("Cannot delete or update a parent row: a foreign key constraint fails", e);
         }
     }
+
 
     /**
      * Updates a course in the database with the provided course object.
@@ -215,7 +215,7 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
      * @param course the course object containing the updated values
      */
     @Override
-    public void updateOne(Course course)  {
+    public void updateOne(Course course) {
         String sql = "UPDATE Course SET name = ?, difficultyId = ?, coordinatorId = ? WHERE courseId = ?;";
         try {
             this.setupPreparedStatement(sql);
@@ -230,8 +230,8 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     /**
      * Adds a student to a course.
      *
-     * @param  userId    the ID of the student
-     * @param  courseId  the ID of the course
+     * @param userId   the ID of the student
+     * @param courseId the ID of the course
      */
     public void addStudentToCourse(int userId, int courseId) {
         String sql = "INSERT INTO StudentCourse(studentId, courseId, enrollDate) VALUES (?, ?, ?);";
@@ -250,8 +250,8 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     /**
      * Retrieves the number of students enrolled in a course.
      *
-     * @param  courseId  the ID of the course
-     * @return            the number of students enrolled in the course
+     * @param courseId the ID of the course
+     * @return the number of students enrolled in the course
      */
     public int getCourseByStudentCount(int courseId) {
         String sql = "select count(*) as studentCount from StudentCourse where courseId = ?";
@@ -273,9 +273,9 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     /**
      * Removes a student from a course by deleting the corresponding record in the StudentCourse table.
      *
-     * @param  studentCourseId  the ID of the student-course record to be removed
+     * @param studentCourseId the ID of the student-course record to be removed
      */
-    public void removeStudentFromCourse( int studentCourseId) {
+    public void removeStudentFromCourse(int studentCourseId) {
         String sql = "DELETE FROM StudentCourse WHERE  studentCourseId = ?;";
         try {
             this.setupPreparedStatement(sql);
@@ -288,7 +288,6 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
 
     /**
      * Deletes all records from the Course table in the database.
-     *
      */
     public void deleteAll() {
         String sql = "DELETE FROM Course;";
@@ -332,14 +331,13 @@ public class CourseDAO extends AbstractDAO implements GenericDAO<Course> {
     /**
      * Sets the given Course object to the prepared statement for querying.
      *
-     * @param  course  the Course object to set to the query
+     * @param course the Course object to set to the query
      */
     private void setCourseToQuery(Course course) throws SQLException {
         this.preparedStatement.setString(1, course.getName());
         this.preparedStatement.setInt(2, course.getDifficulty().getDifficultyId());
         this.preparedStatement.setInt(3, course.getCoordinator().getUserId());
     }
-
 
 
 }

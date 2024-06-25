@@ -18,7 +18,10 @@ public class Main extends Application {
     private static CouchDBaccess couchDBaccess = null;
     private static UserSession userSession = null;
 
+    private static  boolean TEST_MODE = true;
+
     public static void main(String[] args) {
+        TEST_MODE = false;
         launch(args);
     }
 
@@ -47,6 +50,9 @@ public class Main extends Application {
         if (dBaccess == null) {
             // Create an instance of the DBAccess class
             dBaccess = new DBAccess(DB_NAME, DB_USER, DB_PASS);
+            if (TEST_MODE) {
+                dBaccess = new DBAccess("QuizMaster", "userQuizMaster", "pwQuizMaster");
+            }
             dBaccess.openConnection();
         }
         return dBaccess;
@@ -80,5 +86,8 @@ public class Main extends Application {
 
     public static Stage getPrimaryStage() {
         return primaryStage;
+    }
+    public static boolean getTestMode() {
+        return TEST_MODE;
     }
 }

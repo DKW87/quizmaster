@@ -4,8 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import database.mysql.QuizResultDAO;
 import helpers.LocalDateTimeAdapter;
 import model.QuizResult;
+import model.QuizResultDTO;
+import view.Main;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,6 +20,8 @@ import java.util.List;
  * @created 22 June Saturday 2024 - 16:25
  */
 public class QuizResultCouchDBDAO extends AbstractCouchDBDAO {
+
+    private final QuizResultDAO quizResultDAO = new QuizResultDAO(Main.getdBaccess());
     private Gson gson;
     public QuizResultCouchDBDAO(CouchDBaccess couchDBaccess) {
         super(couchDBaccess);
@@ -26,14 +31,15 @@ public class QuizResultCouchDBDAO extends AbstractCouchDBDAO {
                 .create();
     }
 
-    public void saveQuizResult(QuizResult quizResult) {
+    public void saveQuizResult(QuizResultDTO quizResult) {
         String jsonString = gson.toJson(quizResult);
         JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
         saveDocument(jsonObject);
     }
 
     public QuizResult getQuizResultDocId(String doc_Id) {
-        return gson.fromJson(getDocumentById(doc_Id), QuizResult.class);
+        QuizResultDTO quizResult =    gson.fromJson(getDocumentById(doc_Id), QuizResultDTO.class);
+        return quizResultDAO.convertQuizResultDTOToQuizResult(quizResult);
     }
     /**
      * Retrieves all quiz results from the database.
@@ -44,7 +50,7 @@ public class QuizResultCouchDBDAO extends AbstractCouchDBDAO {
     public List<QuizResult> getAllQuizResults() {
         List<QuizResult> results = new ArrayList<>();
         for (JsonObject jsonObject : getAllDocuments()) {
-            results.add(gson.fromJson(jsonObject, QuizResult.class));
+            results.add(quizResultDAO.convertQuizResultDTOToQuizResult(gson.fromJson(jsonObject, QuizResultDTO.class)));
         }
         return results  ;
     }
@@ -57,9 +63,9 @@ public class QuizResultCouchDBDAO extends AbstractCouchDBDAO {
     public List<QuizResult> getAllQuizResults(int quizId) {
         List<QuizResult> results = new ArrayList<>();
         for (JsonObject jsonObject : getAllDocuments()) {
-            int dbQuizId = jsonObject.get("quiz").getAsJsonObject().get("quizId").getAsInt();
+            int dbQuizId = jsonObject.get("quizId").getAsInt();
             if (dbQuizId == quizId) {
-                results.add(gson.fromJson(jsonObject, QuizResult.class));
+                results.add(quizResultDAO.convertQuizResultDTOToQuizResult(gson.fromJson(jsonObject, QuizResultDTO.class)));
             }
         }
         return results  ;
@@ -74,15 +80,12 @@ public class QuizResultCouchDBDAO extends AbstractCouchDBDAO {
     public List<QuizResult> getAllQuizResults(int quizId,int userId) {
         List<QuizResult> results = new ArrayList<>();
         for (JsonObject jsonObject : getAllDocuments()) {
-            int dbQuizId = jsonObject.get("quiz").getAsJsonObject().get("quizId").getAsInt();
-            int dbUserId = jsonObject.get("student").getAsJsonObject().get("userId").getAsInt();
-            if (dbQuizId == quizId
-                    && dbUserId == userId) {
-                results.add(gson.fromJson(jsonObject, QuizResult.class));
+            int dbQuizId = jsonObject.get("quizId").getAsInt();
+            int dbUserId = jsonObject.get("studentId").getAsInt();
+            if (dbQuizId == quizId && dbUserId == userId) {
+                results.add(quizResultDAO.convertQuizResultDTOToQuizResult(gson.fromJson(jsonObject, QuizResultDTO.class)));
             }
         }
         return results  ;
     }
-
-
 }

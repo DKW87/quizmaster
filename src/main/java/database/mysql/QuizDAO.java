@@ -55,7 +55,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
                 var difficulty = difficultyDao.getById(difficultyId);
                 var course = courseDao.getById(courseId);
                 var questionInQuizCount = getQuestionsInQuizCount(quizId);
-                Quiz quiz = new Quiz(quizId, name, quizPoints, course, difficulty,questionInQuizCount);
+                Quiz quiz = new Quiz(quizId, name, quizPoints, course, difficulty, questionInQuizCount);
                 quizzes.add(quiz);
             }
         } catch (SQLException sqlError) {
@@ -83,7 +83,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
                 var difficulty = difficultyDao.getById(difficultyId);
                 var course = courseDao.getById(courseId);
                 var questionInQuizCount = getQuestionsInQuizCount(quizId);
-                quiz = new Quiz(quizId, name, quizPoints, course, difficulty,questionInQuizCount);
+                quiz = new Quiz(quizId, name, quizPoints, course, difficulty, questionInQuizCount);
             }
         } catch (SQLException sqlError) {
             System.out.println("SQL Fout" + sqlError.getMessage());
@@ -108,7 +108,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
                 var difficulty = difficultyDao.getById(difficultyId);
                 var course = courseDao.getById(courseId);
                 var questionInQuizCount = getQuestionsInQuizCount(quizId);
-                quiz = new Quiz(quizId, name, quizPoints, course, difficulty,questionInQuizCount);
+                quiz = new Quiz(quizId, name, quizPoints, course, difficulty, questionInQuizCount);
             }
         } catch (SQLException sqlError) {
             System.out.println("SQL Fout" + sqlError.getMessage());
@@ -162,7 +162,8 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
             }
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
-        } return questionCount;
+        }
+        return questionCount;
     }
 
     public List<Quiz> getAllQuizzesByCoordinator(int coordinatorId) {

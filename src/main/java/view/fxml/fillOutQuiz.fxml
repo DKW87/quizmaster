@@ -1,27 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-            prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.FillOutQuizController">
-    <Label fx:id="titleLabel" layoutX="14.0" layoutY="14.0" text="Vraag 1">
-        <font>
-            <Font size="18.0" />
-        </font>
-    </Label>
-    <TextArea fx:id="questionArea" layoutX="14.0" layoutY="49.0" prefHeight="300.0" prefWidth="600.0" promptText="Deze textarea bevat de vraag en de vier antwoorden." />
-    <Button layoutX="14.0" layoutY="366.0" mnemonicParsing="false" onAction="#doRegisterA" text="Antwoord A" />
-    <Button layoutX="104.0" layoutY="366.0" mnemonicParsing="false" onAction="#doRegisterB" text="Antwoord B" />
-    <Button layoutX="194.0" layoutY="366.0" mnemonicParsing="false" onAction="#doRegisterC" text="Antwoord C" />
-    <Button layoutX="284.0" layoutY="366.0" mnemonicParsing="false" onAction="#doRegisterD" text="Antwoord D" />
-    <Button layoutX="481.0" layoutY="366.0" mnemonicParsing="false" onAction="#doPreviousQuestion" text="Vorige" />
-    <Button layoutX="546.0" layoutY="366.0" mnemonicParsing="false" onAction="#doNextQuestion" text="Volgende" />
-    <Button layoutX="14.0" layoutY="422.0" mnemonicParsing="false" onAction="#doMenu" text="Menu">
-        <font>
-            <Font size="14.0" />
-        </font>
-    </Button>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #154360;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FillOutQuizController">
+   <VBox prefHeight="600.0" prefWidth="900.0">
+      <children>
+         <VBox prefHeight="560.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
+            <children>
+                <Label fx:id="titleLabel" text="Vraag 1">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+               <Label fx:id="testingNumberOfPoints" />
+                <TextArea fx:id="questionArea" prefHeight="301.0" prefWidth="538.0" promptText="Deze textarea bevat de vraag en de vier antwoorden." wrapText="true" />
+               <HBox prefHeight="118.0" prefWidth="538.0">
+                  <children>
+                     <HBox prefHeight="112.0" prefWidth="449.0" spacing="10.0">
+                        <children>
+                            <Button mnemonicParsing="false" onAction="#doRegisterA" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord A" textFill="WHITE" />
+                            <Button mnemonicParsing="false" onAction="#doRegisterB" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord B" textFill="WHITE" />
+                            <Button mnemonicParsing="false" onAction="#doRegisterC" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord C" textFill="WHITE" />
+                            <Button mnemonicParsing="false" onAction="#doRegisterD" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord D" textFill="WHITE" />
+                        </children>
+                     </HBox>
+                     <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                        <children>
+                            <Button mnemonicParsing="false" onAction="#doPreviousQuestion" style="-fx-border-color: #154360; -fx-background-color: #FFFFFF;" text="Vorige" textFill="#154360" />
+                            <Button mnemonicParsing="false" onAction="#doNextQuestion" style="-fx-border-color: #154360; -fx-background-color: #154360;" text="Volgende" textFill="WHITE" />
+                        </children>
+                     </HBox>
+                  </children>
+                  <VBox.margin>
+                     <Insets top="10.0" />
+                  </VBox.margin>
+               </HBox>
+                <Button mnemonicParsing="false" onAction="#doMenu" style="-fx-background-color: #FFFFFF; -fx-border-color: #154360;" text="Menu" textFill="#154360">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+            </children>
+            <padding>
+               <Insets bottom="15.0" left="50.0" right="50.0" top="50.0" />
+            </padding>
+         </VBox>
+      </children>
+      <padding>
+         <Insets bottom="30.0" left="130.0" right="130.0" top="30.0" />
+      </padding>
+   </VBox>
 </AnchorPane>
