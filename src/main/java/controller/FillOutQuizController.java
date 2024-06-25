@@ -3,10 +3,7 @@ package controller;
 import database.mysql.QuestionDAO;
 import database.mysql.QuizResultDAO;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import model.Question;
 import model.Quiz;
 import model.QuizResult;
@@ -21,6 +18,14 @@ public class FillOutQuizController {
 
     @FXML
     public Label testingNumberOfPoints;
+    @FXML
+    public Button buttonAnswerA;
+    @FXML
+    public Button buttonAnswerB;
+    @FXML
+    public Button buttonAnswerC;
+    @FXML
+    public Button buttonAnswerD;
     @FXML
     private Label titleLabel;
     @FXML
@@ -38,6 +43,7 @@ public class FillOutQuizController {
     private Quiz currentQuiz;
     private List<Question> questionList;
     private int[] pointsEarned;
+    private String[] storeAnswers;
 
     public FillOutQuizController() {
         questionDAO = new QuestionDAO(Main.getdBaccess());
@@ -48,18 +54,19 @@ public class FillOutQuizController {
         currentQuiz = quiz;
         questionList = new ArrayList<>(questionDAO.getAllByQuizId(quiz.getQuizId()));
         pointsEarned = new int[questionList.size()];
+        storeAnswers = new String[questionList.size()];
         displayQuestionAndAnswers(questionList);
-        testingNumberOfPoints.setVisible(true); // testing purposes
     }
 
-    public void checkCorrectAnswer(String answer) {
-        final int BEGIN_INDEX = 12;
+    public void checkAndStoreCorrectAnswer(String answerPrefix) {
+        final int BEGIN_INDEX = answerPrefix.length();
         String[] lines = questionArea.getText().split("\n");
 
         for (String line : lines) {
-            if (line.startsWith(answer)) {
-                String checkAnswer = line.substring(BEGIN_INDEX).trim();
-                if (checkAnswer.equals(questionList.get(currentQuestionIndex).getAnswerA())) {
+            if (line.startsWith(answerPrefix)) {
+                String chosenAnswer = line.substring(BEGIN_INDEX).trim();
+                storeAnswers[currentQuestionIndex] = chosenAnswer;
+                if (chosenAnswer.equals(questionList.get(currentQuestionIndex).getAnswerA())) {
                     pointsEarned[currentQuestionIndex] = EEN; // one point equals correct
                 } else {
                     pointsEarned[currentQuestionIndex] = NUL; // zero points equals wrong
@@ -70,44 +77,40 @@ public class FillOutQuizController {
 
     @FXML
     public void doRegisterA() {
-        checkCorrectAnswer(ANTWOORD_A);
+        checkAndStoreCorrectAnswer(ANTWOORD_A);
         if (currentQuestionIndex == questionList.size() - EEN) {
             endOfQuizAlertAndSubmit();
-        }
-        else {
+        } else {
             doNextQuestion();
         }
     }
 
     @FXML
     public void doRegisterB() {
-        checkCorrectAnswer(ANTWOORD_B);
+        checkAndStoreCorrectAnswer(ANTWOORD_B);
         if (currentQuestionIndex == questionList.size() - EEN) {
             endOfQuizAlertAndSubmit();
-        }
-        else {
+        } else {
             doNextQuestion();
         }
     }
 
     @FXML
     public void doRegisterC() {
-        checkCorrectAnswer(ANTWOORD_C);
+        checkAndStoreCorrectAnswer(ANTWOORD_C);
         if (currentQuestionIndex == questionList.size() - EEN) {
             endOfQuizAlertAndSubmit();
-        }
-        else {
+        } else {
             doNextQuestion();
         }
     }
 
     @FXML
     public void doRegisterD() {
-        checkCorrectAnswer(ANTWOORD_D);
+        checkAndStoreCorrectAnswer(ANTWOORD_D);
         if (currentQuestionIndex == questionList.size() - EEN) {
             endOfQuizAlertAndSubmit();
-        }
-        else {
+        } else {
             doNextQuestion();
         }
     }
@@ -115,20 +118,23 @@ public class FillOutQuizController {
     @FXML
     public void doNextQuestion() {
         if (currentQuestionIndex == questionList.size() - EEN) {
+            markButtonAnswered();
             endOfQuizAlertAndSubmit();
         } else {
             currentQuestionIndex++;
             displayQuestionAndAnswers(questionList);
+            markButtonAnswered();
         }
     }
 
     @FXML
     public void doPreviousQuestion() {
-        if (currentQuestionIndex < EEN) {
-            Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "", "Geen vorige vraag beschikbaar.");
-        } else {
+        if (currentQuestionIndex > NUL) {
             currentQuestionIndex--;
             displayQuestionAndAnswers(questionList);
+            markButtonAnswered();
+        } else {
+            Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "", "Geen vorige vraag beschikbaar.");
         }
     }
 
@@ -138,7 +144,7 @@ public class FillOutQuizController {
     }
 
     public void displayQuestionAndAnswers(List<Question> questionList) {
-        titleLabel.setText(String.format("Vraag %d:", currentQuestionIndex + EEN));
+        titleLabel.setText(String.format("Vraag %d/%d:", currentQuestionIndex + EEN, questionList.size()));
         questionArea.setText(String.valueOf(questionBuilder(questionList.get(currentQuestionIndex))));
     }
 
@@ -187,6 +193,46 @@ public class FillOutQuizController {
             }
         }
         return correctPoints;
+    }
+
+    private void markButtonAnswered() {
+        setAllButtonsDefaultColor();
+        String storedAnswer = storeAnswers[currentQuestionIndex];
+
+        if (storedAnswer == null) return;
+
+        String[] lines = questionArea.getText().split("\n");
+
+        for (String line : lines) {
+            checkWhichButtonHasAnswer(line, storedAnswer);
+        }
+    }
+
+    private void checkWhichButtonHasAnswer(String line, String storedAnswer) {
+        if (line.startsWith(ANTWOORD_A) && storedAnswer.equals(line.substring(ANTWOORD_A.length()).trim())) {
+            chosenAnswerButtonColor(buttonAnswerA);
+        } else if (line.startsWith(ANTWOORD_B) && storedAnswer.equals(line.substring(ANTWOORD_B.length()).trim())) {
+            chosenAnswerButtonColor(buttonAnswerB);
+        } else if (line.startsWith(ANTWOORD_C) && storedAnswer.equals(line.substring(ANTWOORD_C.length()).trim())) {
+            chosenAnswerButtonColor(buttonAnswerC);
+        } else if (line.startsWith(ANTWOORD_D) && storedAnswer.equals(line.substring(ANTWOORD_D.length()).trim())) {
+            chosenAnswerButtonColor(buttonAnswerD);
+        }
+    }
+
+    private void defaultButtonColor(Button button) {
+        button.setStyle("-fx-background-color: #154360; -fx-border-color: #154360");
+    }
+
+    private void chosenAnswerButtonColor(Button button) {
+        button.setStyle("-fx-background-color: #501560; -fx-border-color: #501560");
+    }
+
+    private void setAllButtonsDefaultColor() {
+        defaultButtonColor(buttonAnswerA);
+        defaultButtonColor(buttonAnswerB);
+        defaultButtonColor(buttonAnswerC);
+        defaultButtonColor(buttonAnswerD);
     }
 
 } // class
