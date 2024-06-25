@@ -55,20 +55,17 @@
    </Button>
    <TableView fx:id="selectCourseTable" layoutX="14.0" layoutY="79.0" prefHeight="200.0" prefWidth="200.0">
      <columns>
-       <TableColumn prefWidth="75.0" text="C1" />
-       <TableColumn prefWidth="75.0" text="C2" />
+       <TableColumn fx:id="courseNameColumn" prefWidth="171.0" text="Cursusnaam" />
      </columns>
    </TableView>
    <TableView fx:id="selectQuizTable" layoutX="310.0" layoutY="79.0" prefHeight="200.0" prefWidth="200.0">
      <columns>
-       <TableColumn prefWidth="75.0" text="C1" />
-       <TableColumn prefWidth="75.0" text="C2" />
+       <TableColumn fx:id="quizNameColumn" prefWidth="194.0" text="Quiznaam" />
      </columns>
    </TableView>
    <TableView fx:id="selectQuestionTable" layoutX="615.0" layoutY="79.0" prefHeight="200.0" prefWidth="200.0">
      <columns>
-       <TableColumn prefWidth="75.0" text="C1" />
-       <TableColumn prefWidth="75.0" text="C2" />
+       <TableColumn fx:id="questionColumn" prefWidth="177.0" text="Vraag" />
      </columns>
    </TableView>
 </AnchorPane>

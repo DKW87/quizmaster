@@ -70,6 +70,7 @@ public class Quiz {
 
 
 
+
     public Difficulty getQuizDifficulty() {
         return difficulty;
     }

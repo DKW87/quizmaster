@@ -4,12 +4,15 @@ import database.mysql.CourseDAO;
 import database.mysql.DBAccess;
 import database.mysql.QuestionDAO;
 import database.mysql.QuizDAO;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import model.*;
 import view.Main;
 import view.SceneManager;
+import model.Question;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -38,6 +41,12 @@ public class CoordinatorDashboardController {
     public TableView<Quiz> selectQuizTable;
     @FXML
     public TableView<Question> selectQuestionTable;
+    @FXML
+    public TableColumn<Course, String> courseNameColumn;
+    @FXML
+    public TableColumn<Quiz, String> quizNameColumn;
+    @FXML
+    public TableColumn<Question, String> questionColumn;
 
 
     public void setup() {
@@ -90,8 +99,17 @@ public class CoordinatorDashboardController {
         sceneManager.showWelcomeScene();
     }
 
+    // Method that fills the Course Table based on userId.
     private void generateCourseTable() {
         courseDao.getCoursesByCoordinator(Main.getUserSession().getUser().getUserId());
+        quizNameColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.valueOf(cellData.getValue().getCourse().getCourseId()))); // Methode in CourseDAO maken getByName
+    }
+
+    // Method that fills the Quiz Table.
+    private void generateQuizTable() {
+        quizNameColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.valueOf(cellData.getValue().getQuizName())));
     }
 
     private void loadQuizForCourse(int courseId) throws SQLException {
