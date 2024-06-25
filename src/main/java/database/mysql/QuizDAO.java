@@ -55,7 +55,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
                 var difficulty = difficultyDao.getById(difficultyId);
                 var course = courseDao.getById(courseId);
                 var questionInQuizCount = getQuestionsInQuizCount(quizId);
-                Quiz quiz = new Quiz(quizId, name, quizPoints, course, difficulty,questionInQuizCount);
+                Quiz quiz = new Quiz(quizId, name, quizPoints, course, difficulty, questionInQuizCount);
                 quizzes.add(quiz);
             }
         } catch (SQLException sqlError) {
@@ -83,7 +83,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
                 var difficulty = difficultyDao.getById(difficultyId);
                 var course = courseDao.getById(courseId);
                 var questionInQuizCount = getQuestionsInQuizCount(quizId);
-                quiz = new Quiz(quizId, name, quizPoints, course, difficulty,questionInQuizCount);
+                quiz = new Quiz(quizId, name, quizPoints, course, difficulty, questionInQuizCount);
             }
         } catch (SQLException sqlError) {
             System.out.println("SQL Fout" + sqlError.getMessage());
@@ -108,7 +108,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
                 var difficulty = difficultyDao.getById(difficultyId);
                 var course = courseDao.getById(courseId);
                 var questionInQuizCount = getQuestionsInQuizCount(quizId);
-                quiz = new Quiz(quizId, name, quizPoints, course, difficulty,questionInQuizCount);
+                quiz = new Quiz(quizId, name, quizPoints, course, difficulty, questionInQuizCount);
             }
         } catch (SQLException sqlError) {
             System.out.println("SQL Fout" + sqlError.getMessage());
@@ -162,7 +162,8 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
             }
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
-        } return questionCount;
+        }
+        return questionCount;
     }
 
     public List<Quiz> getAllQuizzesByCoordinator(int coordinatorId) {
@@ -216,5 +217,29 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
         return quizzes;
     }
 
-
+    // Created by Mack: Method to gather all Quizzes belonging to a specific CourseID for the CordinatorDashboard.
+    public List<Quiz> getAllQuizzesByCourseId(int courseIdSearch) throws SQLException {
+        List<Quiz> quizzesById = new ArrayList<>();
+        String sqlImport = "SELECT * FROM Quiz WHERE courseId IS ?";
+        try {
+            this.setupPreparedStatement(sqlImport);
+            preparedStatement.setInt(1, courseIdSearch);
+            ResultSet resultSet = executeSelectStatement();
+            while (resultSet.next()) {
+                int quizId = resultSet.getInt("quizId");
+                String name = resultSet.getString("name");
+                int quizPoints = resultSet.getInt("quizPoints");
+                int difficultyId = resultSet.getInt("difficultyId");
+                int courseId = resultSet.getInt("courseId");
+                var difficulty = difficultyDao.getById(difficultyId);
+                var course = courseDao.getById(courseId);
+                var questionInQuizCount = getQuestionsInQuizCount(quizId);
+                Quiz quiz = new Quiz(quizId, name, quizPoints, course, difficulty, questionInQuizCount);
+                quizzesById.add(quiz);
+            }
+        } catch (SQLException sqlError) {
+            System.out.println(sqlError.getMessage());
+        }
+        return quizzesById;
+    }
 }

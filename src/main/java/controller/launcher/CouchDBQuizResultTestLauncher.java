@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Zahir Ekrem SARITEKE
  * @project quizmaster
- * @created 22 June Saturday 2024 - 17:52
+ * @created 25 June Tuesday 2024 - 13:13
  */
 public class CouchDBQuizResultTestLauncher {
 
@@ -30,6 +30,5 @@ public class CouchDBQuizResultTestLauncher {
             System.out.println(qr.getDate());
         }
     }
-
 
 }

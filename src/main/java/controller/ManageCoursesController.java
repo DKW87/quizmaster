@@ -2,16 +2,22 @@ package controller;
 
 import database.mysql.CourseDAO;
 import database.mysql.DBAccess;
+import helpers.ExcelExporter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import model.Course;
 import view.Main;
 import view.SceneManager;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import static utils.Util.confirmMessage;
@@ -40,9 +46,12 @@ public class ManageCoursesController {
     public TableColumn<Course, String> coordinator;
     @FXML
     public TableColumn<Course, String> studentCount;
+    @FXML
+    public Button exportButton;
 
     @FXML
     public TableView<Course> courseTable;
+
 
     private Course selectedCourse;
 
@@ -92,7 +101,16 @@ public class ManageCoursesController {
         } else {
             showAlert(Alert.AlertType.ERROR, "Fout", "Selecteer eerst een cursus");
         }
-
+    }
+    public void doExportExcel(ActionEvent actionEvent) {
+        try {
+            exportTable(courseTable);
+            showAlert(Alert.AlertType.INFORMATION, "Succes", "Cursussen succesvol geexporteerd");
+        } catch (IOException e) {
+            // Handle any exceptions that occur during the export process
+            System.out.println("Couldn't export table data.");
+            throw new RuntimeException(e);
+        }
     }
     // setup table data with columns
     private void generateCourseTable() {
@@ -124,5 +142,17 @@ public class ManageCoursesController {
             courseTable.getItems().remove(selectedCourse);
         }
     }
+    private void exportTable(TableView<Course> tableView) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Exporteer Cursussen");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
+        File file = fileChooser.showSaveDialog(tableView.getScene().getWindow());
+
+        if (file != null) {
+            String sheetName = "Cursussen_" + LocalDate.now();
+            ExcelExporter.exportToExcel(tableView, sheetName, file.getAbsolutePath());
+        }
+    }
+
 
 }

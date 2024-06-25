@@ -7,6 +7,7 @@ module QuizMaster {
     requires lightcouch;
     requires com.google.gson;
     requires java.desktop;
+    requires org.apache.poi.ooxml;
 
     opens view to javafx.graphics, javafx.fxml;
     opens controller to javafx.fxml;
