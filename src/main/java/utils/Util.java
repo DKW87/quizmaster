@@ -1,8 +1,11 @@
 package utils;
 
 import database.mysql.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuItem;
 import model.*;
 import view.Main;
 
@@ -11,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+
+import static constants.Constant.ROLE_TASKS;
 
 /**
  * @author Zahir Ekrem SARITEKE
@@ -156,6 +161,15 @@ public class Util {
         Optional<ButtonType> option = alert.showAndWait();
         return option.get().equals(ButtonType.OK);
 
+    }
+
+    public static MenuItem createMenuItem(String title, EventHandler<ActionEvent> event ) {
+        MenuItem menuItem = new MenuItem(title);
+        menuItem.setOnAction(event);
+        return menuItem;
+    }
+    public static List<MenuItem> configureMenuItems(int roleId)  {
+        return ROLE_TASKS.get(roleId);
     }
 
 

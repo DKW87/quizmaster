@@ -1,8 +1,12 @@
 package constants;
 
 import javafx.scene.control.MenuItem;
+import view.Main;
 
 import java.util.List;
+import java.util.Map;
+
+import static utils.Util.createMenuItem;
 
 /**
  * @author Zahir Ekrem SARITEKE
@@ -21,31 +25,31 @@ public class Constant {
     public static  final String COUCH_DB_USER = "admin";
     public static  final String COUCH_DB_PASS = "admin";
 
+
     // ? roles permission constants
     public static final List<MenuItem> STUDENT_TASKS = List.of(
-            new MenuItem("Cursusbeheer"),
-            new MenuItem("Quiz maken")
+            createMenuItem("Cursusbeheer",event -> Main.getSceneManager().showStudentSignInOutScene()),
+            createMenuItem("Quiz maken",event -> Main.getSceneManager().showSelectQuizForStudent())
+
     );
     public static final List<MenuItem> COORDINATOR_TASKS = List.of(
-            new MenuItem("Coördinator Dashboard"),
-            new MenuItem("Vraagbeheer"),
-            new MenuItem("Quizbeheer")
+            createMenuItem("Quizbeheer",event -> Main.getSceneManager().showManageQuizScene()),
+            createMenuItem("Vraagbeheer",event -> Main.getSceneManager().showManageQuestionsScene()),
+            createMenuItem("Coördinator Dashboard",event -> Main.getSceneManager().showCoordinatorDashboard())
+
     );
     public static final List<MenuItem> ADMINISTRATOR_TASKS = List.of(
-            new MenuItem("Cursusbeheer"),
-            new MenuItem("Exporteer studentenresultaten")
-    );
-    public static final List<MenuItem> FB_TASKS = List.of(
-            new MenuItem("Gebruikersbeheer")
-    );
+            createMenuItem("Cursusbeheer",event -> Main.getSceneManager().showManageCoursesScene()),
+            createMenuItem("Exporteer studentenresultaten",event -> Main.getSceneManager().showWelcomeScene())
+//            createMenuItem("Student indelen",event -> Main.getSceneManager().showAssignStudentsToGroupScene())
+//            createMenuItem("Beheer groepen",event -> Main.getSceneManager().showManageGroupsScene())
 
-    // Administrator > cursussenbeheer > voor alle studenten die 1 quiz hebben gedaan een overzicht maken
-    // FB > Gebruikersbeheer
+    );
+    public static final List<MenuItem> FUNCTIONAL_BEHEERDER_TASKS = List.of(
+            createMenuItem("Gebruikersbeheer",event -> Main.getSceneManager().showManageUserScene())
 
-    // ? style constants
-    public static final String PRIMARY_COLOR = "#156082";
-    public static final String SECONDARY_COLOR = "#E89C31";
-    public static final String ERROR_COLOR = "#f77167";
-    public static final String SUCCESS_COLOR = "#36c95f";
+    );
+    public static final Map<Integer, List<MenuItem>> ROLE_TASKS =
+            Map.of(1,STUDENT_TASKS,2,COORDINATOR_TASKS,4,ADMINISTRATOR_TASKS,5, FUNCTIONAL_BEHEERDER_TASKS);
 
 }

@@ -2,18 +2,11 @@ package controller;
 
 import database.mysql.UserDAO;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import view.Main;
 
-import java.util.Optional;
-
-import static constants.Constant.ERROR_COLOR;
-import static constants.Constant.PRIMARY_COLOR;
 import static utils.Util.confirmMessage;
 
 public class LoginController {
@@ -51,15 +44,6 @@ public class LoginController {
     }
 
 
-    private void resetStyle() {
-        nameTextField.setStyle("-fx-border-color: " + PRIMARY_COLOR);
-        passwordField.setStyle("-fx-border-color: " + PRIMARY_COLOR);
-    }
-
-    private void setErrorStyle() {
-        nameTextField.setStyle("-fx-border-color: " + ERROR_COLOR);
-        passwordField.setStyle("-fx-border-color: " + ERROR_COLOR);
-    }
 
     private boolean validate(String userName, String password) {
         return !userName.isEmpty() && !password.isEmpty() && !userName.isBlank() && !password.isBlank();
