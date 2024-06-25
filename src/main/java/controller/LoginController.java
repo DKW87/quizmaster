@@ -28,7 +28,7 @@ public class LoginController {
     private TextField passwordField;
 
 
-    public void doLogin(ActionEvent actionEvent) {
+    public void doLogin() {
         String userName = nameTextField.getText();
         String password = passwordField.getText();
         if (!validate(userName, password)) {
