@@ -46,6 +46,26 @@ public class CoordinatorDashboardController {
             selectCourseTable.getItems().add(course);
         }
         generateCourseTable();
+        // Listener for course selection
+        selectCourseTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                try {
+                    loadQuizForCourse(newSelection.getCourseId());
+                } catch (SQLException sqlErrror) {
+                    System.out.println("Error in listener for course  " + sqlErrror.getMessage());
+                }
+            }
+        });
+        // Listener for quiz selection
+        selectQuizTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                try {
+                    loadQuestionForQuiz(newSelection.getQuizId());
+                } catch (SQLException sqlErrror) {
+                    System.out.println("Error in listener for quiz  " + sqlErrror.getMessage());
+                }
+            }
+        });
     }
 
     public void doNewQuiz() {
@@ -81,9 +101,8 @@ public class CoordinatorDashboardController {
     }
 
     private void loadQuestionForQuiz(int quizId) throws SQLException {
-        selectQuestionTable.getItems().clear();
+        selectQuestionTable.getItems().clear(); // This will clear previous quizzes once a new course is selected I think
         List<Question> questions = questionDAO.getAllByQuizId(quizId);
         selectQuestionTable.getItems().addAll(questions);
     }
-
 }
