@@ -78,37 +78,30 @@ public class FillOutQuizController {
     @FXML
     public void doRegisterA() {
         checkAndStoreCorrectAnswer(ANTWOORD_A);
-        if (currentQuestionIndex == questionList.size() - EEN) {
-            endOfQuizAlertAndSubmit();
-        } else {
-            doNextQuestion();
-        }
+        checkLastQuestion();
     }
 
     @FXML
     public void doRegisterB() {
         checkAndStoreCorrectAnswer(ANTWOORD_B);
-        if (currentQuestionIndex == questionList.size() - EEN) {
-            endOfQuizAlertAndSubmit();
-        } else {
-            doNextQuestion();
-        }
+        checkLastQuestion();
     }
 
     @FXML
     public void doRegisterC() {
         checkAndStoreCorrectAnswer(ANTWOORD_C);
-        if (currentQuestionIndex == questionList.size() - EEN) {
-            endOfQuizAlertAndSubmit();
-        } else {
-            doNextQuestion();
-        }
+        checkLastQuestion();
     }
 
     @FXML
     public void doRegisterD() {
         checkAndStoreCorrectAnswer(ANTWOORD_D);
+        checkLastQuestion();
+    }
+
+    private void checkLastQuestion() {
         if (currentQuestionIndex == questionList.size() - EEN) {
+            markButtonAnswered();
             endOfQuizAlertAndSubmit();
         } else {
             doNextQuestion();
@@ -182,6 +175,7 @@ public class FillOutQuizController {
             quizResultDAO.storeOne(quizResult);
             Main.getSceneManager().showStudentFeedback(quizResult);
         }
+
     }
 
     private int calculateScore() {
