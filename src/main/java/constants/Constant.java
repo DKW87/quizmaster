@@ -1,8 +1,13 @@
 package constants;
 
 import javafx.scene.control.MenuItem;
+import view.Main;
 
 import java.util.List;
+import java.util.Map;
+
+import static utils.Util.createMenuItem;
+
 
 /**
  * @author Zahir Ekrem SARITEKE
@@ -23,19 +28,28 @@ public class Constant {
 
     // ? roles permission constants
     public static final List<MenuItem> STUDENT_TASKS = List.of(
-            new MenuItem("Course Management"),
-            new MenuItem("Quiz Management")
+            createMenuItem("Beheer cursussen",event -> Main.getSceneManager().showStudentSignInOutScene()),
+            createMenuItem("Beheer quizzent",event -> Main.getSceneManager().showSelectQuizForStudent())
+
     );
     public static final List<MenuItem> COORDINATOR_TASKS = List.of(
-            new MenuItem("Course Management"),
-            new MenuItem("Quiz Management"),
-            new MenuItem("Dashboard")
-    );
+            createMenuItem("Beheer quizzent",event -> Main.getSceneManager().showManageQuizScene()),
+            createMenuItem("Beheer vragen",event -> Main.getSceneManager().showManageQuestionsScene()),
+            createMenuItem("Dashboard",event -> Main.getSceneManager().showCoordinatorDashboard())
 
-    // ? style constants
-    public static final String PRIMARY_COLOR = "#156082";
-    public static final String SECONDARY_COLOR = "#E89C31";
-    public static final String ERROR_COLOR = "#f77167";
-    public static final String SUCCESS_COLOR = "#36c95f";
+    );
+    public static final List<MenuItem> ADMIN_TASKS = List.of(
+            createMenuItem("Beheer cursussen",event -> Main.getSceneManager().showManageCoursesScene()),
+            createMenuItem("Student indelen",event -> Main.getSceneManager().showAssignStudentsToGroupScene()),
+            createMenuItem("Beheer groepen",event -> Main.getSceneManager().showManageGroupsScene())
+
+    );
+    public static final List<MenuItem> FUNCTIONAL_BEHEEDER_TASKS = List.of(
+            createMenuItem("Beheer gebruikers",event -> Main.getSceneManager().showManageUserScene())
+
+    );
+    public static final Map<Integer, List<MenuItem>> ROLE_TASKS =
+            Map.of(1,STUDENT_TASKS,3,COORDINATOR_TASKS,4,ADMIN_TASKS,5,FUNCTIONAL_BEHEEDER_TASKS);
+
 
 }
