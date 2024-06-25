@@ -83,6 +83,4 @@ public class QuizResultCouchDBDAO extends AbstractCouchDBDAO {
         }
         return results  ;
     }
-
-
 }

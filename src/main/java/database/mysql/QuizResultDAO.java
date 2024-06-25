@@ -1,5 +1,6 @@
 package database.mysql;
 
+import model.Quiz;
 import model.QuizResult;
 
 import java.sql.Date;
@@ -17,8 +18,8 @@ import java.util.List;
 public class QuizResultDAO extends AbstractDAO implements GenericDAO<QuizResult> {
 
     // FIXME: implementeer DAO's
-//    private final QuizDAO quizDao = new QuizDAO(dbAccess);
-//    private final UserDAO  userDao = new UserDAO(dbAccess);
+    private final QuizDAO quizDao = new QuizDAO(dbAccess);
+    private final UserDAO  userDao = new UserDAO(dbAccess);
 
 
     public QuizResultDAO(DBAccess dbAccess) {
@@ -69,17 +70,15 @@ public class QuizResultDAO extends AbstractDAO implements GenericDAO<QuizResult>
                 int quizId = resultSet.getInt("quizId");
                 int score = resultSet.getInt("score");
                 // FIXME: implementeer DAO's @Rob(QuizDAO) and @Mack(UserDAO) (see above)
-//                var quiz = quizDao.getById(quizId);
-//                var user = userDao.getById(studentId);
-//                var quizResult = new QuizResult(date, quiz, user, score);
-                quizResultList.add(null);
+                var quiz = quizDao.getById(quizId);
+                var user = userDao.getById(studentId);
+                var quizResult = new QuizResult(quizId, user, quiz, score);
+                quizResultList.add(quizResult);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
         return quizResultList;
-
     }
 
     @Override
