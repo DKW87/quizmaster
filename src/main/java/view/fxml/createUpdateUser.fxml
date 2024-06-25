@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -91,16 +92,25 @@
                                     <font>
                                         <Font size="14.0" />
                                     </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                                 </Button>
                                 <Button fx:id="GebruikerslijstButton" mnemonicParsing="false" onAction="#doGebruikerslijst" style="-fx-border-color: #154360; -fx-background-color: #154360;" text="Gebruikerslijst" textFill="WHITE">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                                 </Button>
                                 <Button fx:id="MenuButton" mnemonicParsing="false" onAction="#doMenu" style="-fx-border-color: #154360; -fx-background-color: white;" text="Menu" textFill="#154360">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                                 </Button>
                             </children>
                         </HBox>

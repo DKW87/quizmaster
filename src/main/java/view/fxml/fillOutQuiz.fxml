@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
@@ -25,16 +26,34 @@
                   <children>
                      <HBox prefHeight="112.0" prefWidth="449.0" spacing="10.0">
                         <children>
-                            <Button fx:id="buttonAnswerA" mnemonicParsing="false" onAction="#doRegisterA" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord A" textFill="WHITE" />
-                            <Button fx:id="buttonAnswerB" mnemonicParsing="false" onAction="#doRegisterB" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord B" textFill="WHITE" />
-                            <Button fx:id="buttonAnswerC" mnemonicParsing="false" onAction="#doRegisterC" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord C" textFill="WHITE" />
-                            <Button fx:id="buttonAnswerD" mnemonicParsing="false" onAction="#doRegisterD" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord D" textFill="WHITE" />
+                            <Button fx:id="buttonAnswerA" mnemonicParsing="false" onAction="#doRegisterA" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord A" textFill="WHITE">
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor></Button>
+                            <Button fx:id="buttonAnswerB" mnemonicParsing="false" onAction="#doRegisterB" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord B" textFill="WHITE">
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor></Button>
+                            <Button fx:id="buttonAnswerC" mnemonicParsing="false" onAction="#doRegisterC" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord C" textFill="WHITE">
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor></Button>
+                            <Button fx:id="buttonAnswerD" mnemonicParsing="false" onAction="#doRegisterD" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord D" textFill="WHITE">
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor></Button>
                         </children>
                      </HBox>
                      <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                         <children>
-                            <Button mnemonicParsing="false" onAction="#doPreviousQuestion" style="-fx-border-color: #154360; -fx-background-color: #FFFFFF;" text="Vorige" textFill="#154360" />
-                            <Button mnemonicParsing="false" onAction="#doNextQuestion" style="-fx-border-color: #154360; -fx-background-color: #154360;" text="Volgende" textFill="WHITE" />
+                            <Button mnemonicParsing="false" onAction="#doPreviousQuestion" style="-fx-border-color: #154360; -fx-background-color: #FFFFFF;" text="Vorige" textFill="#154360">
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor></Button>
+                            <Button mnemonicParsing="false" onAction="#doNextQuestion" style="-fx-border-color: #154360; -fx-background-color: #154360;" text="Volgende" textFill="WHITE">
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor></Button>
                         </children>
                      </HBox>
                   </children>
@@ -46,6 +65,9 @@
                     <font>
                         <Font size="14.0" />
                     </font>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
                 </Button>
             </children>
             <padding>
