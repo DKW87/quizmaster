@@ -110,6 +110,9 @@ public class WelcomeController {
         MenuItem manageQuestion = new MenuItem("Beheer vragen");
         manageQuestion.setOnAction(event -> sceneManager.showManageQuestionsScene());
         taskMenuButton.getItems().add(manageQuestion);
+        MenuItem coordinatorDashboard = new MenuItem("coordinatordashboard");
+        coordinatorDashboard.setOnAction(event -> sceneManager.showCoordinatorDashboard());
+        taskMenuButton.getItems().add(coordinatorDashboard);
     }
 
 }

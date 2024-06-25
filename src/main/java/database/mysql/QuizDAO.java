@@ -220,7 +220,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
     // Created by Mack: Method to gather all Quizzes belonging to a specific CourseID for the CordinatorDashboard.
     public List<Quiz> getAllQuizzesByCourseId(int courseIdSearch) throws SQLException {
         List<Quiz> quizzesById = new ArrayList<>();
-        String sqlImport = "SELECT * FROM Quiz WHERE courseId IS ?";
+        String sqlImport = "SELECT * FROM Quiz WHERE courseId = ?";
         try {
             this.setupPreparedStatement(sqlImport);
             preparedStatement.setInt(1, courseIdSearch);

@@ -7,6 +7,7 @@ import database.mysql.QuizDAO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import model.*;
@@ -36,11 +37,11 @@ public class CoordinatorDashboardController {
     @FXML
     public Button menuButton;
     @FXML
-    public TableView<Course> selectCourseTable;
+    public ListView<Course> courseList;
     @FXML
-    public TableView<Quiz> selectQuizTable;
+    public ListView<Quiz> quizList;
     @FXML
-    public TableView<Question> selectQuestionTable;
+    public ListView<Question> questionList;
     @FXML
     public TableColumn<Course, String> courseNameColumn;
     @FXML
@@ -51,22 +52,22 @@ public class CoordinatorDashboardController {
 
     public void setup() {
         List<Course> courseView = courseDao.getCoursesByCoordinator(Main.getUserSession().getUser().getUserId());
-        for (Course course : courseView) {
-            selectCourseTable.getItems().add(course);
-        }
-        generateCourseTable();
+        System.out.println(courseView.get(0).getName());
+        courseList.getItems().setAll(courseView);
+
         // Listener for course selection
-        selectCourseTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        courseList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 try {
                     loadQuizForCourse(newSelection.getCourseId());
                 } catch (SQLException sqlErrror) {
-                    System.out.println("Error in listener for course  " + sqlErrror.getMessage());
+                    System.out.println("Error in listener for course  " + sqlErrror.getMessage()
+                    + sqlErrror.getErrorCode());
                 }
             }
         });
         // Listener for quiz selection
-        selectQuizTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+       quizList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 try {
                     loadQuestionForQuiz(newSelection.getQuizId());
@@ -82,7 +83,7 @@ public class CoordinatorDashboardController {
     }
 
     public void doEditQuiz() {
-        Quiz quiz = (Quiz) selectQuizTable.getSelectionModel().getSelectedItem();
+        Quiz quiz = (Quiz) quizList.getSelectionModel().getSelectedItem();
         sceneManager.showCreateUpdateQuizScene(quiz);
     }
 
@@ -91,7 +92,7 @@ public class CoordinatorDashboardController {
     }
 
     public void doEditQuestion() {
-        Question question = (Question) selectQuestionTable.getSelectionModel().getSelectedItem();
+        Question question = (Question) questionList.getSelectionModel().getSelectedItem();
         sceneManager.showCreateUpdateQuestionScene(question);
     }
 
@@ -113,14 +114,14 @@ public class CoordinatorDashboardController {
     }
 
     private void loadQuizForCourse(int courseId) throws SQLException {
-        selectQuizTable.getItems().clear(); // This will clear previous quizzes once a new course is selected I think
+        quizList.getItems().clear(); // This will clear previous quizzes once a new course is selected I think
         List<Quiz> quizzes = quizDao.getAllQuizzesByCourseId(courseId);
-        selectQuizTable.getItems().addAll(quizzes);
+        quizList.getItems().addAll(quizzes);
     }
 
     private void loadQuestionForQuiz(int quizId) throws SQLException {
-        selectQuestionTable.getItems().clear(); // This will clear previous quizzes once a new course is selected I think
+        questionList.getItems().clear(); // This will clear previous quizzes once a new course is selected I think
         List<Question> questions = questionDAO.getAllByQuizId(quizId);
-        selectQuestionTable.getItems().addAll(questions);
+        questionList.getItems().addAll(questions);
     }
 }
