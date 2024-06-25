@@ -25,10 +25,10 @@
                   <children>
                      <HBox prefHeight="112.0" prefWidth="449.0" spacing="10.0">
                         <children>
-                            <Button mnemonicParsing="false" onAction="#doRegisterA" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord A" textFill="WHITE" />
-                            <Button mnemonicParsing="false" onAction="#doRegisterB" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord B" textFill="WHITE" />
-                            <Button mnemonicParsing="false" onAction="#doRegisterC" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord C" textFill="WHITE" />
-                            <Button mnemonicParsing="false" onAction="#doRegisterD" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord D" textFill="WHITE" />
+                            <Button fx:id="buttonAnswerA" mnemonicParsing="false" onAction="#doRegisterA" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord A" textFill="WHITE" />
+                            <Button fx:id="buttonAnswerB" mnemonicParsing="false" onAction="#doRegisterB" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord B" textFill="WHITE" />
+                            <Button fx:id="buttonAnswerC" mnemonicParsing="false" onAction="#doRegisterC" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord C" textFill="WHITE" />
+                            <Button fx:id="buttonAnswerD" mnemonicParsing="false" onAction="#doRegisterD" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Antwoord D" textFill="WHITE" />
                         </children>
                      </HBox>
                      <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
