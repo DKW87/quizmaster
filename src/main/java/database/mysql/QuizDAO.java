@@ -217,29 +217,55 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
         return quizzes;
     }
 
-    // Created by Mack: Method to gather all Quizzes belonging to a specific CourseID for the CordinatorDashboard.
-    public List<Quiz> getAllQuizzesByCourseId(int courseIdSearch) throws SQLException {
-        List<Quiz> quizzesById = new ArrayList<>();
-        String sqlImport = "SELECT * FROM Quiz WHERE courseId = ?";
+    // methode telt het aantal keer een Quiz is gemaakt op basis van UserID en QuizID als input
+    public int getNumberMadeQuizzes(int UserID, int QuizID) {
+        String sql = "SELECT COUNT(QuizID) AS AantalGemaakt FROM QUIZRESULTS WHERE UserID =? AND QuizID =?";
+        int madeQuizCount = 0;
         try {
-            this.setupPreparedStatement(sqlImport);
-            preparedStatement.setInt(1, courseIdSearch);
-            ResultSet resultSet = executeSelectStatement();
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, UserID);
+            this.preparedStatement.setInt(2, QuizID);
+            ResultSet resultSet = this.executeSelectStatement();
             while (resultSet.next()) {
-                int quizId = resultSet.getInt("quizId");
-                String name = resultSet.getString("name");
-                int quizPoints = resultSet.getInt("quizPoints");
-                int difficultyId = resultSet.getInt("difficultyId");
-                int courseId = resultSet.getInt("courseId");
-                var difficulty = difficultyDao.getById(difficultyId);
-                var course = courseDao.getById(courseId);
-                var questionInQuizCount = getQuestionsInQuizCount(quizId);
-                Quiz quiz = new Quiz(quizId, name, quizPoints, course, difficulty, questionInQuizCount);
-                quizzesById.add(quiz);
+                madeQuizCount = resultSet.getInt("AantalGemaakt");
             }
-        } catch (SQLException sqlError) {
-            System.out.println(sqlError.getMessage());
-        }
-        return quizzesById;
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        } return madeQuizCount;
     }
+
+    // methode telt het aantal keer een Quiz is gehaald op basis van UserID en QuizID als input
+    public int getNumberSuccesQuizzes(int UserID, int QuizID) {
+        String sql = "SELECT SUM(Gehaald) AS AantalGehaald FROM QUIZRESULTS WHERE UserID =? AND QuizID =?";
+        int succesQuizCount = 0;
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, UserID);
+            this.preparedStatement.setInt(2, QuizID);
+            ResultSet resultSet = this.executeSelectStatement();
+            while (resultSet.next()) {
+                succesQuizCount = resultSet.getInt("AantalGehaald");
+            }
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        } return succesQuizCount;
+    }
+
+    // methode haalt de highscore op van een gemaakte quiz op basis van UserID en QuizID als input
+    public int getQuizHighscore(int UserID, int QuizID) {
+        String sql = "SELECT MAX(Score) AS HighScore FROM QUIZRESULTS WHERE UserID =? AND QuizID =?";
+        int quizHighscore = 0;
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, UserID);
+            this.preparedStatement.setInt(2, QuizID);
+            ResultSet resultSet = this.executeSelectStatement();
+            while (resultSet.next()) {
+                quizHighscore = resultSet.getInt("HighScore");
+            }
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        } return quizHighscore;
+    }
+
 }

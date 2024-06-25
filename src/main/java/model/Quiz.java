@@ -36,6 +36,7 @@ public class Quiz {
         this.questionsInQuizCount = questionsInQuizCount;
     }
 
+    // aparte constructor om questionsInQuizCount mee te nemen:
     public Quiz(int quizId, String name, int quizPoints, Course course, Difficulty difficulty) {
         this.quizId = quizId;
         this.name = name;
@@ -45,7 +46,7 @@ public class Quiz {
         this.questionsInQuizCount = 0;
     }
 
-    // getters en setters
+    // getters en setters:
     public int getQuizId() {
         return quizId;
     }

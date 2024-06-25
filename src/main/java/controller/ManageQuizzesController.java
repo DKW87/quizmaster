@@ -2,6 +2,7 @@ package controller;
 
 import database.mysql.DBAccess;
 import database.mysql.QuizDAO;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,9 +47,9 @@ public class ManageQuizzesController {
     @FXML
     public TableColumn<Quiz, String> difficultyColumn;
     @FXML
-    public TableColumn<Quiz, String> passMarkColumn;
+    public TableColumn<Quiz, Integer> passMarkColumn;
     @FXML
-    public TableColumn<Quiz, String> numberQuestionsColumn;
+    public TableColumn<Quiz, Integer> numberQuestionsColumn;
 
 
     // setup bij openen van het QuizList scherm waarbij de bestaande Quizes op basis van ingelogde userID uit de DB worden gehaald.
@@ -123,9 +124,9 @@ public class ManageQuizzesController {
         difficultyColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getQuizDifficulty().getName()));
         numberQuestionsColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(String.valueOf(cellData.getValue().getQuestionsInQuizCount())));
+                new SimpleIntegerProperty(cellData.getValue().getQuestionsInQuizCount()).asObject());
         passMarkColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(String.valueOf(cellData.getValue().getQuizPoints())));
+                new SimpleIntegerProperty(cellData.getValue().getQuizPoints()).asObject());
         quizTable.getSelectionModel().selectFirst();
     }
 
