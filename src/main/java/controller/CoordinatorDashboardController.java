@@ -52,9 +52,7 @@ public class CoordinatorDashboardController {
 
     public void setup() {
         List<Course> courseView = courseDao.getCoursesByCoordinator(Main.getUserSession().getUser().getUserId());
-        System.out.println(courseView.get(0).getName());
         courseList.getItems().setAll(courseView);
-
         // Listener for course selection
         courseList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {

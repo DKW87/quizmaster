@@ -39,12 +39,12 @@ public class StudentFeedbackController {
     private ListView<QuizResult> feedbackList;
 
 
-    public void setup(QuizResult quizResult) {
-        List<QuizResult> quizResults = quizResultDAO.getResultsByStudent(quizResult.getStudent().getUserId());
-        for (QuizResult quizResultsOutput : quizResults) {
-            quizResultTable.getItems().add(quizResultsOutput);
-        }
+    public void setup() {
+        List<QuizResult> quizResults = quizResultDAO.getResultsByStudent(Main.getUserSession().getUser().getUserId());
+        System.out.println("Student ID =    "  + Main.getUserSession().getUser().getUserId());
+        System.out.println("Size of quizResults   " + quizResults.size());
         generateQuizResultTable();
+        quizResultTable.getItems().addAll(quizResults);
     }
 
     public void doMenu() {

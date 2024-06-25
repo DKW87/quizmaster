@@ -35,9 +35,10 @@ public class QuizResultDAO extends AbstractDAO {
      */
     public List<QuizResult> getResultsByStudent(int studentId) {
         List<QuizResult> quizResultList = new ArrayList<>();
-        String sql = "SELECT * FROM Result WHERE userId = ? order by date;";
+        String sql = "SELECT * FROM Result WHERE userId = ? order by date DESC;";
         try {
             this.setupPreparedStatement(sql);
+            preparedStatement.setInt(1, studentId);
             ResultSet resultSet = executeSelectStatement();
             while (resultSet.next()) {
                 var quizResult = createQuizResultFromResultSet(resultSet);
@@ -46,9 +47,7 @@ public class QuizResultDAO extends AbstractDAO {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
         return quizResultList;
-
     }
 
     /**
