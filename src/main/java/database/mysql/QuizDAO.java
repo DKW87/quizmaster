@@ -216,5 +216,55 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
         return quizzes;
     }
 
+    // methode telt het aantal keer een Quiz is gemaakt op basis van UserID en QuizID als input
+    public int getNumberMadeQuizzes(int UserID, int QuizID) {
+        String sql = "SELECT COUNT(QuizID) AS AantalGemaakt FROM QUIZRESULTS WHERE UserID =? AND QuizID =?";
+        int madeQuizCount = 0;
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, UserID);
+            this.preparedStatement.setInt(2, QuizID);
+            ResultSet resultSet = this.executeSelectStatement();
+            while (resultSet.next()) {
+                madeQuizCount = resultSet.getInt("AantalGemaakt");
+            }
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        } return madeQuizCount;
+    }
+
+    // methode telt het aantal keer een Quiz is gehaald op basis van UserID en QuizID als input
+    public int getNumberSuccesQuizzes(int UserID, int QuizID) {
+        String sql = "SELECT SUM(Gehaald) AS AantalGehaald FROM QUIZRESULTS WHERE UserID =? AND QuizID =?";
+        int succesQuizCount = 0;
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, UserID);
+            this.preparedStatement.setInt(2, QuizID);
+            ResultSet resultSet = this.executeSelectStatement();
+            while (resultSet.next()) {
+                succesQuizCount = resultSet.getInt("AantalGehaald");
+            }
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        } return succesQuizCount;
+    }
+
+    // methode haalt de highscore op van een gemaakte quiz op basis van UserID en QuizID als input
+    public int getQuizHighscore(int UserID, int QuizID) {
+        String sql = "SELECT MAX(Score) AS HighScore FROM QUIZRESULTS WHERE UserID =? AND QuizID =?";
+        int quizHighscore = 0;
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, UserID);
+            this.preparedStatement.setInt(2, QuizID);
+            ResultSet resultSet = this.executeSelectStatement();
+            while (resultSet.next()) {
+                quizHighscore = resultSet.getInt("HighScore");
+            }
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        } return quizHighscore;
+    }
 
 }

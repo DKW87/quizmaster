@@ -42,7 +42,23 @@ public class LauncherTestRob {
 
         System.out.println(testQuiz);
 
+        System.out.println();
+        System.out.println("-----test aantal keer gemaakt" );
+        int aantalGemaakt;
+        aantalGemaakt =quizDAO.getNumberMadeQuizzes(206,1);
+        System.out.println(aantalGemaakt);
 
+        System.out.println();
+        System.out.println("-----test aantal keer gehaald" );
+        int aantalGehaald;
+        aantalGehaald =quizDAO.getNumberSuccesQuizzes(206,1);
+        System.out.println(aantalGehaald);
+
+        System.out.println();
+        System.out.println("-----test highscore" );
+        int highscore;
+        highscore =quizDAO.getQuizHighscore(206,1);
+        System.out.println(highscore);
 
 
 
