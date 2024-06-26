@@ -1,5 +1,6 @@
 package controller;
 
+import database.couchdb.QuizResultCouchDBDAO;
 import database.mysql.QuestionDAO;
 import database.mysql.QuizResultDAO;
 import javafx.fxml.FXML;
@@ -40,6 +41,7 @@ public class FillOutQuizController {
     private int currentQuestionIndex = 0;
     private final QuestionDAO questionDAO;
     private final QuizResultDAO quizResultDAO;
+    private  final QuizResultCouchDBDAO quizResultCouchDBDAO;
     private Quiz currentQuiz;
     private List<Question> questionList;
     private int[] pointsEarned;
@@ -48,6 +50,7 @@ public class FillOutQuizController {
     public FillOutQuizController() {
         questionDAO = new QuestionDAO(Main.getdBaccess());
         quizResultDAO = new QuizResultDAO(Main.getdBaccess());
+        quizResultCouchDBDAO = new QuizResultCouchDBDAO(Main.getCouchDBaccess());
     }
 
     public void setup(Quiz quiz) {
@@ -173,6 +176,10 @@ public class FillOutQuizController {
         if (submitQuiz.getResult() == ButtonType.OK) {
             QuizResult quizResult = new QuizResult(0, Main.getUserSession().getUser(), currentQuiz, calculateScore());
             quizResultDAO.storeOne(quizResult);
+            if(Main.getCouchDBMode()) {
+                // Sync quiz results to couchDB when in couchDB mode
+                quizResultCouchDBDAO.syncQuizResultMySQLToCouchDB();
+            }
             Main.getSceneManager().showStudentFeedback(quizResult);
         }
 

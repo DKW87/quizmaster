@@ -46,7 +46,8 @@ class CourseDAOTest {
         // Assert
         List<Course> allCourses = courseDAO.getAll();
         assertEquals(defaultCoursesSize + 1, allCourses.size());
-    }@Test
+    }
+    @Test
     @DisplayName("Test CourseDAO storeOne and bulkCreate")
     void getCoursesByCoordinator() throws SQLException {
         int coordinatorId = 26;

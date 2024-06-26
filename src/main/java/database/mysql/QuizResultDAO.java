@@ -25,6 +25,22 @@ public class QuizResultDAO extends AbstractDAO {
         super(dbAccess);
     }
 
+    public List<QuizResult> getAllResults() {
+        List<QuizResult> quizResultList = new ArrayList<>();
+        String sql = "SELECT * FROM Result   order by date DESC;";
+        try {
+            this.setupPreparedStatement(sql);
+            ResultSet resultSet = executeSelectStatement();
+            while (resultSet.next()) {
+                var quizResult = createQuizResultFromResultSet(resultSet);
+                quizResultList.add(quizResult);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return quizResultList;
+    }
+
 
     /**
      * Retrieves a list of QuizResults for a specific student based on the provided studentId.
@@ -104,6 +120,13 @@ public class QuizResultDAO extends AbstractDAO {
                 quizResultDTO.getDate()
         );
     }
+    public QuizResultDTO convertQuizResultToQuizResultDTO(QuizResult qr) {
+        return new QuizResultDTO(qr.getResultId(),
+                qr.getStudent().getUserId(),
+                qr.getQuiz().getQuizId(),
+                qr.getScore()
+        );
+    }
 
     private QuizResult createQuizResultFromResultSet(ResultSet resultSet) throws SQLException {
         LocalDateTime date = resultSet.getTimestamp("date").toLocalDateTime();
@@ -122,5 +145,6 @@ public class QuizResultDAO extends AbstractDAO {
         preparedStatement.setInt(4, quizResult.getScore());
 
     }
+
 
 }

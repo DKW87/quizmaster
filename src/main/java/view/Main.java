@@ -18,10 +18,12 @@ public class Main extends Application {
     private static CouchDBaccess couchDBaccess = null;
     private static UserSession userSession = null;
 
-    private static  boolean TEST_MODE = false;
+    private static  boolean TEST_MODE = true;
+    // ? for couchdb mode
+    private static  boolean COUCHDB_MODE = true;
 
     public static void main(String[] args) {
-    //    TEST_MODE = false;
+        TEST_MODE = false;
         launch(args);
     }
 
@@ -89,5 +91,8 @@ public class Main extends Application {
     }
     public static boolean getTestMode() {
         return TEST_MODE;
+    }
+    public static boolean getCouchDBMode() {
+        return COUCHDB_MODE;
     }
 }
