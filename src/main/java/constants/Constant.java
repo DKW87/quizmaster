@@ -19,6 +19,10 @@ public class Constant {
     public static  final String DB_NAME = "zbakkumm";
     public static  final String DB_USER = "bakkumm";
     public static  final String DB_PASS = "1J.cINqCPBBcHJ";
+    // ? Test Database constants
+    public static  final String TEST_DB_NAME = "QuizMaster";
+    public static  final String TEST_DB_USER = "userQuizMaster";
+    public static  final String TEST_DB_PASS = "pwQuizMaster";
 
     // ? couchDB constants
     public static  final String COUCH_DB_NAME = "results";

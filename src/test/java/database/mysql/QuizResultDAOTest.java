@@ -25,16 +25,21 @@ class QuizResultDAOTest {
     @Test
     @DisplayName("Test QuizResultDAO storeOne and getStudentResultsByQuizId")
     void storeOneAndgetStudentResults() {
+        int defaultResultsSize = quizResultDAO.getAllResults().size();
         int defaultResultsByQuizSize = quizResultDAO.getStudentResultsByQuizId(1,1).size();
         int defaultResultsByStudentSize = quizResultDAO.getResultsByStudent(1).size();
         QuizResult quizResult = new QuizResult(0,userDAO.getById(1),quizDAO.getById(1),12);
         quizResultDAO.storeOne(quizResult);
         int resultsByQuizSize = quizResultDAO.getStudentResultsByQuizId(1,1).size();
         int resultsByStudentSize = quizResultDAO.getStudentResultsByQuizId(1,1).size();
+        int resultsSize = quizResultDAO.getAllResults().size();
         assertEquals(defaultResultsByQuizSize+1,resultsByQuizSize);
         assertEquals(defaultResultsByStudentSize+1,resultsByStudentSize);
+        assertEquals(defaultResultsSize+1,resultsSize);
 
-    };@Test
+    };
+
+    @Test
     @DisplayName("Test convertQuizResultDTOToQuizResult")
     void convertQuizResultDTOToQuizResult() {
         QuizResultDTO quizResultDTO = new QuizResultDTO(1,1,1,12);
@@ -43,6 +48,16 @@ class QuizResultDAOTest {
         assertEquals(quizResultDTO.getStudentId(),quizResult.getStudent().getUserId());
         assertEquals(quizResultDTO.getScore(),quizResult.getScore());
         assertEquals(quizResultDTO.getResultId(),quizResult.getResultId());
+
+    }; @Test
+    @DisplayName("Test convertQuizResultToQuizResultDTO")
+    void convertQuizResultToQuizResultDTO() {
+        QuizResult quizResult = new QuizResult(1,userDAO.getById(1),quizDAO.getById(1),12);
+        QuizResultDTO quizResultDTO = quizResultDAO.convertQuizResultToQuizResultDTO(quizResult);
+        assertEquals(quizResult.getQuiz().getQuizId(),quizResultDTO.getQuizId());
+        assertEquals(quizResult.getStudent().getUserId(),quizResultDTO.getStudentId());
+        assertEquals(quizResult.getScore(),quizResultDTO.getScore());
+        assertEquals(quizResult.getResultId(),quizResultDTO.getResultId());
 
     };
 

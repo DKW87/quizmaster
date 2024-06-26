@@ -18,10 +18,12 @@ public class Main extends Application {
     private static CouchDBaccess couchDBaccess = null;
     private static UserSession userSession = null;
 
-    private static  boolean TEST_MODE = false;
+    private static  boolean TEST_MODE = true;
+    // ? for couchdb mode
+    private static  boolean COUCHDB_MODE = true;
 
     public static void main(String[] args) {
-    //    TEST_MODE = false;
+        TEST_MODE = false;
         launch(args);
     }
 
@@ -51,7 +53,7 @@ public class Main extends Application {
             // Create an instance of the DBAccess class
             dBaccess = new DBAccess(DB_NAME, DB_USER, DB_PASS);
             if (TEST_MODE) {
-                dBaccess = new DBAccess("QuizMaster", "userQuizMaster", "pwQuizMaster");
+                dBaccess = new DBAccess(TEST_DB_NAME, TEST_DB_USER, TEST_DB_PASS);
             }
             dBaccess.openConnection();
         }
@@ -89,5 +91,8 @@ public class Main extends Application {
     }
     public static boolean getTestMode() {
         return TEST_MODE;
+    }
+    public static boolean getCouchDBMode() {
+        return COUCHDB_MODE;
     }
 }

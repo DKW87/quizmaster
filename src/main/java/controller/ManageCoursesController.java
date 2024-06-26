@@ -62,9 +62,6 @@ public class ManageCoursesController {
         this.selectedCourse = selectedCourse;
     }
 
-
-
-
     public void setup() {
         List<Course> courses = courseDao.getAll();
          // set up table data

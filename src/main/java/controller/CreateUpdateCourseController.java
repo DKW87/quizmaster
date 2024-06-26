@@ -25,6 +25,8 @@ public class CreateUpdateCourseController {
     private final UserDAO userDao = new UserDAO(dbAccess);
     private final CourseDAO courseDao = new CourseDAO(dbAccess);
 
+    private final int COORDINATOR_ROL_ID = 2;
+
     @FXML
     public Button saveButton;
     @FXML
@@ -103,7 +105,8 @@ public class CreateUpdateCourseController {
      *
      */
     private void setupCourseCoordinatorComboBox(){
-        var coordinators = userDao.getByRoleID(2);
+        var coordinators = userDao.getByRoleID(COORDINATOR_ROL_ID);
+
         coordinatorComboBox.getItems()
                 .addAll(FXCollections.observableArrayList(coordinators));
         // Custom cell factory to display coordinator name

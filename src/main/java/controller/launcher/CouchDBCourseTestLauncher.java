@@ -8,6 +8,7 @@ import view.Main;
 
 import java.util.List;
 
+import static constants.Constant.*;
 import static utils.Util.convertCsvToArray;
 import static utils.Util.generateCsvListToCourses;
 
@@ -18,7 +19,8 @@ import static utils.Util.generateCsvListToCourses;
  */
 public class CouchDBCourseTestLauncher {
 
-    private static final CouchDBaccess couchDBaccess= Main.getCouchDBaccess();
+    private static final CouchDBaccess couchDBaccess = new CouchDBaccess("courses",
+            COUCH_DB_USER, COUCH_DB_PASS);
     private static final DBAccess dbAccess= Main.getdBaccess();
 
     private static final CourseCouchDBDAO courseCouchDBDAO = new CourseCouchDBDAO(couchDBaccess);
@@ -26,10 +28,10 @@ public class CouchDBCourseTestLauncher {
 
     public static void main(String[] args) {
 
-        //saveCourses(buildCourseListCvs());
-        //saveCourses(buildCourseListDb());
-        //deleteCourses(courseCouchDBDAO.getAllCourses());
-        // System.out.println( courseCouchDBDAO.getCourseByName("Spaans B"));
+//        saveCourses(buildCourseListCvs());
+        saveCourses(buildCourseListDb());
+        deleteCourses(courseCouchDBDAO.getAllCourses());
+
 
     }
 

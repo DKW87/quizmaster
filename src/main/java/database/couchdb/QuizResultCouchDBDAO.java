@@ -88,4 +88,21 @@ public class QuizResultCouchDBDAO extends AbstractCouchDBDAO {
         }
         return results  ;
     }
+
+    /**
+     * Deletes all quiz results by iterating through each document and deleting it.
+     */
+    public void deleteAllQuizResults() {
+        for (JsonObject jsonObject : getAllDocuments()) {
+            deleteDocument(jsonObject.get("_id").getAsString(), jsonObject.get("_rev").getAsString());
+        }
+    }
+
+    public void syncQuizResultMySQLToCouchDB() {
+        deleteAllQuizResults();
+        List<QuizResult> quizResults = quizResultDAO.getAllResults();
+        for (QuizResult qr : quizResults) {
+            saveQuizResult(quizResultDAO.convertQuizResultToQuizResultDTO(qr));
+        }
+    }
 }
