@@ -57,15 +57,16 @@ public class CoordinatorDashboardController {
         courseList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 try {
+                    questionList.getItems().clear(); // clear questionList if new Course selected after loading questionList
                     loadQuizForCourse(newSelection.getCourseId());
                 } catch (SQLException sqlErrror) {
                     System.out.println("Error in listener for course  " + sqlErrror.getMessage()
-                    + sqlErrror.getErrorCode());
+                            + sqlErrror.getErrorCode());
                 }
             }
         });
         // Listener for quiz selection
-       quizList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        quizList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 try {
                     loadQuestionForQuiz(newSelection.getQuizId());

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -58,10 +59,22 @@
                </HBox>
                <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                   <children>
-                      <Button mnemonicParsing="false" onAction="#doNewQuiz" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Nieuwe quiz" textFill="WHITE" />
-                      <Button mnemonicParsing="false" onAction="#doEditQuiz" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Wijzig quiz" textFill="WHITE" />
-                      <Button mnemonicParsing="false" onAction="#doNewQuestion" prefHeight="28.0" prefWidth="92.0" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Nieuwe vraag" textFill="WHITE" />
-                      <Button mnemonicParsing="false" onAction="#doEditQuestion" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Wijzig vraag" textFill="WHITE" />
+                      <Button mnemonicParsing="false" onAction="#doNewQuiz" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Nieuwe quiz" textFill="WHITE">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor></Button>
+                      <Button mnemonicParsing="false" onAction="#doEditQuiz" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Wijzig quiz" textFill="WHITE">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor></Button>
+                      <Button mnemonicParsing="false" onAction="#doNewQuestion" prefHeight="28.0" prefWidth="92.0" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Nieuwe vraag" textFill="WHITE">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor></Button>
+                      <Button mnemonicParsing="false" onAction="#doEditQuestion" style="-fx-background-color: #154360; -fx-border-color: #154360;" text="Wijzig vraag" textFill="WHITE">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor></Button>
                   </children>
                   <VBox.margin>
                      <Insets top="10.0" />
@@ -71,6 +84,9 @@
                   <font>
                      <Font size="14.0" />
                   </font>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
                </Button>
             </children>
             <padding>

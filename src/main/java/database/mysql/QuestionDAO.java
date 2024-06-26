@@ -49,31 +49,6 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
         return questions;
     }
 
-    public List<Question> getAllByQuizId(int quizId) {
-        List<Question> questions = new ArrayList<Question>();
-        String sql = "SELECT * FROM Question WHERE quizId = ?";
-        try {
-            this.setupPreparedStatement(sql);
-            this.preparedStatement.setInt(1, quizId);
-            ResultSet resultSet = this.executeSelectStatement();
-            while (resultSet.next()) {
-                int questionId = resultSet.getInt("questionId");
-                String questionDescription = resultSet.getString("questionDescription");
-                String answerA = resultSet.getString("answerA");
-                String answerB = resultSet.getString("answerB");
-                String answerC = resultSet.getString("answerC");
-                String answerD = resultSet.getString("answerD");
-                Quiz quiz = quizdao.getById(quizId);
-                Question question = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
-                question.setQuestionId(questionId);
-                questions.add(question);
-            }
-        } catch (SQLException error) {
-            System.out.println("The following exception occurred: " + error.getErrorCode());
-        }
-        return questions;
-    }
-
     @Override
     public Question getById(int id) {
         Question question = null;
@@ -128,33 +103,6 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
         return question;
     }
 
-    public Question checkUnique(Question question) {
-        String sql = "SELECT * FROM Question WHERE questionDescription = ? AND answerA = ? AND quizId = ?";
-        try {
-            this.setupPreparedStatement(sql);
-            this.preparedStatement.setString(1, question.getQuestionDescription());
-            this.preparedStatement.setString(2, question.getAnswerA());
-            this.preparedStatement.setInt(3, question.getQuiz().getQuizId());
-            ResultSet resultSet = this.executeSelectStatement();
-            while (resultSet.next()) {
-                int questionId = resultSet.getInt("questionId");
-                String questionDescription = resultSet.getString("questionDescription");
-                String answerA = resultSet.getString("answerA");
-                String answerB = resultSet.getString("answerB");
-                String answerC = resultSet.getString("answerC");
-                String answerD = resultSet.getString("answerD");
-                int quizId = resultSet.getInt("quizId");
-                Quiz quiz = quizdao.getById(quizId);
-                Question newQuestion = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
-                newQuestion.setQuestionId(questionId);
-                return newQuestion;
-            }
-        } catch (SQLException error) {
-            System.out.println("The following exception occurred: " + error.getErrorCode());
-        }
-        return null;
-    }
-
     @Override
     public void storeOne(Question question) {
         String sql = "INSERT INTO Question(questionDescription, answerA, answerB, answerC, answerD, quizId) VALUES (?, ?, ?, ?, ?, ?);";
@@ -170,12 +118,6 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
             question.setQuestionId(pKey);
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
-        }
-    }
-
-    public void storeList(List<Question> questions) {
-        for (Question question : questions) {
-            storeOne(question);
         }
     }
 
@@ -208,6 +150,80 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
         }
+    }
+
+    public List<Question> getAllByQuizId(int quizId) {
+        List<Question> questions = new ArrayList<Question>();
+        String sql = "SELECT * FROM Question WHERE quizId = ?";
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, quizId);
+            ResultSet resultSet = this.executeSelectStatement();
+            while (resultSet.next()) {
+                int questionId = resultSet.getInt("questionId");
+                String questionDescription = resultSet.getString("questionDescription");
+                String answerA = resultSet.getString("answerA");
+                String answerB = resultSet.getString("answerB");
+                String answerC = resultSet.getString("answerC");
+                String answerD = resultSet.getString("answerD");
+                Quiz quiz = quizdao.getById(quizId);
+                Question question = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
+                question.setQuestionId(questionId);
+                questions.add(question);
+            }
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        }
+        return questions;
+    }
+
+    public Question checkUnique(Question question) {
+        String sql = "SELECT * FROM Question WHERE questionDescription = ? AND answerA = ? AND quizId = ?";
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setString(1, question.getQuestionDescription());
+            this.preparedStatement.setString(2, question.getAnswerA());
+            this.preparedStatement.setInt(3, question.getQuiz().getQuizId());
+            ResultSet resultSet = this.executeSelectStatement();
+            while (resultSet.next()) {
+                int questionId = resultSet.getInt("questionId");
+                String questionDescription = resultSet.getString("questionDescription");
+                String answerA = resultSet.getString("answerA");
+                String answerB = resultSet.getString("answerB");
+                String answerC = resultSet.getString("answerC");
+                String answerD = resultSet.getString("answerD");
+                int quizId = resultSet.getInt("quizId");
+                Quiz quiz = quizdao.getById(quizId);
+                Question newQuestion = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
+                newQuestion.setQuestionId(questionId);
+                return newQuestion;
+            }
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        }
+        return null;
+    }
+
+    public void storeList(List<Question> questions) {
+        for (Question question : questions) {
+            storeOne(question);
+        }
+    }
+
+    public int countQuestionsInQuiz(int quizId) {
+        final int NUL = 0;
+        int aantal = NUL;
+        String sql = "SELECT COUNT(*) AS Aantal FROM Question WHERE quizId = ?;";
+        try {
+            this.setupPreparedStatement(sql);
+            this.preparedStatement.setInt(1, quizId);
+            ResultSet resultSet = this.executeSelectStatement();
+            if (resultSet.next()) { aantal = resultSet.getInt("Aantal"); }
+            return aantal;
+        } catch (SQLException error) {
+            System.out.println("The following exception occurred: " + error.getErrorCode());
+        }
+        return NUL;
     }
 
 } // class

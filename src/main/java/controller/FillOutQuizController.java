@@ -99,7 +99,7 @@ public class FillOutQuizController {
         checkLastQuestion();
     }
 
-    private void checkLastQuestion() {
+    public void checkLastQuestion() {
         if (currentQuestionIndex == questionList.size() - EEN) {
             markButtonAnswered();
             endOfQuizAlertAndSubmit();
@@ -138,10 +138,10 @@ public class FillOutQuizController {
 
     public void displayQuestionAndAnswers(List<Question> questionList) {
         titleLabel.setText(String.format("Vraag %d/%d:", currentQuestionIndex + EEN, questionList.size()));
-        questionArea.setText(String.valueOf(questionBuilder(questionList.get(currentQuestionIndex))));
+        questionArea.setText(questionBuilder(questionList.get(currentQuestionIndex)));
     }
 
-    public StringBuilder questionBuilder(Question question) {
+    public String questionBuilder(Question question) {
         List<String> answers = shuffleAnswers(question);
         StringBuilder stringBuilder = new StringBuilder();
         String[] labels = {ANTWOORD_A, ANTWOORD_B, ANTWOORD_C, ANTWOORD_D};
@@ -150,7 +150,7 @@ public class FillOutQuizController {
         for (int i = 0; i < answers.size(); i++) {
             stringBuilder.append(labels[i] + answers.get(i) + "\n\n");
         }
-        return stringBuilder;
+        return String.valueOf(stringBuilder);
     }
 
     private List<String> shuffleAnswers(Question question) {
@@ -178,7 +178,7 @@ public class FillOutQuizController {
 
     }
 
-    private int calculateScore() {
+    public int calculateScore() {
         int correctPoints = 0;
 
         for (int i = 0; i < pointsEarned.length; i++) {
@@ -227,6 +227,57 @@ public class FillOutQuizController {
         defaultButtonColor(buttonAnswerB);
         defaultButtonColor(buttonAnswerC);
         defaultButtonColor(buttonAnswerD);
+    }
+
+
+    /* * * * * * * * * * * * * * * * *
+     * Everything down from here is  *
+     *       exclusively             *
+     *   used for testing purposes   *
+     * * * * * * * * * * * * * * * * */
+
+    public void setCurrentQuestionIndex(int newQuestionIndex) {
+        currentQuestionIndex = newQuestionIndex;
+    }
+
+    public void setCurrentQuestionList(Question question) {
+        questionList = new ArrayList<>(1);
+        questionList.add(0,question);
+    }
+
+    public void setStoreAnswersSize(int size) {
+        storeAnswers = new String[size];
+    }
+
+    public void setQuestionArea(String string) {
+        this.questionArea.setText(string);
+    }
+
+    public String getStoredAnswer() {
+        return storeAnswers[currentQuestionIndex];
+    }
+
+    public int getScore() {
+        return pointsEarned[currentQuestionIndex];
+    }
+
+    public boolean getChosenAnswerEqualsAnswerA() {
+        final int BEGIN_INDEX = ANTWOORD_A.length();
+        String[] lines = questionArea.getText().split("\n");
+
+        for (String line : lines) {
+            if (line.startsWith(ANTWOORD_A)) {
+                String chosenAnswer = line.substring(BEGIN_INDEX).trim();
+                if (chosenAnswer.equals(questionList.get(currentQuestionIndex).getAnswerA())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void setPointsEarned(int[] pointsArray) {
+        pointsEarned = pointsArray;
     }
 
 } // class
