@@ -1,5 +1,7 @@
 package controller;
 
+import database.couchdb.CouchDBaccess;
+import database.couchdb.QuestionCouchDBDAO;
 import database.mysql.DBAccess;
 import database.mysql.QuestionDAO;
 import model.*;
@@ -15,51 +17,32 @@ import java.util.List;
  */
 public class DannysTestLauncher {
 
-    private final static DBAccess dbAccess = Main.getdBaccess();
-
+    private final static CouchDBaccess couchDBaccess = new CouchDBaccess("question", "admin", "admin");
+    private final static QuestionCouchDBDAO questionCouchDBDAO = new QuestionCouchDBDAO(couchDBaccess);
     private final static QuestionDAO questionDAO = new QuestionDAO(Main.getdBaccess());
+
 
     public static void main(String[] args) {
 
-        Question question = questionDAO.getById(90);
-        System.out.println(question);
-        question.setQuestionDescription("456");
-        System.out.println(question);
-        System.out.println(question.getQuiz().getQuizId());
-        questionDAO.updateOne(question);
-        Question question2 = questionDAO.getById(90);
-        System.out.println(question2);
-//
-//        String locationQuestionCSV = "Resources/Vragen.csv";
-//        QuestionDAO questionDAO = new QuestionDAO(dbAccess);
-//        Question questionMethodHandler = new Question(null, null, null, null, null, null);
-//
-//
-//        // converts CSV to a string list
-//        List<String> questionsInCsv = questionMethodHandler.convertCsvToList(locationQuestionCSV);
-//
-//        for (String question : questionsInCsv) {
-//            System.out.println(question);
-//        }
-//
-//        // create list of Question objects based on converted CSV
-//        List<Question> listQuestionObjects = questionMethodHandler.convertListToObjects(questionsInCsv);
-//
-//        for (Question question : listQuestionObjects) {
-//            System.out.println(question);
-//        }
-//
-//        // save list of Question objects to DB
-////        questionDAO.storeList(listQuestionObjects); questions already stored in DB
-//
-//        // create list of all Question records in DB
-//        List<Question> remoteQuestions = questionDAO.getAll();
-//        dbAccess.closeConnection();
-//
-//        for (Question question : remoteQuestions) {
-//            System.out.println(question);
-//        }
-//
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+        *  This launcher and QuestionCouchDBDAO serves to demonstrate  *
+        *  my ability to be able to store in and read from my local    *
+        *  CoachDB using NoSQL. This was made for my portfolio.        *
+        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+        // getAll from MySQL and saveAll in NoSQL
+        List<Question> questionsList = new ArrayList<>(questionDAO.getAll());
+        questionCouchDBDAO.saveAllQuestions(questionsList);
+
+        // print result from MySQL
+        System.out.println(questionsList.get(0));
+
+        // Query CouchDB with PK based on 3 unique param: questionDescription, answerA and quizId
+        Question questionFromJSON = questionCouchDBDAO.getAllQuestions(questionsList.get(0).getQuestionDescription(),
+                questionsList.get(0).getAnswerA(), questionsList.get(0).getQuiz().getQuizId());
+
+        // print result from NoSQL
+        System.out.println(questionFromJSON);
 
     } // main
 
