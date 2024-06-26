@@ -2,6 +2,7 @@ package controller;
 
 import database.mysql.DBAccess;
 import database.mysql.QuizDAO;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -26,6 +27,12 @@ import java.util.List;
 
 import static utils.Util.showAlert;
 
+/*
+ * @author Rob JANSEN
+ * @project Quizmaster
+ * @created 21/06/2024 - 11:00
+ */
+
 public class SelectQuizForStudentController {
     private final DBAccess dDacces = Main.getdBaccess();
     private final SceneManager sceneManager = Main.getSceneManager();
@@ -41,13 +48,13 @@ public class SelectQuizForStudentController {
     @FXML
     public TableColumn<Quiz, String> courseColumn;
     @FXML
-    public TableColumn<Quiz, String> numberQuestionsColumn;
+    public TableColumn<Quiz, Integer> numberQuestionsColumn;
     @FXML
-    public TableColumn<Quiz, String> numberMadeColumn;
+    public TableColumn<Quiz, Integer> numberMadeColumn;
     @FXML
-    public TableColumn<Quiz, String> numberSuccesColumn;
+    public TableColumn<Quiz, Integer> numberSuccesColumn;
     @FXML
-    public TableColumn<Quiz, String> highscoreColumn;
+    public TableColumn<Quiz, Integer> highscoreColumn;
 
 
 
@@ -100,36 +107,38 @@ public class SelectQuizForStudentController {
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getQuizDifficulty())));
         courseColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getCourse().getName())));
+
         numberQuestionsColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(String.valueOf(cellData.getValue().getQuestionsInQuizCount())));
-        numberMadeColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Quiz, String>, ObservableValue<String>>() {
+                new SimpleIntegerProperty(cellData.getValue().getQuestionsInQuizCount()).asObject());
+
+        numberMadeColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Quiz, Integer>, ObservableValue<Integer>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Quiz, String> cellData) {
+            public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Quiz, Integer> cellData) {
                 int numberMadeQuizzes = quizDAO.getNumberMadeQuizzes(
                         Main.getUserSession().getUser().getUserId(),
                         cellData.getValue().getQuizId()
                 );
-                return new SimpleStringProperty(String.valueOf(numberMadeQuizzes));
+                return new SimpleIntegerProperty(numberMadeQuizzes).asObject();
             }
         });
-        numberSuccesColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Quiz, String>, ObservableValue<String>>() {
+        numberSuccesColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Quiz, Integer>, ObservableValue<Integer>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Quiz, String> cellData) {
+            public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Quiz, Integer> cellData) {
                 int numberSuccesQuizzes = quizDAO.getNumberSuccesQuizzes(
                         Main.getUserSession().getUser().getUserId(),
                         cellData.getValue().getQuizId()
                 );
-                return new SimpleStringProperty(String.valueOf(numberSuccesQuizzes));
+                return new SimpleIntegerProperty(numberSuccesQuizzes).asObject();
             }
         });
-        highscoreColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Quiz, String>, ObservableValue<String>>() {
+        highscoreColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Quiz, Integer>, ObservableValue<Integer>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Quiz, String> cellData) {
+            public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Quiz, Integer> cellData) {
                 int quizHighscore = quizDAO.getQuizHighscore(
                         Main.getUserSession().getUser().getUserId(),
                         cellData.getValue().getQuizId()
                 );
-                return new SimpleStringProperty(String.valueOf(quizHighscore));
+                return new SimpleIntegerProperty(quizHighscore).asObject();
             }
         });
         quizTableStudent.getSortOrder().add(numberMadeColumn);
