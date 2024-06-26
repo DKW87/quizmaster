@@ -1,6 +1,5 @@
 package database.mysql;
 
-import model.Quiz;
 import model.QuizResult;
 import model.QuizResultDTO;
 
