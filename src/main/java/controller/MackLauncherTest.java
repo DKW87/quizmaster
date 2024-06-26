@@ -6,89 +6,61 @@
 
 package controller;
 
+import com.google.gson.Gson;
+import database.couchdb.CouchDBaccess;
+import database.couchdb.UsersCouchDBDAO;
 import database.mysql.DBAccess;
-import model.User;
+import model.*;
 import database.mysql.UserDAO;
-import database.mysql.RoleDAO;
+import view.Main;
 
 import java.io.IOException;
 import java.util.List;
 
-import static utils.Util.convertListToUsers;
-
 public class MackLauncherTest {
+
+    private final static DBAccess dbAccess = Main.getdBaccess();
+    private static CouchDBaccess couchDBAccess;
+    private static UsersCouchDBDAO usersCouchDBDAO;
 
     public static void main(String[] args) throws IOException {
 
-        DBAccess dbAccess = new DBAccess("zbakkumm", "bakkumm", "1J.cINqCPBBcHJ");
-        dbAccess.openConnection();
+        // Access to local NoSQL DB
+        couchDBAccess = new CouchDBaccess("users", "testadmin", "test");
+        usersCouchDBDAO = new UsersCouchDBDAO(couchDBAccess);
 
-        RoleDAO roleDAO = new RoleDAO(dbAccess);
+        // Retrieving all Users from SQL DB in list allUsersTest
         UserDAO userDAO = new UserDAO(dbAccess);
+        List<User> allUsersTest;
+        allUsersTest = userDAO.getAll();
+        System.out.println("-- All users have been retrieved from SQL DB. --");
 
-        List<User> users = userDAO.getAll();
-        List<User> users2 = userDAO.getByRoleID(2);
-        User user = userDAO.getByName("talmama");
+        // Converting list allUsersTest to JSON
+        Gson gson = new Gson();
+        String jsonUsersTest = gson.toJson(allUsersTest);
+        System.out.println("-- List has been converted to JSON. --");
 
-        System.out.println(user);
+        // JSON to User objects
+        User[] userJsonToUsers = gson.fromJson(jsonUsersTest, User[].class);
 
-
-//        // Small CSV to check import into Java.
-//        String csvFilePath = "resources/gebruikersV6.csv";
-//        List<User> importUsersTest = convertListToUsers(csvFilePath);
-
-        // test print from import above.
-//        for (User user : importUsersTest) {
-//            System.out.println(user.getUserName());
-//            System.out.println(user.getPassword());
-//            System.out.println(user.getFirstName());
-//            System.out.println(user.getInfix());
-//            System.out.println(user.getLastName());
-//            System.out.println(user.getRole());
-//            System.out.println();
-//            System.out.println("----");
-//            System.out.println();
-//        }
-//
-//        for (User user : importUsersTest) {
-//            userDAO.storeOne(user);
-//            System.out.printf("User %s added to DB\n", user.getUserName());
-//        }
-
-
-    }
-
-}
-
-    /*           Role Student = new Role("Student");
-        Student.setRoleId(1);
-        Role Coordinator = new Role("Coordinator");
-        Coordinator.setRoleId(2);
-        Role Docent = new Role("Docent");
-        Docent.setRoleId(3);
-        Role Administrator = new Role("Administrator");
-        Administrator.setRoleId(4);
-        Role functioneelBeheerder = new Role("Functioneel Beheerder");
-        functioneelBeheerder.setRoleId(5);
-
-        String csvFilePath = "resources/GebruikersTest.csv";
-        List<User> userListTest = new ArrayList<>();
-
-        User talmama = new User("talmama", "passwordTest123", "Mariella", "Talman", Student);
-        User knobbse = new User("knobbse", "pw123", "Selvi", "Knobben", Coordinator);
-        User engelya = new User("engelya", "jBY4mjzG07", "Yaniek", "Van", "Engelenburg", Student);
-        User goddina = new User("goddina", "T84$br", "Nathaly", "Goddijn", Administrator);
-        userListTest.add(talmama);
-        userListTest.add(knobbse);
-        userListTest.add(engelya);
-        userListTest.add(goddina);
-
-        for (User user : userListTest) {
-            System.out.println(user.getUserName());
-            System.out.println(user.getFirstName());
-            System.out.println(user.getInfix());
-            System.out.println(user.getLastName());
-            System.out.println(user.getRole());
+        // Saving all users in list in NoSQL DB
+        for (User user : userJsonToUsers) {
+            usersCouchDBDAO.saveUser(user);
         }
+
+        // Retrieving a user with Doc ID
+        System.out.println("-- User retrieval from ID: --");
+        User getUserFromId = usersCouchDBDAO.getUserByDocId("fca8dba169924b708abbfd3917bde91c");
+        System.out.println(getUserFromId + "\n");
+
+        // Retrieving user from a userName
+        System.out.println("-- User retrieval from userName: --");
+        User getUserFromUserName = usersCouchDBDAO.getUserByUserName("bongasa");
+        System.out.println(getUserFromUserName + "\n");
+
+        // Retrieving all users in the NoSQL DB.
+        System.out.println("-- All users retrieval: --");
+        List<User> allUsersRetrieved = usersCouchDBDAO.getAllUsers();
+            System.out.println(allUsersRetrieved+ "\n");
     }
-    */
+}
