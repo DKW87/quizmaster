@@ -46,6 +46,15 @@ class CourseDAOTest {
         // Assert
         List<Course> allCourses = courseDAO.getAll();
         assertEquals(defaultCoursesSize + 1, allCourses.size());
+    }@Test
+    @DisplayName("Test CourseDAO storeOne and bulkCreate")
+    void getCoursesByCoordinator() throws SQLException {
+        int coordinatorId = 26;
+        int defaultCoursesSize = courseDAO.getCoursesByCoordinator(coordinatorId).size();
+        Course course = new Course("TestCourse-" + LocalDateTime.now(), userDAO.getById(coordinatorId),difficultyDAO.getById(1)) ;
+        courseDAO.storeOne(course);
+        List<Course> allCourses = courseDAO.getCoursesByCoordinator(coordinatorId);
+        assertEquals(defaultCoursesSize + 1, allCourses.size());
     }
     @Test
     @DisplayName("Test CourseDAO storeOne check unique name")
@@ -76,7 +85,8 @@ class CourseDAOTest {
         // Assert
         assertTrue(result);
 
-    }@Test
+    }
+    @Test
     @DisplayName("Test CourseDAO deleteOneById with parent key")
     void deleteOneByIdUnSuccess() {
         Course testCourse = courseDAO.getById(1);
@@ -92,7 +102,6 @@ class CourseDAOTest {
         assertEquals(expectedMessage, actualMessage);
 
     }
-
 
 
     @Test
