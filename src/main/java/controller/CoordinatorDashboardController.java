@@ -40,8 +40,7 @@ public class CoordinatorDashboardController {
                     questionList.getItems().clear(); // clear questionList if new Course selected after loading questionList
                     loadQuizForCourse(newSelection.getCourseId());
                 } catch (SQLException sqlErrror) {
-                    System.out.println("Error in listener for course  " + sqlErrror.getMessage()
-                            + sqlErrror.getErrorCode());
+                    System.out.println("Error in listener for course  " + sqlErrror.getMessage());
                 }
             }
         });
@@ -80,13 +79,13 @@ public class CoordinatorDashboardController {
     }
 
     private void loadQuizForCourse(int courseId) throws SQLException {
-        quizList.getItems().clear(); // This will clear previous quizzes once a new course is selected I think
+        quizList.getItems().clear();
         List<Quiz> quizzes = quizDao.getAllQuizzesByCourseId(courseId);
         quizList.getItems().addAll(quizzes);
     }
 
     private void loadQuestionForQuiz(int quizId) throws SQLException {
-        questionList.getItems().clear(); // This will clear previous quizzes once a new course is selected I think
+        questionList.getItems().clear();
         List<Question> questions = questionDAO.getAllByQuizId(quizId);
         questionList.getItems().addAll(questions);
     }
