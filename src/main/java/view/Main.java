@@ -18,10 +18,10 @@ public class Main extends Application {
     private static CouchDBaccess couchDBaccess = null;
     private static UserSession userSession = null;
 
-    private static  boolean TEST_MODE = true;
+    private static  boolean TEST_MODE = false;
 
     public static void main(String[] args) {
-        TEST_MODE = false;
+    //    TEST_MODE = false;
         launch(args);
     }
 
