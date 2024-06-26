@@ -39,9 +39,9 @@ public class StudentFeedbackController {
 
     public void setup(QuizResult quizResult) {
         feedbackLabel.setText(String.format("Feedback voor quiz <%s>", quizResult.getQuiz().getQuizName()));
-        List<QuizResult> quizResults = quizResultDAO.getResultsByStudent(Main.getUserSession().getUser().getUserId());
-        System.out.println("Student ID =    "  + Main.getUserSession().getUser().getUserId());
-        System.out.println("Size of quizResults   " + quizResults.size());
+        List<QuizResult> quizResults = quizResultDAO.
+                getStudentResultsByQuizId(quizResult.getQuiz().getQuizId(),
+                        Main.getUserSession().getUser().getUserId());
         generateQuizResultTable();
         quizResultTable.getItems().addAll(quizResults);
         quizResultTable.getSelectionModel().selectFirst();
@@ -60,7 +60,7 @@ public class StudentFeedbackController {
         quizNameColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getQuiz().getQuizName())));
         completeDateColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(String.valueOf(cellData.getValue().getDate())));
+                new SimpleStringProperty(String.valueOf(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").format(cellData.getValue().getDate()))));
         scoredPointsColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getScore())));
     }
