@@ -120,6 +120,12 @@ public class QuizResultDAO extends AbstractDAO {
                 quizResultDTO.getDate()
         );
     }
+    /**
+     * Converts a QuizResult object to a QuizResultDTO object.
+     *
+     * @param  qr  the QuizResult object to be converted
+     * @return     the converted QuizResultDTO object
+     */
     public QuizResultDTO convertQuizResultToQuizResultDTO(QuizResult qr) {
         return new QuizResultDTO(qr.getResultId(),
                 qr.getStudent().getUserId(),
@@ -128,6 +134,13 @@ public class QuizResultDAO extends AbstractDAO {
         );
     }
 
+    /**
+     * Creates a QuizResult object from a ResultSet.
+     *
+     * @param  resultSet  the ResultSet containing the data to create the QuizResult object
+     * @return            the created QuizResult object
+     * @throws SQLException if there is an error retrieving data from the ResultSet
+     */
     private QuizResult createQuizResultFromResultSet(ResultSet resultSet) throws SQLException {
         LocalDateTime date = resultSet.getTimestamp("date").toLocalDateTime();
         int userId = resultSet.getInt("userId");
@@ -138,6 +151,12 @@ public class QuizResultDAO extends AbstractDAO {
         var quiz = quizDao.getById(quizId);
         return new QuizResult(resultId, user, quiz, score, date);
     }
+    /**
+     * Sets the values of a PreparedStatement object with the data from a QuizResult object.
+     *
+     * @param  quizResult  the QuizResult object containing the data to be set
+     * @throws SQLException if there is an error setting the values in the PreparedStatement
+     */
     private void setQuizResultToQuery(QuizResult quizResult) throws SQLException {
         preparedStatement.setTimestamp(1, java.sql.Timestamp.valueOf(quizResult.getDate()));
         preparedStatement.setInt(2, quizResult.getStudent().getUserId());

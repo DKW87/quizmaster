@@ -53,7 +53,7 @@ public class Main extends Application {
             // Create an instance of the DBAccess class
             dBaccess = new DBAccess(DB_NAME, DB_USER, DB_PASS);
             if (TEST_MODE) {
-                dBaccess = new DBAccess("QuizMaster", "userQuizMaster", "pwQuizMaster");
+                dBaccess = new DBAccess(TEST_DB_NAME, TEST_DB_USER, TEST_DB_PASS);
             }
             dBaccess.openConnection();
         }
