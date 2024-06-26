@@ -1,17 +1,11 @@
 package controller;
 
-import database.couchdb.QuizResultCouchDBDAO;
 import database.mysql.DBAccess;
-import database.mysql.QuizDAO;
 import database.mysql.QuizResultDAO;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import model.Quiz;
 import model.QuizResult;
-import model.User;
 import view.Main;
 
 import java.time.format.DateTimeFormatter;

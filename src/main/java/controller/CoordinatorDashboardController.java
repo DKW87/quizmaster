@@ -4,12 +4,8 @@ import database.mysql.CourseDAO;
 import database.mysql.DBAccess;
 import database.mysql.QuestionDAO;
 import database.mysql.QuizDAO;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import model.*;
 import view.Main;
 import view.SceneManager;
@@ -27,27 +23,11 @@ public class CoordinatorDashboardController {
     private final QuestionDAO questionDAO = new QuestionDAO(dbAccess);
 
     @FXML
-    public Button newQuizButton;
-    @FXML
-    public Button changeQuizButton;
-    @FXML
-    public Button newQuestionButton;
-    @FXML
-    public Button changeQuestionButton;
-    @FXML
-    public Button menuButton;
-    @FXML
     public ListView<Course> courseList;
     @FXML
     public ListView<Quiz> quizList;
     @FXML
     public ListView<Question> questionList;
-    @FXML
-    public TableColumn<Course, String> courseNameColumn;
-    @FXML
-    public TableColumn<Quiz, String> quizNameColumn;
-    @FXML
-    public TableColumn<Question, String> questionColumn;
 
 
     public void setup() {
@@ -97,19 +77,6 @@ public class CoordinatorDashboardController {
 
     public void doMenu() {
         sceneManager.showWelcomeScene();
-    }
-
-    // Method that fills the Course Table based on userId.
-    private void generateCourseTable() {
-        courseDao.getCoursesByCoordinator(Main.getUserSession().getUser().getUserId());
-        quizNameColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(String.valueOf(cellData.getValue().getCourse().getCourseId()))); // Methode in CourseDAO maken getByName
-    }
-
-    // Method that fills the Quiz Table.
-    private void generateQuizTable() {
-        quizNameColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(String.valueOf(cellData.getValue().getQuizName())));
     }
 
     private void loadQuizForCourse(int courseId) throws SQLException {
