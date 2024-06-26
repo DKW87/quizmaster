@@ -21,7 +21,7 @@
                     </font>
                 </Label>
                <Label fx:id="testingNumberOfPoints" />
-                <TextArea fx:id="questionArea" disable="true" prefHeight="301.0" prefWidth="538.0" promptText="Deze textarea bevat de vraag en de vier antwoorden." wrapText="true" />
+                <TextArea fx:id="questionArea" editable="false" prefHeight="301.0" prefWidth="538.0" promptText="Deze textarea bevat de vraag en de vier antwoorden." wrapText="true" />
                <HBox prefHeight="118.0" prefWidth="538.0">
                   <children>
                      <HBox prefHeight="112.0" prefWidth="449.0" spacing="10.0">
