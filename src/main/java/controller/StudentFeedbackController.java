@@ -35,16 +35,16 @@ public class StudentFeedbackController {
     private TableView<QuizResult> quizResultTable;
     @FXML
     private Label feedbackLabel;
-    @FXML
-    private ListView<QuizResult> feedbackList;
 
 
-    public void setup() {
+    public void setup(QuizResult quizResult) {
+        feedbackLabel.setText(String.format("Feedback voor quiz <%s>", quizResult.getQuiz().getQuizName()));
         List<QuizResult> quizResults = quizResultDAO.getResultsByStudent(Main.getUserSession().getUser().getUserId());
         System.out.println("Student ID =    "  + Main.getUserSession().getUser().getUserId());
         System.out.println("Size of quizResults   " + quizResults.size());
         generateQuizResultTable();
         quizResultTable.getItems().addAll(quizResults);
+        quizResultTable.getSelectionModel().selectFirst();
     }
 
     public void doMenu() {
