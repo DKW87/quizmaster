@@ -21,6 +21,8 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
     private final DifficultyDAO difficultyDao = new DifficultyDAO(dbAccess);
     private final CourseDAO courseDao = new CourseDAO(dbAccess);
 
+
+    // methode om 1 quiz op te slaan in de DB
     @Override
     public void storeOne(Quiz quiz) {
         String sql = "INSERT INTO Quiz(name, difficultyId, quizPoints,courseId) VALUES (?, ?, ? ,?)";
@@ -37,7 +39,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
         }
     }
 
-
+    // methode om alle Quizzen uit de DB op te halen
     @Override
     public List<Quiz> getAll() {
         List<Quiz> quizzes = new ArrayList<>();
@@ -65,7 +67,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
 
     }
 
-
+    // methode om een Quiz uit de DB te halen op basis van een quizID
     @Override
     public Quiz getById(int quizId) {
         Quiz quiz = null;
@@ -91,6 +93,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
         return quiz;
     }
 
+    // methode om een Quiz uit de DB te halen op basis van de Quiznaam
     @Override
     public Quiz getByName(String name) {
         Quiz quiz = null;
@@ -116,6 +119,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
         return quiz;
     }
 
+    // methode om een bestaande Quiz te updaten in de DB
     @Override
     public void updateOne(Quiz quiz) {
         String sql = "UPDATE Quiz SET name = ?, difficultyId = ?," +
@@ -127,7 +131,6 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
             this.preparedStatement.setInt(3, quiz.getQuizPoints());
             this.preparedStatement.setInt(4, quiz.getCourse().getCourseId());
             this.preparedStatement.setInt(5, quiz.getQuizId());
-//            this.preparedStatement.setInt(7,quiz.getQuestionsInQuizCount());
             this.executeManipulateStatement();
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
@@ -136,7 +139,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
 
     ;
 
-
+    // methode om een Quiz in de DB te verwijderen op basis van een QuizID
     @Override
     public void deleteOneById(int quizId) {
         String sql = "DELETE FROM Quiz WHERE quizId = ?";
@@ -166,6 +169,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
         return questionCount;
     }
 
+    // methode om alle Quizzen in de DB op te halen op basis van coordinatorID
     public List<Quiz> getAllQuizzesByCoordinator(int coordinatorId) {
         List<Quiz> quizzes = new ArrayList<>();
         String sql = "SELECT * FROM Quiz WHERE courseId IN (SELECT courseId FROM Course WHERE coordinatorId = ?)";
@@ -191,7 +195,7 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
         return quizzes;
     }
 
-
+    // methode om alle Quizzen op te halen voor een student (op basis van studentID) voor cursussen waard de student een actieve inschrijving heeft.
     public List<Quiz> getAllQuizzesByStudentId(int studentId) {
         List<Quiz> quizzes = new ArrayList<>();
         String sql = "SELECT * FROM Quiz WHERE courseId IN (SELECT courseId FROM StudentCourse WHERE studentId=? AND dropoutDate IS NULL)";
@@ -231,7 +235,8 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
             }
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
-        } return madeQuizCount;
+        }
+        return madeQuizCount;
     }
 
     // methode telt het aantal keer een Quiz is gehaald op basis van UserID en QuizID als input
@@ -248,7 +253,8 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
             }
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
-        } return succesQuizCount;
+        }
+        return succesQuizCount;
     }
 
     // methode haalt de highscore op van een gemaakte quiz op basis van UserID en QuizID als input
@@ -265,7 +271,8 @@ public class QuizDAO extends AbstractDAO implements GenericDAO<Quiz> {
             }
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
-        } return quizHighscore;
+        }
+        return quizHighscore;
     }
 
     // Created by Mack: Method to gather all Quizzes belonging to a specific CourseID for the CordinatorDashboard.

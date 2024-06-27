@@ -56,12 +56,9 @@ public class CreateUpdateQuizController {
     public Button menu;
     public TextField quizCesuurPercentageField;
 
-
     private Quiz selectedQuiz;
 
-
-
-
+    // setup van het scherm
     public void setup(Quiz quiz) {
         courseComboBox.getItems().addAll(FXCollections.observableArrayList(courseDao.getAll()));
         courseComboBox.getSelectionModel().selectedItemProperty().addListener(this::onChangeCourse);
@@ -70,40 +67,46 @@ public class CreateUpdateQuizController {
 
     }
 
+    // action button om terug naar de Quiz lijst te gaan
     @FXML
     public void doGoToQuizzesList(ActionEvent actionEvent) {
         sceneManager.showManageQuizScene();
     }
 
+    // action button om terug naar het menu te gaan
     @FXML
     public void doMenu(ActionEvent actionEvent) {
         sceneManager.showWelcomeScene();
     }
 
+    // action button om een Quiz aan te maken of te wijzigen
+    @FXML
     public void doCreateUpdateQuiz(ActionEvent event) {
         Quiz quiz = getQuiz();
         if (quiz != null) {
 
-                selectAction(quiz);
+            selectAction(quiz);
         }
     }
 
+    // methode voor ophalen van de waarden die in het scherm worden getoond, wordt aangeroepen in de Setup
+    // methode checkt of er reeds bestaande vragen aanwezig zijn voor een Quiz. Indien er (nog) geen vragen bij een Quiz zijn wordt een melding gegeven om de gebruiker hierop te attenderen
+    // methode checkt het aantal bestaande vragen die bij een Quiz horen (indien meer dan 0) en hoeveel de Cesuur voor de Quiz is en geeft een melding als de Cesuur (benodigd aantal goede vragen om Quiz te halen) ten opzichte van het aantal vragen van de Quiz kleiner is dan de Min Cesuur (nu ingesteld op 50%)
+
     private void setDefaultQuiz(Quiz quiz) {
-
-
         if (quiz != null) {
-            double quizCesuurPercentage=0.0;
+            double quizCesuurPercentage = 0.0;
             final double MINIMUM_CESUUR_PERCENTAGE = 50.0;
-            if (quiz.getQuestionsInQuizCount()!=0){
-                quizCesuurPercentage = (double) Math.round((((double) quiz.getQuizPoints() / (double) quiz.getQuestionsInQuizCount()) * 100.0) * 10) /10; // om het percentage van aantal benodigde goede vragen (Cesuur) t.o.v. aantal beschikbare vragen in Quiz te laten zien
+            if (quiz.getQuestionsInQuizCount() != 0) {
+                quizCesuurPercentage = (double) Math.round((((double) quiz.getQuizPoints() / (double) quiz.getQuestionsInQuizCount()) * 100.0) * 10) / 10; // om het percentage van aantal benodigde goede vragen (Cesuur) t.o.v. aantal beschikbare vragen in Quiz te laten zien
             }
-            if (quizCesuurPercentage ==0.0){
+            if (quizCesuurPercentage == 0.0) {
                 String messageGeenVragen = String.format("LET OP: Voor deze Quiz zijn nog geen vragen aangemaakt");
                 showAlert(Alert.AlertType.INFORMATION, "Geen vragen", messageGeenVragen);
             }
 
-            if (quizCesuurPercentage >0.0 & quizCesuurPercentage <MINIMUM_CESUUR_PERCENTAGE){
-                String messageCesuur = String.format("LET OP: Het benodigde aantal goede vragen t.o.v. totaal aantal vragen in de Quiz is KLEINER dan %.0f procent",MINIMUM_CESUUR_PERCENTAGE);
+            if (quizCesuurPercentage > 0.0 & quizCesuurPercentage < MINIMUM_CESUUR_PERCENTAGE) {
+                String messageCesuur = String.format("LET OP: Het benodigde aantal goede vragen t.o.v. totaal aantal vragen in de Quiz is KLEINER dan %.0f procent", MINIMUM_CESUUR_PERCENTAGE);
                 showAlert(Alert.AlertType.INFORMATION, "Cesuur Klein", messageCesuur);
             }
 
@@ -124,6 +127,8 @@ public class CreateUpdateQuizController {
 
     }
 
+    // (hulp) methode bij het aanmaken van een nieuwe Quiz // wijzigen bestaande Quiz. Gebruikt bij doCreateUpdateQuiz
+    // checkt of de juiste velden zijn ingevuld (in dit geval alleen Quiz naam, rest is niet verplicht)
     private Quiz getQuiz() {
         String quizname = quizNameField.getText();
         // Check if name is not blank or empty
@@ -139,15 +144,17 @@ public class CreateUpdateQuizController {
         int points = quizPointsField.getText().isEmpty() ? 0 : Integer.parseInt(quizPointsField.getText());
         Course course = (Course) courseComboBox.getValue();
 
-        return new Quiz(quizId,quizname,points,course,difficulty);
+        return new Quiz(quizId, quizname, points, course, difficulty);
     }
 
-    // check of Quiz al voorkomt in de DB (check op naam van de Quiz)
-    private boolean isExistingQuiz(Quiz quiz) {return quizDAO.getByName(quiz.getQuizName()) != null;}
+    // Methode checkt of Quiz al voorkomt in de DB (check op naam van de Quiz)
+    private boolean isExistingQuiz(Quiz quiz) {
+        return quizDAO.getByName(quiz.getQuizName()) != null;
+    }
 
-
-    private void selectAction(Quiz quiz){
-        if (quiz.getQuizId() ==0 ) {
+    // methode om een Quiz te wijzigen of nieuwe Quiz op te slaan. Gebruikt in doCreateUpdateQuiz
+    private void selectAction(Quiz quiz) {
+        if (quiz.getQuizId() == 0) {
             if (isExistingQuiz(quiz)) {
                 showAlert(Alert.AlertType.ERROR, "Fout", "Quiznaam bestaat al!");
                 return;
@@ -174,15 +181,15 @@ public class CreateUpdateQuizController {
     // in Quiz Difficulty Combobox difficulty gelijk aan of 1 lager (indien van toepassing) t.o.v. (nieuw) verkregen Course Difficulty
     // for loop loopt effectief van 1 (beginner) tm 3 (gevorderd). Indien Course Difficulty = 3, dan Quiz difficulty 3 en 2 // Course difficulty =2, dan Quiz difficulty 2 en 1 // Course difficulty =1 dan Quiz difficulty =1;
 
-    private void setDifficultyComboBoxItems(int difficultyId){
+    private void setDifficultyComboBoxItems(int difficultyId) {
         List<Difficulty> filteredDifficulty = new ArrayList<>();
         for (Difficulty difficulty : difficulties) {
-            if (difficultyId!=3) {
+            if (difficultyId != 3) {
                 if (difficulty.getDifficultyId() <= difficultyId) {
                     filteredDifficulty.add(difficulty);
                 }
             } else {
-                if (difficulty.getDifficultyId() == difficultyId ||difficulty.getDifficultyId() + 1 == difficultyId) {
+                if (difficulty.getDifficultyId() == difficultyId || difficulty.getDifficultyId() + 1 == difficultyId) {
                     filteredDifficulty.add(difficulty);
                 }
             }
@@ -192,6 +199,7 @@ public class CreateUpdateQuizController {
 
     }
 
+    // methode om het formulier te resetten, zodat weer een Nieuwe Quiz kan worden aangemaakt
     private void resetForm() {
         quizNameField.clear();
 //        courseComboBox.getSelectionModel().clearSelection();
@@ -199,9 +207,6 @@ public class CreateUpdateQuizController {
         questionsInQuizCountField.clear();
         quizPointsField.clear();
     }
-
-
-
 
 
 }
