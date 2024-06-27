@@ -30,7 +30,8 @@
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn fx:id="completeDateColumn" prefWidth="138.0" text="Datum Afgerond" />
-                        <TableColumn fx:id="scoredPointsColumn" prefWidth="147.0" text="Behaalde Punten" />
+                        <TableColumn fx:id="scoredPointsColumn" prefWidth="147.0" text="Behaalde Punten" style="-fx-alignment: CENTER;"  />
+                        <TableColumn fx:id="resultColumn" prefWidth="147.0" text="Resultaat" style="-fx-alignment: CENTER;"  />
                     </columns>
                   <columnResizePolicy>
                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
