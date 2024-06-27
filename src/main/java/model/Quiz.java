@@ -70,8 +70,6 @@ public class Quiz {
     }
 
 
-
-
     public Difficulty getQuizDifficulty() {
         return difficulty;
     }
@@ -83,7 +81,9 @@ public class Quiz {
 
     // toString
     @Override
-    public String toString() {return this.name;}
+    public String toString() {
+        return this.name;
+    }
 
 
 }

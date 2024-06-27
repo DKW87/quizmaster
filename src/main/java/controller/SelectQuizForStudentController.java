@@ -57,8 +57,10 @@ public class SelectQuizForStudentController {
     public TableColumn<Quiz, Integer> highscoreColumn;
 
 
-
     // Setup voor aanroepen van het scherm
+    // alle Quizzen uit de DB worden opgehaald waarvoor een student (op basis van een studentID) een actieve cursus inschrijving heeft
+    // generate QuizTable - methode - zie onder om de table te vullen
+
     public void setup() {
         int logedInStudentID = userSession.getUser().getUserId();
         List<Quiz> quizzenPerStudent = quizDAO.getAllQuizzesByStudentId(logedInStudentID);
@@ -72,23 +74,23 @@ public class SelectQuizForStudentController {
         }
     }
 
+    // action button: ga terug naar hoofdmenu
     @FXML
     public void doMenu(ActionEvent actionEvent) {
         sceneManager.showWelcomeScene();
     }
 
-
+    // action button: maak een quiz
     @FXML
     public void doQuiz() {
         if (quizTableStudent.getSelectionModel().getSelectedItem() != null) {
-           Main.getSceneManager().showFillOutQuiz(quizTableStudent.getSelectionModel().getSelectedItem());
-        }
-        else {
+            Main.getSceneManager().showFillOutQuiz(quizTableStudent.getSelectionModel().getSelectedItem());
+        } else {
             Util.showAlert(Alert.AlertType.ERROR, "Foutmelding", "Selecteer een quiz.");
         }
     }
 
-
+    // action button om een file te maken van de QuizLijst
     @FXML
     public void doGenerateQuizFile() {
         int logedInStudentID = userSession.getUser().getUserId();
@@ -100,6 +102,7 @@ public class SelectQuizForStudentController {
         }
     }
 
+    // methode om de Quiz Tabel te vullen met de juiste waarden
     private void generateQuizTable() {
         quizNameColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getQuizName())));
@@ -144,6 +147,8 @@ public class SelectQuizForStudentController {
         quizTableStudent.getSortOrder().add(numberMadeColumn);
         quizTableStudent.getSelectionModel().selectFirst();
     }
+
+    // methode om een bestand te maken van een Quiz lijst TODO : RJ: toevoegen #keer gemaakt, #keer succesvol, #highscore
     public static void maakBestandvanQuizLijst(List<Quiz> quizLijst) {
 
         SwingUtilities.invokeLater(() -> {
@@ -154,10 +159,10 @@ public class SelectQuizForStudentController {
                 File fileToSave = fileChooser.getSelectedFile();
                 try (PrintWriter printWriter = new PrintWriter(fileToSave)) {
                     StringBuilder printHeaders = new StringBuilder();
-                    printHeaders.append(String.format("%-30s, %-20s, %-30s, %-20s, %-20s, %-20s, %-20s", "Quiznaam:" ,"Moeilijkheidsgraad:", "Cursus:", "Aantal vragen:","Aantal keer gemaakt:", "Aantal keer succesvol:", "Highscore:"));
+                    printHeaders.append(String.format("%-30s, %-20s, %-30s, %-20s, %-20s, %-20s, %-20s", "Quiznaam:", "Moeilijkheidsgraad:", "Cursus:", "Aantal vragen:", "Aantal keer gemaakt:", "Aantal keer succesvol:", "Highscore:"));
                     printWriter.println(printHeaders);
                     for (Quiz quiz : quizLijst) {
-                        printWriter.println(String.format("%-30s, %-20s, %-30s, %-20s, %-20s, %-20s, %-20s", quiz.getQuizName(), quiz.getQuizDifficulty(), quiz.getCourse(), quiz.getQuestionsInQuizCount(),"0","0","0"));
+                        printWriter.println(String.format("%-30s, %-20s, %-30s, %-20s, %-20s, %-20s, %-20s", quiz.getQuizName(), quiz.getQuizDifficulty(), quiz.getCourse(), quiz.getQuestionsInQuizCount(), "0", "0", "0"));
                     }
                     JOptionPane.showMessageDialog(null, "Bestand succesvol op je computer opgeslagen!", "Bestand opgeslagen", JOptionPane.INFORMATION_MESSAGE);
                 } catch (FileNotFoundException fout) {
