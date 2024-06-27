@@ -17,6 +17,7 @@ import java.util.List;
 
 public class FillOutQuizController {
 
+    // FXML attributes
     @FXML
     public Label testingNumberOfPoints;
     @FXML
@@ -32,6 +33,7 @@ public class FillOutQuizController {
     @FXML
     private TextArea questionArea;
 
+    // variables
     private final int NUL = 0;
     private final int EEN = 1;
     private final String ANTWOORD_A = "Antwoord A: ";
@@ -41,7 +43,7 @@ public class FillOutQuizController {
     private int currentQuestionIndex = 0;
     private final QuestionDAO questionDAO;
     private final QuizResultDAO quizResultDAO;
-    private  final QuizResultCouchDBDAO quizResultCouchDBDAO;
+    private final QuizResultCouchDBDAO quizResultCouchDBDAO;
     private Quiz currentQuiz;
     private List<Question> questionList;
     private int[] pointsEarned;
@@ -54,13 +56,20 @@ public class FillOutQuizController {
     }
 
     public void setup(Quiz quiz) {
-        currentQuiz = quiz;
-        questionList = new ArrayList<>(questionDAO.getAllByQuizId(quiz.getQuizId()));
-        pointsEarned = new int[questionList.size()];
-        storeAnswers = new String[questionList.size()];
-        displayQuestionAndAnswers(questionList);
+        if (quiz.getQuestionsInQuizCount() == NUL) {
+            quitIfNoQuestionsFound();
+        } else {
+            currentQuiz = quiz;
+            questionList = new ArrayList<>(questionDAO.getAllByQuizId(quiz.getQuizId()));
+            pointsEarned = new int[questionList.size()];
+            storeAnswers = new String[questionList.size()];
+            displayQuestionAndAnswers(questionList);
+        }
     }
 
+    // called by a button providing the answerPrefix (e.g. "Antwoord A")
+    // Then this method parses the questionArea field and stores answerPrefix suffix to remember antwoord given
+    // awards a point and stores this in an array if answer was correct: 1 == correct, 0 == wrong
     public void checkAndStoreCorrectAnswer(String answerPrefix) {
         final int BEGIN_INDEX = answerPrefix.length();
         String[] lines = questionArea.getText().split("\n");
@@ -70,9 +79,9 @@ public class FillOutQuizController {
                 String chosenAnswer = line.substring(BEGIN_INDEX).trim();
                 storeAnswers[currentQuestionIndex] = chosenAnswer;
                 if (chosenAnswer.equals(questionList.get(currentQuestionIndex).getAnswerA())) {
-                    pointsEarned[currentQuestionIndex] = EEN; // one point equals correct
+                    pointsEarned[currentQuestionIndex] = EEN;
                 } else {
-                    pointsEarned[currentQuestionIndex] = NUL; // zero points equals wrong
+                    pointsEarned[currentQuestionIndex] = NUL;
                 }
             }
         }
@@ -144,6 +153,7 @@ public class FillOutQuizController {
         questionArea.setText(questionBuilder(questionList.get(currentQuestionIndex)));
     }
 
+    // used to fill questionArea TextArea with question description and their answers combined
     public String questionBuilder(Question question) {
         List<String> answers = shuffleAnswers(question);
         StringBuilder stringBuilder = new StringBuilder();
@@ -176,13 +186,16 @@ public class FillOutQuizController {
         if (submitQuiz.getResult() == ButtonType.OK) {
             QuizResult quizResult = new QuizResult(0, Main.getUserSession().getUser(), currentQuiz, calculateScore());
             quizResultDAO.storeOne(quizResult);
-            if(Main.getCouchDBMode()) {
-                // Sync quiz results to couchDB when in couchDB mode
-                quizResultCouchDBDAO.syncQuizResultMySQLToCouchDB();
-            }
+            couchDBmode();
             Main.getSceneManager().showStudentFeedback(quizResult);
         }
+    }
 
+    // Sync quiz results to couchDB when in couchDB mode
+    private void couchDBmode() {
+        if (Main.getCouchDBMode()) {
+            quizResultCouchDBDAO.syncQuizResultMySQLToCouchDB();
+        }
     }
 
     public int calculateScore() {
@@ -226,7 +239,7 @@ public class FillOutQuizController {
     }
 
     private void chosenAnswerButtonColor(Button button) {
-        button.setStyle("-fx-background-color: #501560; -fx-border-color: #501560");
+        button.setStyle("-fx-background-color: #741583; -fx-border-color: #741583");
     }
 
     private void setAllButtonsDefaultColor() {
@@ -236,6 +249,15 @@ public class FillOutQuizController {
         defaultButtonColor(buttonAnswerD);
     }
 
+    private void quitIfNoQuestionsFound() {
+        Alert noQuestionsFound = new Alert(Alert.AlertType.INFORMATION);
+        noQuestionsFound.setTitle("Geen vragen gevonden");
+        noQuestionsFound.setHeaderText(null);
+        noQuestionsFound.setContentText("Geen vragen gevonden. Klik op OK om terug te gaan naar" +
+                "het quiz overzicht.");
+        noQuestionsFound.showAndWait();
+        Main.getSceneManager().showSelectQuizForStudent();
+    }
 
     /* * * * * * * * * * * * * * * * *
      * Everything down from here is  *
@@ -249,7 +271,7 @@ public class FillOutQuizController {
 
     public void setCurrentQuestionList(Question question) {
         questionList = new ArrayList<>(1);
-        questionList.add(0,question);
+        questionList.add(0, question);
     }
 
     public void setStoreAnswersSize(int size) {

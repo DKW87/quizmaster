@@ -38,7 +38,7 @@ public class DannysTestLauncher {
         System.out.println(questionsList.get(0));
 
         // Query CouchDB with PK based on 3 unique param: questionDescription, answerA and quizId
-        Question questionFromJSON = questionCouchDBDAO.getAllQuestions(questionsList.get(0).getQuestionDescription(),
+        Question questionFromJSON = questionCouchDBDAO.getOneByUnique(questionsList.get(0).getQuestionDescription(),
                 questionsList.get(0).getAnswerA(), questionsList.get(0).getQuiz().getQuizId());
 
         // print result from NoSQL

@@ -35,7 +35,7 @@ public class QuestionCouchDBDAO extends AbstractCouchDBDAO {
         }
     }
 
-    public Question getAllQuestions(String questionDescription, String answerA, int quizId) {
+    public Question getOneByUnique(String questionDescription, String answerA, int quizId) {
         Question question;
         for (JsonObject jsonObject : getAllDocuments()) {
             question = gson.fromJson(jsonObject, Question.class);

@@ -4,7 +4,6 @@ import database.mysql.QuestionDAO;
 import database.mysql.QuizDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import model.Course;
 import model.Question;
 import model.Quiz;
 import view.Main;
@@ -13,32 +12,28 @@ import java.util.Optional;
 
 public class CreateUpdateQuestionController {
 
+    // FXML attributes
+    @FXML
+    private Label headerLabel;
+    @FXML
+    private Label questionIdLabel;
+    @FXML
+    private TextArea questionDescription;
+    @FXML
+    private TextField answerA;
+    @FXML
+    private TextField answerB;
+    @FXML
+    private TextField answerC;
+    @FXML
+    private TextField answerD;
+    @FXML
+    private ComboBox<Quiz> quizList;
+
+    // variables
     private final QuestionDAO questionDAO;
     private final QuizDAO quizDAO;
 
-    @FXML
-    private Label headerLabel;
-
-    @FXML
-    private Label questionIdLabel;
-
-    @FXML
-    private TextArea questionDescription;
-
-    @FXML
-    private TextField answerA;
-
-    @FXML
-    private TextField answerB;
-
-    @FXML
-    private TextField answerC;
-
-    @FXML
-    private TextField answerD;
-
-    @FXML
-    private ComboBox<Quiz> quizList;
 
     public CreateUpdateQuestionController() {
         questionDAO = new QuestionDAO(Main.getdBaccess());
@@ -109,10 +104,14 @@ public class CreateUpdateQuestionController {
             return null;
         } else {
             Question question = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
-            if (!questionIdLabel.getText().isEmpty()) {
-                question.setQuestionId(Integer.parseInt(questionIdLabel.getText()));
-            }
+            setQuestionId(question);
             return question;
+        }
+    }
+
+    private void setQuestionId(Question question) {
+        if (!questionIdLabel.getText().isEmpty()) {
+            question.setQuestionId(Integer.parseInt(questionIdLabel.getText()));
         }
     }
 
@@ -134,6 +133,25 @@ public class CreateUpdateQuestionController {
         }
     }
 
+    private void storeQuestion(Question question) {
+        if (isExistingQuestion(question)) {
+          alertQuestionAlreadyExists();
+        } else {
+            questionDAO.storeOne(question);
+            alertNewQuestionSaveSuccessfull();
+        }
+    }
+
+    private void updateQuestion(Question question) {
+        if (isExistingQuestion(question)) {
+            alertQuestionAlreadyExists();
+        }
+        else {
+            questionDAO.updateOne(question);
+            alertUpdateQuestionSuccessfull();
+        }
+    }
+
     private void alertAllFieldsRequired() {
         Alert allFieldsRequired = new Alert(Alert.AlertType.ERROR);
         allFieldsRequired.setTitle("Foutmelding");
@@ -142,44 +160,33 @@ public class CreateUpdateQuestionController {
         allFieldsRequired.showAndWait();
     }
 
-    private void storeQuestion(Question question) {
-        if (isExistingQuestion(question)) {
-          Alert duplicateQuestion = new Alert(Alert.AlertType.ERROR);
-          duplicateQuestion.setTitle("Foutmelding");
-          duplicateQuestion.setHeaderText(null);
-            duplicateQuestion.setContentText("Deze vraag bestaat al! Omschrijving, vraag a en quiz moeten gezamenlijk uniek zijn!");
-            duplicateQuestion.showAndWait();
-        } else {
-            questionDAO.storeOne(question);
-            Alert storeQuestion = new Alert(Alert.AlertType.INFORMATION);
-            storeQuestion.setTitle("Vraag Toegevoegd");
-            storeQuestion.setHeaderText(null);
-            storeQuestion.setContentText("Je nieuwe vraag is opgeslagen! Klik op OK om verder te gaan.");
-            Optional<ButtonType> result = storeQuestion.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                resetForm();
-            }
+    private void alertQuestionAlreadyExists() {
+        Alert duplicateQuestion = new Alert(Alert.AlertType.ERROR);
+        duplicateQuestion.setTitle("Foutmelding");
+        duplicateQuestion.setHeaderText(null);
+        duplicateQuestion.setContentText("Deze vraag bestaat al! Omschrijving, vraag a en quiz moeten gezamenlijk uniek zijn!");
+        duplicateQuestion.showAndWait();
+    }
+
+    private void alertNewQuestionSaveSuccessfull() {
+        Alert storeQuestion = new Alert(Alert.AlertType.INFORMATION);
+        storeQuestion.setTitle("Vraag Toegevoegd");
+        storeQuestion.setHeaderText(null);
+        storeQuestion.setContentText("Je nieuwe vraag is opgeslagen! Klik op OK om verder te gaan.");
+        Optional<ButtonType> result = storeQuestion.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            resetForm();
         }
     }
 
-    private void updateQuestion(Question question) {
-        if (isExistingQuestion(question)) {
-            Alert duplicateQuestion = new Alert(Alert.AlertType.ERROR);
-            duplicateQuestion.setTitle("Foutmelding");
-            duplicateQuestion.setHeaderText(null);
-            duplicateQuestion.setContentText("Deze vraag bestaat al! Omschrijving, vraag a en quiz moeten gezamenlijk uniek zijn!");
-            duplicateQuestion.showAndWait();
-        }
-        else {
-            questionDAO.updateOne(question);
-            Alert updateQuestion = new Alert(Alert.AlertType.INFORMATION);
-            updateQuestion.setTitle("Vraag Gewijzigd");
-            updateQuestion.setHeaderText(null);
-            updateQuestion.setContentText("Je wijzigingen zijn opgeslagen! Klik op OK om terug naar de lijst te gaan.");
-            Optional<ButtonType> result = updateQuestion.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                Main.getSceneManager().showManageQuestionsScene();
-            }
+    private void alertUpdateQuestionSuccessfull() {
+        Alert updateQuestion = new Alert(Alert.AlertType.INFORMATION);
+        updateQuestion.setTitle("Vraag Gewijzigd");
+        updateQuestion.setHeaderText(null);
+        updateQuestion.setContentText("Je wijzigingen zijn opgeslagen! Klik op OK om terug naar de lijst te gaan.");
+        Optional<ButtonType> result = updateQuestion.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Main.getSceneManager().showManageQuestionsScene();
         }
     }
 
@@ -196,4 +203,4 @@ public class CreateUpdateQuestionController {
         quizList.getSelectionModel().clearSelection();
     }
 
-}
+} // class
