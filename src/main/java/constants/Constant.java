@@ -1,5 +1,7 @@
 package constants;
 
+import database.mysql.CourseDAO;
+import database.mysql.QuizResultDAO;
 import javafx.scene.control.MenuItem;
 import view.Main;
 
@@ -14,6 +16,8 @@ import static utils.Util.createMenuItem;
  * @created 15 June 2024 - 11:50
  */
 public class Constant {
+
+    private static final QuizResultDAO quizResultDAO = new QuizResultDAO(Main.getdBaccess());
 
     // ? Database constants
     public static  final String DB_NAME = "zbakkumm";
@@ -44,7 +48,7 @@ public class Constant {
     );
     public static final List<MenuItem> ADMINISTRATOR_TASKS = List.of(
             createMenuItem("Cursusbeheer",event -> Main.getSceneManager().showManageCoursesScene()),
-            createMenuItem("Exporteer studentenresultaten",event -> Main.getSceneManager().showWelcomeScene())
+            createMenuItem("Exporteer studentenresultaten",event -> quizResultDAO.exportResultAdminExport())
 //            createMenuItem("Student indelen",event -> Main.getSceneManager().showAssignStudentsToGroupScene())
 //            createMenuItem("Beheer groepen",event -> Main.getSceneManager().showManageGroupsScene())
 

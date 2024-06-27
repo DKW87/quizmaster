@@ -1,13 +1,21 @@
 package database.mysql;
 
+import javafx.scene.control.Alert;
 import model.QuizResult;
 import model.QuizResultDTO;
 
+import javax.swing.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static utils.Util.showAlert;
 
 /**
  * @author Zahir Ekrem SARITEKE
@@ -110,6 +118,62 @@ public class QuizResultDAO extends AbstractDAO {
         }
         return primaryKey;
 
+    }
+
+    public void exportResultAdminExport() {
+        String sqlViewExport = "SELECT * FROM RESULTADMINEXPORT";
+        try (FileWriter writer = new FileWriter("quiz_results " + LocalDate.now() + ".txt")) {
+            this.setupPreparedStatement(sqlViewExport);
+            ResultSet resultSet = executeSelectStatement();
+
+            String[] headers = {"User ID", "UserName", "Quiz ID", "Quiz Naam", "Score", "Gehaald"};
+            String formatString = "%-10s| %-13s| %-10s| %-30s| %-10s| %-10s\n";
+
+            writer.write(String.format(formatString, (Object[]) headers));
+            writer.write("--------------------------------------------------------------------------------------------\n");
+             writeResultSetToFile(resultSet, writer, formatString); // Call the helper method
+            //saveToFile(writer2);
+            showAlert(Alert.AlertType.INFORMATION, "Succes", "Quiz Results succesvol geexporteerd");
+
+        } catch (SQLException | IOException e) { // Combined catch for both exceptions
+            System.err.println("Error in exportResultAdminExport: " + e.getMessage());
+        }
+    }
+
+    // Helper method for the resultSet in exports from SQL view.
+    private FileWriter writeResultSetToFile(ResultSet resultSet, FileWriter writer, String formatString) throws SQLException, IOException {
+        while (resultSet.next()) {
+            Object[] rowData = {
+                    resultSet.getInt("UserId"),
+                    resultSet.getString("UserName"),
+                    resultSet.getInt("quizId"),
+                    resultSet.getString("QuizNaam"),
+                    resultSet.getInt("Score"),
+                    resultSet.getInt("Gehaald")
+            };
+            writer.write(String.format(formatString, rowData));
+        }
+        return writer;
+    }
+
+    // Method for the File Saver.
+    private void saveToFile(FileWriter fileWriter) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save Quiz Results");
+//        fileChooser.setSelectedFile(new File("quiz_results.txt"));
+
+        int userSelection = fileChooser.showSaveDialog(null);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            try (FileWriter newWriter = new FileWriter(fileToSave)) {
+                newWriter.write(fileWriter.toString());
+            } catch (IOException e) {
+                System.err.println("Error writing to file: " + e.getMessage());
+                JOptionPane.showMessageDialog(null, "Error exporting results: " + e.getMessage(),
+                        "Export Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     public QuizResult convertQuizResultDTOToQuizResult(QuizResultDTO quizResultDTO) {
