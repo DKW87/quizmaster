@@ -32,7 +32,7 @@ public class Constant {
 
     // ? roles permission constants
     public static final List<MenuItem> STUDENT_TASKS = List.of(
-            createMenuItem("Cursusbeheer",event -> Main.getSceneManager().showStudentSignInOutScene()),
+            createMenuItem("In- en/of uitschrijven voor cursus(sen)",event -> Main.getSceneManager().showStudentSignInOutScene()),
             createMenuItem("Quiz maken",event -> Main.getSceneManager().showSelectQuizForStudent())
 
     );

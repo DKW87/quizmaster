@@ -17,21 +17,19 @@ import java.util.Optional;
 
 public class ManageQuestionsController {
 
+    // FXML attributes
     @FXML
     public TableView<Question> questionsTable;
-
     @FXML
     public TableColumn<Question, String> questionDescriptionColumn;
-
     @FXML
     public TableColumn<Question, String> answerAColumn;
-
     @FXML
     public TableColumn<Question, String> partOfQuizColumn;
-
     @FXML
     public TableColumn<Question, Integer> questionsCounterColumn;
 
+    // variables
     private final QuestionDAO questionDAO;
     private final QuizDAO quizDAO;
 
@@ -78,15 +76,19 @@ public class ManageQuestionsController {
             noSelectionError();
         } else {
             Question question = (Question) questionsTable.getSelectionModel().getSelectedItem();
-            Alert confirmDelete = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmDelete.setTitle("Verwijder Vraag");
-            confirmDelete.setHeaderText(null);
-            confirmDelete.setContentText("Weet je zeker dat je deze vraag wil verwijderen?");
-            Optional<ButtonType> result = confirmDelete.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                questionDAO.deleteOneById(question.getQuestionId());
-                questionsTable.getItems().remove(question);
-            }
+            confirmAndDelete(question);
+        }
+    }
+
+    private void confirmAndDelete(Question question) {
+        Alert confirmDelete = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmDelete.setTitle("Verwijder Vraag");
+        confirmDelete.setHeaderText(null);
+        confirmDelete.setContentText("Weet je zeker dat je deze vraag wil verwijderen?");
+        Optional<ButtonType> result = confirmDelete.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            questionDAO.deleteOneById(question.getQuestionId());
+            questionsTable.getItems().remove(question);
         }
     }
 
@@ -112,4 +114,4 @@ public class ManageQuestionsController {
         questionsTable.getSelectionModel().selectFirst();
     }
 
-}
+} // class
