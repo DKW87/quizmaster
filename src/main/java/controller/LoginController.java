@@ -30,6 +30,8 @@ public class LoginController {
         }
         if (authenticate(userName, password)) {
             Main.getSceneManager().showWelcomeScene();
+        } else {
+            loginError.setVisible(true);
         }
 
 

@@ -22,6 +22,8 @@ public class StudentFeedbackController {
     @FXML
     public TableColumn<QuizResult, String> scoredPointsColumn;
     @FXML
+    public TableColumn<QuizResult, String> resultColumn;
+    @FXML
     public Button menuButton;
     @FXML
     public Button newQuizButton;
@@ -56,7 +58,20 @@ public class StudentFeedbackController {
         completeDateColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").format(cellData.getValue().getDate()))));
         scoredPointsColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(String.valueOf(cellData.getValue().getScore())));
+                new SimpleStringProperty(String.valueOf(getScoredPoints(cellData.getValue()))));
+        resultColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.valueOf(getResult(cellData.getValue()))));
+
+
     }
+    public  String getResult(QuizResult quizResult) {
+        return quizResult.getScore() >= quizResult.getQuiz().getQuizPoints()
+                ? "Geslaagd" :
+                "Niet geslaagd";
+    }
+    public String getScoredPoints(QuizResult quizResult) {
+        return String.valueOf(quizResult.getScore() + "/" + quizResult.getQuiz().getQuizPoints());
+    }
+
 }
 
