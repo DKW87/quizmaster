@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import view.Main;
 
-import java.awt.*;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,7 +22,6 @@ class FillOutQuizControllerTest {
 
 
     private int[] pointsEarned;
-    private TextArea questionArea;
     private String answerPrefixA = "Antwoord A: ";
     private String answerPrefixB = "Antwoord B: ";
     private String answerPrefixC = "Antwoord C: ";
@@ -100,4 +98,5 @@ class FillOutQuizControllerTest {
         actualScore = controller.calculateScore();
         assertEquals(expectedScore, actualScore);
     }
+
 }

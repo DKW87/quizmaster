@@ -1,11 +1,5 @@
 package model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 /**
  * @author Danny KWANT
  * @project Quizmaster
@@ -22,6 +16,7 @@ public class Question {
     private String answerC;
     private String answerD;
     private Quiz quiz;
+
     // constructors
 
     public Question(String questionDescription, String answerA, String answerB, String answerC, String answerD, Quiz quiz) {
@@ -54,10 +49,6 @@ public class Question {
         return questionDescription;
     }
 
-    public void setQuestionDescription(String questionDescription) {
-        this.questionDescription = questionDescription;
-    }
-
     public String getAnswerA() {
         return answerA;
     }
@@ -73,7 +64,6 @@ public class Question {
     public String getAnswerD() {
         return answerD;
     }
-
 
     public Quiz getQuiz() {
         return quiz;

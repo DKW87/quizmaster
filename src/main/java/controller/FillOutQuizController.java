@@ -34,20 +34,20 @@ public class FillOutQuizController {
     private TextArea questionArea;
 
     // variables
+    private final QuestionDAO questionDAO;
+    private final QuizResultDAO quizResultDAO;
+    private final QuizResultCouchDBDAO quizResultCouchDBDAO;
     private final int NUL = 0;
     private final int EEN = 1;
+    private Quiz currentQuiz;
+    private int currentQuestionIndex = 0;
     private final String ANTWOORD_A = "Antwoord A: ";
     private final String ANTWOORD_B = "Antwoord B: ";
     private final String ANTWOORD_C = "Antwoord C: ";
     private final String ANTWOORD_D = "Antwoord D: ";
-    private int currentQuestionIndex = 0;
-    private final QuestionDAO questionDAO;
-    private final QuizResultDAO quizResultDAO;
-    private final QuizResultCouchDBDAO quizResultCouchDBDAO;
-    private Quiz currentQuiz;
     private List<Question> questionList;
-    private int[] pointsEarned;
     private String[] storeAnswers;
+    private int[] pointsEarned;
 
     public FillOutQuizController() {
         questionDAO = new QuestionDAO(Main.getdBaccess());
@@ -57,7 +57,7 @@ public class FillOutQuizController {
 
     public void setup(Quiz quiz) {
         if (quiz.getQuestionsInQuizCount() == NUL) {
-            quitIfNoQuestionsFound();
+            returnPrevMenuNoQuestionsFound();
         } else {
             currentQuiz = quiz;
             questionList = new ArrayList<>(questionDAO.getAllByQuizId(quiz.getQuizId()));
@@ -249,7 +249,7 @@ public class FillOutQuizController {
         defaultButtonColor(buttonAnswerD);
     }
 
-    private void quitIfNoQuestionsFound() {
+    private void returnPrevMenuNoQuestionsFound() {
         Alert noQuestionsFound = new Alert(Alert.AlertType.INFORMATION);
         noQuestionsFound.setTitle("Geen vragen gevonden");
         noQuestionsFound.setHeaderText(null);

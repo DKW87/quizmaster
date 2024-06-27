@@ -95,4 +95,5 @@ public class Main extends Application {
     public static boolean getCouchDBMode() {
         return COUCHDB_MODE;
     }
+
 }

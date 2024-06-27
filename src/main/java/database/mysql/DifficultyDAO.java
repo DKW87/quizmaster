@@ -26,11 +26,7 @@ public class DifficultyDAO extends AbstractDAO implements GenericDAO<Difficulty>
             this.setupPreparedStatement(sql);
             ResultSet resultSet = this.executeSelectStatement();
             while (resultSet.next()) {
-                int difficultyId = resultSet.getInt("difficultyId");
-                String name = resultSet.getString("name");
-                Difficulty difficulty = new Difficulty(name);
-                difficulty.setDifficultyId(difficultyId);
-                difficulties.add(difficulty);
+                difficulties.add(createDifficultyFromResultSet(resultSet));
             }
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
@@ -46,12 +42,8 @@ public class DifficultyDAO extends AbstractDAO implements GenericDAO<Difficulty>
             this.setupPreparedStatement(sql);
             this.preparedStatement.setInt(1, id);
             ResultSet resultSet = this.executeSelectStatement();
-            while (resultSet.next()) {
-                int difficultyId = resultSet.getInt("difficultyId");
-                String difficultyName = resultSet.getString("name");
-                difficulty = new Difficulty(difficultyName);
-                difficulty.setDifficultyId(difficultyId);
-                return difficulty;
+            if (resultSet.next()) {
+                difficulty = createDifficultyFromResultSet(resultSet);
             }
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
@@ -67,12 +59,8 @@ public class DifficultyDAO extends AbstractDAO implements GenericDAO<Difficulty>
             this.setupPreparedStatement(sql);
             this.preparedStatement.setString(1, name);
             ResultSet resultSet = this.executeSelectStatement();
-            while (resultSet.next()) {
-                int difficultyId = resultSet.getInt("difficultyId");
-                String difficultyName = resultSet.getString("name");
-                difficulty = new Difficulty(difficultyName);
-                difficulty.setDifficultyId(difficultyId);
-                return difficulty;
+            if (resultSet.next()) {
+                difficulty = createDifficultyFromResultSet(resultSet);
             }
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getMessage());
@@ -117,6 +105,14 @@ public class DifficultyDAO extends AbstractDAO implements GenericDAO<Difficulty>
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
         }
+    }
+
+    private Difficulty createDifficultyFromResultSet(ResultSet resultSet) throws SQLException {
+        int difficultyId = resultSet.getInt("difficultyId");
+        String difficultyName = resultSet.getString("name");
+        Difficulty difficulty = new Difficulty(difficultyName);
+        difficulty.setDifficultyId(difficultyId);
+        return difficulty;
     }
 
 } // class

@@ -116,21 +116,14 @@ public class CreateUpdateQuestionController {
     }
 
     private boolean checkAllFieldsFilled() {
-        if (questionDescription.getText().isEmpty() || questionDescription.getText().isBlank()) {
-            return false;
-        } else if (answerA.getText().isEmpty() || answerA.getText().isBlank()) {
-            return false;
-        } else if (answerB.getText().isEmpty() || answerB.getText().isBlank()) {
-            return false;
-        } else if (answerC.getText().isEmpty() || answerC.getText().isBlank()) {
-            return false;
-        } else if (answerD.getText().isEmpty() || answerD.getText().isBlank()) {
-            return false;
-        } else if (quizList.getSelectionModel().getSelectedItem() == null) {
-            return false;
-        } else {
-            return true;
+        String[] fields = {questionDescription.getText(), answerA.getText(), answerB.getText(), answerC.getText(),
+                answerD.getText()};
+        for (String string : fields) {
+            if (string.isEmpty() || string.isBlank()) {
+                return false;
+            }
         }
+        return quizList.getSelectionModel().getSelectedItem() != null;
     }
 
     private void storeQuestion(Question question) {

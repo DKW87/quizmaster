@@ -2,7 +2,6 @@ package controller;
 
 import database.mysql.QuestionDAO;
 import database.mysql.QuizDAO;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -48,7 +47,6 @@ public class ManageQuestionsController {
         questionsTable.getItems().addAll(questions);
         generateQuestionsTable();
     }
-
 
     @FXML
     public void doMenu() {
@@ -108,9 +106,9 @@ public class ManageQuestionsController {
         partOfQuizColumn.setCellValueFactory(celldata ->
                 new SimpleStringProperty(celldata.getValue().getQuiz().getQuizName()));
         questionsCounterColumn.setCellValueFactory(celldata -> {
-                    int count = questionDAO.countQuestionsInQuiz(celldata.getValue().getQuiz().getQuizId());
-                    return new SimpleObjectProperty<>(count);
-                });
+            int count = questionDAO.countQuestionsInQuiz(celldata.getValue().getQuiz().getQuizId());
+            return new SimpleObjectProperty<>(count);
+        });
         questionsTable.getSelectionModel().selectFirst();
     }
 

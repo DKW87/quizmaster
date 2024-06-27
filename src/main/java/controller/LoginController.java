@@ -11,7 +11,7 @@ import static utils.Util.confirmMessage;
 
 public class LoginController {
 
-    private final  UserDAO userDao = new UserDAO(Main.getdBaccess());
+    private final UserDAO userDao = new UserDAO(Main.getdBaccess());
 
     @FXML
     public Label loginError;
@@ -45,8 +45,6 @@ public class LoginController {
         }
     }
 
-
-
     private boolean validate(String userName, String password) {
         return !userName.isEmpty() && !password.isEmpty() && !userName.isBlank() && !password.isBlank();
     }
@@ -69,6 +67,5 @@ public class LoginController {
         // Set session user
         Main.getUserSession().setUser(user);
         return true;
-
     }
 }

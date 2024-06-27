@@ -22,26 +22,15 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
         super(dbAccess);
     }
 
-
     @Override
     public List<Question> getAll() {
-        List<Question> questions = new ArrayList<Question>();
+        List<Question> questions = new ArrayList<>();
         String sql = "SELECT * FROM Question;";
         try {
             this.setupPreparedStatement(sql);
             ResultSet resultSet = this.executeSelectStatement();
             while (resultSet.next()) {
-                int questionId = resultSet.getInt("questionId");
-                String questionDescription = resultSet.getString("questionDescription");
-                String answerA = resultSet.getString("answerA");
-                String answerB = resultSet.getString("answerB");
-                String answerC = resultSet.getString("answerC");
-                String answerD = resultSet.getString("answerD");
-                int quizId = resultSet.getInt("quizId");
-                Quiz quiz = quizdao.getById(quizId);
-                Question question = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
-                question.setQuestionId(questionId);
-                questions.add(question);
+                questions.add(createQuestionFromResultSet(resultSet));
             }
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
@@ -57,18 +46,8 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
             this.setupPreparedStatement(sql);
             this.preparedStatement.setInt(1, id);
             ResultSet resultSet = this.executeSelectStatement();
-            while (resultSet.next()) {
-                int questionId = resultSet.getInt("questionId");
-                String questionDescription = resultSet.getString("questionDescription");
-                String answerA = resultSet.getString("answerA");
-                String answerB = resultSet.getString("answerB");
-                String answerC = resultSet.getString("answerC");
-                String answerD = resultSet.getString("answerD");
-                int quizId = resultSet.getInt("quizId");
-                Quiz quiz = quizdao.getById(quizId);
-                question = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
-                question.setQuestionId(questionId);
-                return question;
+            if (resultSet.next()) {
+                question = createQuestionFromResultSet(resultSet);
             }
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
@@ -84,18 +63,8 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
             this.setupPreparedStatement(sql);
             this.preparedStatement.setString(1, name);
             ResultSet resultSet = this.executeSelectStatement();
-            while (resultSet.next()) {
-                int questionId = resultSet.getInt("questionId");
-                String questionDescription = resultSet.getString("questionDescription");
-                String answerA = resultSet.getString("answerA");
-                String answerB = resultSet.getString("answerB");
-                String answerC = resultSet.getString("answerC");
-                String answerD = resultSet.getString("answerD");
-                int quizId = resultSet.getInt("quizId");
-                Quiz quiz = quizdao.getById(quizId);
-                question = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
-                question.setQuestionId(questionId);
-                return question;
+            if (resultSet.next()) {
+                question = createQuestionFromResultSet(resultSet);
             }
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
@@ -153,23 +122,14 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
     }
 
     public List<Question> getAllByQuizId(int quizId) {
-        List<Question> questions = new ArrayList<Question>();
+        List<Question> questions = new ArrayList<>();
         String sql = "SELECT * FROM Question WHERE quizId = ?";
         try {
             this.setupPreparedStatement(sql);
             this.preparedStatement.setInt(1, quizId);
             ResultSet resultSet = this.executeSelectStatement();
             while (resultSet.next()) {
-                int questionId = resultSet.getInt("questionId");
-                String questionDescription = resultSet.getString("questionDescription");
-                String answerA = resultSet.getString("answerA");
-                String answerB = resultSet.getString("answerB");
-                String answerC = resultSet.getString("answerC");
-                String answerD = resultSet.getString("answerD");
-                Quiz quiz = quizdao.getById(quizId);
-                Question question = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
-                question.setQuestionId(questionId);
-                questions.add(question);
+                questions.add(createQuestionFromResultSet(resultSet));
             }
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
@@ -185,18 +145,8 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
             this.preparedStatement.setString(2, question.getAnswerA());
             this.preparedStatement.setInt(3, question.getQuiz().getQuizId());
             ResultSet resultSet = this.executeSelectStatement();
-            while (resultSet.next()) {
-                int questionId = resultSet.getInt("questionId");
-                String questionDescription = resultSet.getString("questionDescription");
-                String answerA = resultSet.getString("answerA");
-                String answerB = resultSet.getString("answerB");
-                String answerC = resultSet.getString("answerC");
-                String answerD = resultSet.getString("answerD");
-                int quizId = resultSet.getInt("quizId");
-                Quiz quiz = quizdao.getById(quizId);
-                Question newQuestion = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
-                newQuestion.setQuestionId(questionId);
-                return newQuestion;
+            if (resultSet.next()) {
+                return createQuestionFromResultSet(resultSet);
             }
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
@@ -211,19 +161,34 @@ public class QuestionDAO extends AbstractDAO implements GenericDAO<Question> {
     }
 
     public int countQuestionsInQuiz(int quizId) {
-        final int NUL = 0;
-        int aantal = NUL;
+        int aantal = 0;
         String sql = "SELECT COUNT(*) AS Aantal FROM Question WHERE quizId = ?;";
         try {
             this.setupPreparedStatement(sql);
             this.preparedStatement.setInt(1, quizId);
             ResultSet resultSet = this.executeSelectStatement();
-            if (resultSet.next()) { aantal = resultSet.getInt("Aantal"); }
+            if (resultSet.next()) {
+                aantal = resultSet.getInt("Aantal");
+            }
             return aantal;
         } catch (SQLException error) {
             System.out.println("The following exception occurred: " + error.getErrorCode());
         }
-        return NUL;
+        return aantal;
+    }
+
+    private Question createQuestionFromResultSet(ResultSet resultSet) throws SQLException {
+        int questionId = resultSet.getInt("questionId");
+        String questionDescription = resultSet.getString("questionDescription");
+        String answerA = resultSet.getString("answerA");
+        String answerB = resultSet.getString("answerB");
+        String answerC = resultSet.getString("answerC");
+        String answerD = resultSet.getString("answerD");
+        int quizId = resultSet.getInt("quizId");
+        Quiz quiz = quizdao.getById(quizId);
+        Question question = new Question(questionDescription, answerA, answerB, answerC, answerD, quiz);
+        question.setQuestionId(questionId);
+        return question;
     }
 
 } // class
