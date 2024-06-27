@@ -182,6 +182,7 @@ public class CreateUpdateCourseController {
         } else {
             // Update the existing course in the database
             courseDao.updateOne(course);
+            Main.getSceneManager().showManageCoursesScene();
         }
         // Display success message
         if(!Main.getTestMode()) showAlert(Alert.AlertType.INFORMATION, "Succes", "Cursus succesvol aangepast");
@@ -194,8 +195,8 @@ public class CreateUpdateCourseController {
     private void resetForm() {
         courseIdField.clear();
         courseNameField.clear();
-        difficultyComboBox.getSelectionModel().selectFirst();
-        coordinatorComboBox.getSelectionModel().selectFirst();
+        difficultyComboBox.getSelectionModel().clearSelection();
+        coordinatorComboBox.getSelectionModel().clearSelection();
 
     }
 
