@@ -23,6 +23,8 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static utils.Util.showAlert;
@@ -34,9 +36,9 @@ import static utils.Util.showAlert;
  */
 
 public class SelectQuizForStudentController {
-    private final DBAccess dDacces = Main.getdBaccess();
+    private static final DBAccess dDacces = Main.getdBaccess();
     private final SceneManager sceneManager = Main.getSceneManager();
-    QuizDAO quizDAO = new QuizDAO(dDacces);
+    static QuizDAO quizDAO = new QuizDAO(dDacces);
     private final UserSession userSession = Main.getUserSession();
 
     @FXML
@@ -148,12 +150,13 @@ public class SelectQuizForStudentController {
         quizTableStudent.getSelectionModel().selectFirst();
     }
 
-    // methode om een bestand te maken van een Quiz lijst TODO : RJ: toevoegen #keer gemaakt, #keer succesvol, #highscore
+    // methode om een bestand te maken van een Quiz lijst
     public static void maakBestandvanQuizLijst(List<Quiz> quizLijst) {
+        int logedInStudentID = Main.getUserSession().getUser().getUserId();
         SwingUtilities.invokeLater(() -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Kies een locatie om het bestand op te slaan");
-            fileChooser.setSelectedFile(new File("quiz_export.csv"));
+            fileChooser.setSelectedFile(new File("Quiz_Export_User_" + logedInStudentID + "_" + "Date_" + LocalDate.now() + ".csv"));
             int userSelection = fileChooser.showSaveDialog(null);
             if (userSelection == JFileChooser.APPROVE_OPTION) {
                 File fileToSave = fileChooser.getSelectedFile();
@@ -162,7 +165,11 @@ public class SelectQuizForStudentController {
                     printHeaders.append(String.format("%-30s, %-20s, %-30s, %-20s, %-20s, %-20s, %-20s", "Quiznaam:", "Moeilijkheidsgraad:", "Cursus:", "Aantal vragen:", "Aantal keer gemaakt:", "Aantal keer succesvol:", "Highscore:"));
                     printWriter.println(printHeaders);
                     for (Quiz quiz : quizLijst) {
-                        printWriter.println(String.format("%-30s, %-20s, %-30s, %-20s, %-20s, %-20s, %-20s", quiz.getQuizName(), quiz.getQuizDifficulty(), quiz.getCourse(), quiz.getQuestionsInQuizCount(), "0", "0", "0"));
+                        int numberOfMadeQuizzes = quizDAO.getNumberMadeQuizzes(logedInStudentID,quiz.getQuizId());
+                        int numberOfSuccesFullQuizzes = quizDAO.getNumberSuccesQuizzes(logedInStudentID, quiz.getQuizId());
+                        int quizHighscore = quizDAO.getQuizHighscore(logedInStudentID, quiz.getQuizId());
+
+                        printWriter.println(String.format("%-30s, %-20s, %-30s, %-20s, %-20s, %-20s, %-20s", quiz.getQuizName(), quiz.getQuizDifficulty(), quiz.getCourse(), quiz.getQuestionsInQuizCount(), numberOfMadeQuizzes, numberOfSuccesFullQuizzes, quizHighscore));
                     }
                     JOptionPane.showMessageDialog(null, "Bestand succesvol op je computer opgeslagen!", "Bestand opgeslagen", JOptionPane.INFORMATION_MESSAGE);
                 } catch (FileNotFoundException fout) {

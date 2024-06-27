@@ -17,6 +17,8 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static utils.Util.showAlert;
@@ -152,7 +154,7 @@ public class ManageQuizzesController {
         SwingUtilities.invokeLater(() -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Kies een locatie om het bestand op te slaan");
-            fileChooser.setSelectedFile(new File("quiz_export.csv"));
+            fileChooser.setSelectedFile(new File("Quiz_Export_User_" + Main.getUserSession().getUser().getUserId() +"_" + "Date_" + LocalDate.now() + ".csv"));
             int userSelection = fileChooser.showSaveDialog(null);
             if (userSelection == JFileChooser.APPROVE_OPTION) {
                 File fileToSave = fileChooser.getSelectedFile();
