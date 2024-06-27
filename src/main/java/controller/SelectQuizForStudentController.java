@@ -150,10 +150,10 @@ public class SelectQuizForStudentController {
 
     // methode om een bestand te maken van een Quiz lijst TODO : RJ: toevoegen #keer gemaakt, #keer succesvol, #highscore
     public static void maakBestandvanQuizLijst(List<Quiz> quizLijst) {
-
         SwingUtilities.invokeLater(() -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Kies een locatie om het bestand op te slaan");
+            fileChooser.setSelectedFile(new File("quiz_export.csv"));
             int userSelection = fileChooser.showSaveDialog(null);
             if (userSelection == JFileChooser.APPROVE_OPTION) {
                 File fileToSave = fileChooser.getSelectedFile();
