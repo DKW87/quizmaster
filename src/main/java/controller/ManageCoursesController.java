@@ -135,6 +135,10 @@ public class ManageCoursesController {
         }
 
         if (confirmMessage("Course Verwijderen",message )) {
+            if(selectedCourse.getStudentCount()>0) {
+                showAlert(Alert.AlertType.ERROR, "Fout", "Cursus heeft studenten, kan niet worden verwijderd");
+                return;
+            }
             courseDao.deleteOneById(selectedCourse.getCourseId());
             courseTable.getItems().remove(selectedCourse);
         }
