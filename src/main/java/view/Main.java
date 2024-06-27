@@ -20,7 +20,7 @@ public class Main extends Application {
 
     private static  boolean TEST_MODE = true;
     // ? for couchdb mode
-    private static  boolean COUCHDB_MODE = true;
+    private static  boolean COUCHDB_MODE = false;
 
     public static void main(String[] args) {
         TEST_MODE = false;
